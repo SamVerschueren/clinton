@@ -2,8 +2,10 @@
 const path = require('path');
 const fs = require('fs');
 const ghGot = require('gh-got');
+const pick = require('pick-values');
 module.exports = (repository, opts) => {
 	const rulesPath = path.join(__dirname, 'rules');
+	const taskPath = path.join(__dirname, 'tasks');
 
 	opts = opts || {};
 
@@ -35,13 +37,25 @@ module.exports = (repository, opts) => {
 	.then(data => {
 		repo._tree = data.body.tree.map(file => file.path);
 
-		return Promise.all(fs.readdirSync(rulesPath).map(rule =>
-			require(path.join(rulesPath, rule))(repo, opts).catch(result => {
-				if (result) {
-					repo.validations = repo.validations.concat(result);
-				}
-			})
-		));
+		const tasks = {};
+		const rules = fs.readdirSync(rulesPath);
+
+		return Promise.all(rules.map(rule => {
+			const mod = require(path.join(rulesPath, rule));
+
+			(mod._dependencies || []).forEach(dep => {
+				tasks[dep] = require(path.join(taskPath, dep))(repo, opts);
+			});
+
+			return Promise.all(pick(tasks, mod._dependencies || []))
+				.then(result =>
+					mod.apply(mod, [repo, opts].concat(result)).catch(result => {
+						if (result) {
+							repo.validations = repo.validations.concat(result);
+						}
+					})
+				);
+		}));
 	})
 	.then(() => repo.validations);
 };

@@ -1,6 +1,5 @@
 'use strict';
-const got = require('got');
-module.exports = repository => {
+module.exports = (repository, options, pkg) => {
 	const props = [
 		'name',
 		'version',
@@ -13,21 +12,21 @@ module.exports = repository => {
 		'engines'
 	];
 
-	return got(`https://raw.githubusercontent.com/${repository._fullName}/master/package.json`, {json: true}).then(res => {
-		const result = [];
+	const result = [];
 
-		props.forEach(el => {
-			if (!res.body[el]) {
-				result.push({
-					name: `package-property-${el}`,
-					severity: 'warn',
-					message: `Missing recommended package.json property \`${el}\``
-				});
-			}
-		});
-
-		if (result.length > 0) {
-			return Promise.reject(result);
+	props.forEach(el => {
+		if (!pkg[el]) {
+			result.push({
+				name: `package-property-${el}`,
+				severity: 'warn',
+				message: `Missing recommended package.json property \`${el}\``
+			});
 		}
 	});
+
+	if (result.length > 0) {
+		return Promise.reject(result);
+	}
 };
+
+module.exports._dependencies = ['pkg-loader'];
