@@ -49,7 +49,7 @@ module.exports = (repository, opts) => {
 
 			return Promise.all(pick(tasks, mod._dependencies || []))
 				.then(result =>
-					mod.apply(mod, [repo, opts].concat(result)).catch(result => {
+					Promise.resolve(mod.apply(mod, [repo, opts].concat(result))).catch(result => {
 						if (result) {
 							repo.validations = repo.validations.concat(result);
 						}

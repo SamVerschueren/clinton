@@ -31,7 +31,8 @@
   "dependencies": {
     "gh-got": "^2.3.0",
     "got": "^5.1.0",
-    "pick-values": "^1.0.1"
+    "pick-values": "^1.0.1",
+    "semver": "^5.1.0"
   },
   "devDependencies": {
     "ava": "*",
@@ -40,7 +41,9 @@
   "xo": {
     "esnext": true,
     "rules": {
-      "prefer-reflect": [0]
+      "prefer-reflect": [
+        0
+      ]
     },
     "ignores": [
       "test.js"
