@@ -40,12 +40,16 @@ module.exports = (repository, opts) => {
 		const tasks = {};
 		const rules = fs.readdirSync(rulesPath);
 
-		return Promise.all(rules.map(rule => {
+		rules.forEach(rule => {
 			const mod = require(path.join(rulesPath, rule));
 
 			(mod._dependencies || []).forEach(dep => {
 				tasks[dep] = require(path.join(taskPath, dep))(repo, opts);
 			});
+		});
+
+		return Promise.all(rules.map(rule => {
+			const mod = require(path.join(rulesPath, rule));
 
 			return Promise.all(pick(tasks, mod._dependencies || []))
 				.then(result =>
