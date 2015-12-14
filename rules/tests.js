@@ -1,5 +1,5 @@
 'use strict';
-const got = require('got');
+const travisGot = require('travis-got');
 module.exports = (repository, opts, pkg) => {
 	const messages = [];
 
@@ -25,7 +25,7 @@ module.exports = (repository, opts, pkg) => {
 		});
 	}
 
-	messages.push(got(`https://api.travis-ci.org/repos/${repository._fullName}`, {json: true, headers: {Accept: 'application/vnd.travis-ci.2+json'}}).then(data => {
+	messages.push(travisGot(`repos/${repository._fullName}`).then(data => {
 		if (data.body.repo && data.body.repo.last_build_state === 'errored') {
 			return Promise.resolve({
 				name: 'travis-build-status',
