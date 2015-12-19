@@ -31,7 +31,7 @@
   "dependencies": {
     "gh-got": "^2.3.0",
     "got": "^5.1.0",
-    "pick-values": "^1.0.1",
+    "memoizesync": "^0.5.0",
     "semver": "^5.1.0",
     "travis-got": "^1.0.0"
   },
@@ -45,9 +45,6 @@
       "prefer-reflect": [
         0
       ]
-    },
-    "ignores": [
-      "test.js"
-    ]
+    }
   }
 }

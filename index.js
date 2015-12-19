@@ -1,11 +1,10 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
-const ghGot = require('gh-got');
-const pick = require('pick-values');
+const ghGot = require('./utils/cache').ghGot;
+
 module.exports = (repository, opts) => {
 	const rulesPath = path.join(__dirname, 'rules');
-	const taskPath = path.join(__dirname, 'tasks');
 
 	opts = opts || {};
 
@@ -37,28 +36,16 @@ module.exports = (repository, opts) => {
 	.then(data => {
 		repo._tree = data.body.tree.map(file => file.path);
 
-		const tasks = {};
 		const rules = fs.readdirSync(rulesPath);
-
-		rules.forEach(rule => {
-			const mod = require(path.join(rulesPath, rule));
-
-			(mod._dependencies || []).forEach(dep => {
-				tasks[dep] = require(path.join(taskPath, dep))(repo, opts);
-			});
-		});
 
 		return Promise.all(rules.map(rule => {
 			const mod = require(path.join(rulesPath, rule));
 
-			return Promise.all(pick(tasks, mod._dependencies || []))
-				.then(result =>
-					Promise.resolve(mod.apply(mod, [repo, opts].concat(result))).catch(result => {
-						if (result) {
-							repo.validations = repo.validations.concat(result);
-						}
-					})
-				);
+			return Promise.resolve(mod.apply(mod, [repo, opts])).catch(result => {
+				if (result) {
+					repo.validations = repo.validations.concat(result);
+				}
+			});
 		}));
 	})
 	.then(() => repo.validations);

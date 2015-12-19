@@ -1,5 +1,6 @@
 'use strict';
-module.exports = (repository, options, pkg) => {
+const loadFile = require('../utils/load-file');
+module.exports = repository => {
 	const props = [
 		'name',
 		'version',
@@ -12,21 +13,19 @@ module.exports = (repository, options, pkg) => {
 		'engines'
 	];
 
-	const result = [];
+	return loadFile(repository, 'package.json').then(pkg => {
+		const result = [];
 
-	props.forEach(el => {
-		if (!pkg[el]) {
-			result.push({
-				name: `package-property-${el}`,
-				severity: 'warn',
-				message: `Missing recommended package.json property \`${el}\``
-			});
-		}
-	});
+		props.forEach(el => {
+			if (!pkg[el]) {
+				result.push({
+					name: `package-property-${el}`,
+					severity: 'warn',
+					message: `Missing recommended package.json property \`${el}\``
+				});
+			}
+		});
 
-	if (result.length > 0) {
 		return Promise.reject(result);
-	}
+	});
 };
-
-module.exports._dependencies = ['pkg-loader'];
