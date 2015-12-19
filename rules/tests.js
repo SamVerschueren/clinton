@@ -26,7 +26,7 @@ module.exports = repository => {
 				severity: 'error',
 				message: 'Missing property `scripts.test` in package.json.'
 			});
-		} else if (pkg.scripts && (/no test specified/.test(pkg.scripts.test) || pkg.script.test === '')) {
+		} else if (pkg.scripts && (/no test specified/.test(pkg.scripts.test) || pkg.scripts.test === '')) {
 			messages.push({
 				name: 'package-untested',
 				severity: 'error',
