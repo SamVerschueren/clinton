@@ -33,7 +33,7 @@
     "got": "^5.1.0",
     "memoizesync": "^0.5.0",
     "semver": "^5.1.0",
-    "string-occurrence": "^1.1.0",
+    "string-occurrence": "^1.1.1",
     "travis-got": "^1.0.0"
   },
   "devDependencies": {
