@@ -1,5 +1,5 @@
 'use strict';
-const memoize = require('memoizesync');
+const memoize = require('mem');
 
 exports.ghGot = memoize(require('gh-got'));
 exports.travisGot = memoize(require('travis-got'));
