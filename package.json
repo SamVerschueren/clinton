@@ -33,6 +33,7 @@
     "gh-got": "^2.3.0",
     "got": "^5.1.0",
     "mem": "^0.1.0",
+    "pify": "^2.3.0",
     "semver": "^5.1.0",
     "string-occurrence": "^1.1.1",
     "travis-got": "^1.0.0"
@@ -40,13 +41,5 @@
   "devDependencies": {
     "ava": "*",
     "xo": "*"
-  },
-  "xo": {
-    "esnext": true,
-    "rules": {
-      "prefer-reflect": [
-        0
-      ]
-    }
   }
 }

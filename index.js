@@ -1,52 +1,38 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
-const ghGot = require('./utils/cache').ghGot;
+const context = require('./lib/context');
+const github = require('./lib/github');
 
 module.exports = (repository, opts) => {
 	const rulesPath = path.join(__dirname, 'rules');
 
 	opts = opts || {};
 
-	let repo;
+	// Create a new context
+	const ctx = context.create(opts);
 
-	return Promise.all([
-		ghGot(`repos/${repository}`, {token: opts.token}),
-		ghGot(`repos/${repository}/branches/master`, {token: opts.token})
-	])
-	.then(result => {
-		const data = result[0].body;
-		const master = result[1].body;
+	// The default loader is the GitHub loader
+	const loader = github;
 
-		if (data.language.toLowerCase() !== 'javascript') {
-			throw new TypeError('We can only validate JavaScript projects.');
-		}
+	if (opts.local) {
+		// loader = local;
+		throw new Error('not supported yet');
+	}
 
-		repo = {
-			_fullName: data.full_name,
-			_name: data.name,
-			_url: data.html_url,
-			_issues: data.open_issues_count,
-			_sha: master.commit.sha,
-			validations: []
-		};
+	return loader.load(repository, ctx)
+		.then(ctx => {
+			const rules = fs.readdirSync(rulesPath);
 
-		return ghGot(`repos/${repository}/git/trees/${repo._sha}`, {token: opts.token});
-	})
-	.then(data => {
-		repo._tree = data.body.tree.map(file => file.path);
+			return Promise.all(rules.map(rule => {
+				const mod = require(path.join(rulesPath, rule));
 
-		const rules = fs.readdirSync(rulesPath);
-
-		return Promise.all(rules.map(rule => {
-			const mod = require(path.join(rulesPath, rule));
-
-			return Promise.resolve(mod.apply(mod, [repo, opts])).catch(result => {
-				if (result) {
-					repo.validations = repo.validations.concat(result);
-				}
-			});
-		}));
-	})
-	.then(() => repo.validations);
+				return Promise.resolve(mod(ctx)).catch(result => {
+					if (result) {
+						ctx.addValidation(result);
+					}
+				});
+			}));
+		})
+		.then(() => ctx.validations);
 };

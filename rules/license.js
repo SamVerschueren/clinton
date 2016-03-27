@@ -1,6 +1,6 @@
 'use strict';
-module.exports = repository => {
-	if (repository._tree.indexOf('LICENSE') === -1 && repository._tree.indexOf('license') === -1) {
+module.exports = function (ctx) {
+	if (!ctx.files.some(file => file.toLowerCase().indexOf('license') === 0)) {
 		return Promise.reject({
 			name: 'license',
 			severity: 'warn',

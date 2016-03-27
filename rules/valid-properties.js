@@ -1,6 +1,5 @@
 'use strict';
-const loadFile = require('../utils/load-file');
-module.exports = repository => {
+module.exports = function (ctx) {
 	const props = [
 		'name',
 		'version',
@@ -13,7 +12,7 @@ module.exports = repository => {
 		'engines'
 	];
 
-	return loadFile(repository, 'package.json').then(pkg => {
+	return ctx.readFile('package.json').then(pkg => {
 		const result = [];
 
 		props.forEach(el => {

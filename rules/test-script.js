@@ -1,13 +1,11 @@
 'use strict';
-const semver = require('semver');
-
 module.exports = function (ctx) {
 	return ctx.readFile('package.json').then(pkg => {
-		if (!semver.valid(pkg.version)) {
+		if (pkg.scripts && (/no test specified/.test(pkg.scripts.test) || pkg.scripts.test === '')) {
 			return Promise.reject({
-				name: 'valid-version',
+				name: 'no-test-script',
 				severity: 'error',
-				message: 'The specified `version` in package.json is invalid.'
+				message: 'The package is untested.'
 			});
 		}
 	});

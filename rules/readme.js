@@ -1,6 +1,6 @@
 'use strict';
-module.exports = repository => {
-	if (!repository._tree.some(file => file.toLowerCase().indexOf('readme') === 0)) {
+module.exports = function (ctx) {
+	if (!ctx.files.some(file => file.toLowerCase().indexOf('readme') === 0)) {
 		return Promise.reject({
 			name: 'no-readme',
 			severity: 'error',

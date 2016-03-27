@@ -1,6 +1,6 @@
 'use strict';
-module.exports = repository => {
-	if (repository._tree.indexOf('.editorconfig') === -1) {
+module.exports = function (ctx) {
+	if (ctx.files.indexOf('.editorconfig') === -1) {
 		return Promise.reject({
 			name: 'editorconfig',
 			severity: 'warn',
