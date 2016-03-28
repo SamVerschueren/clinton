@@ -33,6 +33,7 @@
     "gh-got": "^2.3.0",
     "got": "^5.1.0",
     "mem": "^0.1.0",
+    "object-assign": "^4.0.1",
     "pify": "^2.3.0",
     "semver": "^5.1.0",
     "string-occurrence": "^1.1.1",

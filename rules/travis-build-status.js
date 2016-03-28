@@ -4,8 +4,8 @@ module.exports = function (ctx) {
 		return Promise.resolve();
 	}
 
-	// TODO this will not work when executed locally
-	return ctx.travisGot(`repos/${ctx.repository.full_name}`).then(res => {
+	// TODO what if repository is not something like `SamVerschueren/gh-lint`?
+	return ctx.travis.get(`repos/${ctx.pkg.repository}`).then(res => {
 		const data = res.body;
 
 		// Validate travis build

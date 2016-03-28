@@ -1,27 +1,37 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
+const objectAssign = require('object-assign');
 const context = require('./lib/context');
-const github = require('./lib/github');
+const github = require('./lib/github-loader');
+const local = require('./lib/local-loader');
 
 module.exports = (repository, opts) => {
+	// Location of the default rules
 	const rulesPath = path.join(__dirname, 'rules');
 
-	opts = opts || {};
+	opts = objectAssign({
+		cwd: process.cwd()
+	}, opts);
 
 	// Create a new context
 	const ctx = context.create(opts);
 
 	// The default loader is the GitHub loader
-	const loader = github;
+	let loader = github;
 
 	if (opts.local) {
-		// loader = local;
-		throw new Error('not supported yet');
+		loader = local;
 	}
 
 	return loader.load(repository, ctx)
-		.then(ctx => {
+		.then(() => {
+			return ctx.readFile('package.json');
+		})
+		.then(pkg => {
+			ctx.pkg = pkg;
+		})
+		.then(() => {
 			const rules = fs.readdirSync(rulesPath);
 
 			return Promise.all(rules.map(rule => {

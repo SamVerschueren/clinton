@@ -31,9 +31,22 @@ lint('SamVerschueren/gh-lint', {token: 'my-github-token'}).then(messages => {
 
 Type: `string`
 
-The repository to lint.
+The repository to lint or the path to the package on your local file system.
 
 #### options
+
+##### local
+
+Type: `boolean`<br>
+Default: `false`
+
+Lint a local project.
+
+##### cwd
+
+Type: `string`
+
+Current working directory when linting local projects.
 
 ##### token
 
