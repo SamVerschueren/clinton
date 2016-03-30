@@ -12,7 +12,7 @@ module.exports = function (ctx) {
 		'engines'
 	];
 
-	return ctx.readFile('package.json').then(pkg => {
+	return ctx.fs.readFile('package.json').then(pkg => {
 		const result = [];
 
 		props.forEach(el => {
