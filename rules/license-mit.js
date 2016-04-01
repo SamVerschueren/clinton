@@ -1,9 +1,9 @@
 'use strict';
 module.exports = function (ctx) {
-	const license = ctx.files.find(file => file.toLowerCase().indexOf('lice') === 0);
+	const license = ctx.files.find(file => file.toLowerCase().indexOf('license') === 0);
 
 	if (!license) {
-		throw new Error('No license found.');
+		throw new Error('Missing `license` file');
 	}
 
 	return ctx.fs.readFile(license).then(content => {
