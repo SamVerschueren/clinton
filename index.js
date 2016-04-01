@@ -1,9 +1,8 @@
 'use strict';
 const path = require('path');
 const objectAssign = require('object-assign');
+const environment = require('./lib/environment');
 const context = require('./lib/context');
-const github = require('./lib/github-loader');
-const local = require('./lib/local-loader');
 
 function createSeverity(severity) {
 	if (typeof severity === 'string') {
@@ -46,23 +45,12 @@ module.exports = (repository, opts) => {
 	// Parse the rules
 	const rules = parseRules(opts.rules);
 
-	// Create a new context
-	const ctx = context.create(opts);
+	// Create a new environment
+	const env = environment.create(opts);
 
-	// The default loader is the GitHub loader
-	let loader = github;
+	const validations = [];
 
-	if (opts.local) {
-		loader = local;
-	}
-
-	return loader.load(repository, ctx)
-		.then(() => {
-			return ctx.fs.readFile('package.json');
-		})
-		.then(pkg => {
-			ctx.pkg = pkg;
-		})
+	return env.load(repository)
 		.then(() => {
 			const ruleIds = Object.keys(rules);
 
@@ -72,19 +60,17 @@ module.exports = (repository, opts) => {
 				const rule = rules[ruleId];
 
 				// Create a rule context
-				const ruleContext = context.create(opts);
-				ruleContext.files = ctx.files;
-				ruleContext.options = rule.slice(1);
+				const ctx = context.create(env, rule.slice(1));
 
 				// Execute the rule
 				return Promise.resolve()
-					.then(() => mod(ruleContext))
+					.then(() => mod(ctx))
 					.catch(err => {
 						if (err) {
 							err = Array.isArray(err) ? err : [err];
 
 							err.forEach(e => {
-								ctx.addValidation({
+								validations.push({
 									name: ruleId,
 									severity: rule[0],
 									message: e.message
@@ -94,5 +80,5 @@ module.exports = (repository, opts) => {
 					});
 			}));
 		})
-		.then(() => ctx.validations);
+		.then(() => validations);
 };

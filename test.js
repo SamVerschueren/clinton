@@ -12,7 +12,7 @@ test('remote - no errors', async t => {
 });
 
 test('local - no errors', async t => {
-	const errors = await fn('.', {local: true, cwd: __dirname});
+	const errors = await fn('.', {local: true});
 
 	t.is(errors.length, 0);
 });

@@ -48,6 +48,13 @@ Type: `string`
 
 Current working directory when linting local projects.
 
+##### branch
+
+Type: `string`<br>
+Default: *`default branch`*
+
+Branch name that should be linted.
+
 ##### token
 
 Type: `string`

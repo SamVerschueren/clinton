@@ -31,7 +31,8 @@
   ],
   "dependencies": {
     "gh-got": "^2.3.0",
-    "got": "^5.1.0",
+    "globby": "^4.0.0",
+    "got": "^6.2.0",
     "mem": "^0.1.0",
     "object-assign": "^4.0.1",
     "pify": "^2.3.0",
