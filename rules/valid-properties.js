@@ -13,18 +13,14 @@ module.exports = function (ctx) {
 	];
 
 	return ctx.fs.readFile('package.json').then(pkg => {
-		const result = [];
+		const errors = [];
 
 		props.forEach(el => {
 			if (!pkg[el]) {
-				result.push({
-					name: `package-property-${el}`,
-					severity: 'warn',
-					message: `Missing recommended package.json property \`${el}\``
-				});
+				errors.push(new Error(`Missing recommended package.json property \`${el}\``));
 			}
 		});
 
-		return Promise.reject(result);
+		return Promise.reject(errors);
 	});
 };
