@@ -33,7 +33,7 @@ function parseRules(rules) {
 	return ret;
 }
 
-module.exports = (repository, opts) => {
+module.exports = (input, opts) => {
 	// Location of the default rules
 	const rulesPath = path.join(__dirname, 'rules');
 
@@ -42,16 +42,20 @@ module.exports = (repository, opts) => {
 		rules: {}
 	}, opts);
 
-	// Parse the rules
-	const rules = parseRules(opts.rules);
-
 	// Create a new environment
-	const env = environment.create(opts);
+	const env = environment.create(input, opts);
 
 	const validations = [];
 
-	return env.load(repository)
+	return env.load()
 		.then(() => {
+			// Parse the rules
+			let rules = opts.rules;
+			if (env.pkg['gh-lint'] && env.pkg['gh-lint'].rules) {
+				rules = env.pkg['gh-lint'].rules;
+			}
+
+			rules = parseRules(rules);
 			const ruleIds = Object.keys(rules);
 
 			return Promise.all(ruleIds.map(ruleId => {

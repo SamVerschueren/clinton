@@ -16,31 +16,24 @@ $ npm install --save gh-lint
 ```js
 const lint = require('gh-lint');
 
-lint('SamVerschueren/gh-lint', {token: 'my-github-token'}).then(messages => {
-	console.log(messages);
-	//=> errors, warnings and info objects
+lint('SamVerschueren/gh-lint', {token: 'my-github-token'}).then(validations => {
+	console.log(validations);
+	//=> errors and warning objects
 });
 ```
 
 
 ## API
 
-### lint(repository, [options])
+### lint(input, [options])
 
-#### repository
+#### input
 
 Type: `string`
 
-The repository to lint or the path to the package on your local file system.
+Name of the repository or local path.
 
 #### options
-
-##### local
-
-Type: `boolean`<br>
-Default: `false`
-
-Lint a local project.
 
 ##### cwd
 
@@ -53,7 +46,7 @@ Current working directory when linting local projects.
 Type: `string`<br>
 Default: *`default branch`*
 
-Branch name that should be linted.
+Branch name of the GitHub repository.
 
 ##### token
 
@@ -66,7 +59,6 @@ Can be overriden globally with the `GITHUB_TOKEN` environment variable.
 
 ## Related
 
-- [gh-lint-cli](https://github.com/SamVerschueren/gh-lint-cli) - CLI for this module
 - [gh-lint-brainstorm](https://github.com/SamVerschueren/gh-lint-brainstorm) - Brainstorming repository for this module
 
 
