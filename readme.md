@@ -35,6 +35,12 @@ Name of the repository or local path.
 
 #### options
 
+##### plugins
+
+Type: `string[]`
+
+List of plugin names.
+
 ##### cwd
 
 Type: `string`

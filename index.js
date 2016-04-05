@@ -3,6 +3,7 @@ const path = require('path');
 const objectAssign = require('object-assign');
 const environment = require('./lib/environment');
 const context = require('./lib/context');
+const pkg = require('./package.json');
 
 function createSeverity(severity) {
 	if (typeof severity === 'string') {
@@ -39,7 +40,8 @@ module.exports = (input, opts) => {
 
 	opts = objectAssign({
 		cwd: process.cwd(),
-		rules: {}
+		rules: {},
+		plugins: []
 	}, opts);
 
 	// Create a new environment
@@ -51,15 +53,21 @@ module.exports = (input, opts) => {
 		.then(() => {
 			// Parse the rules
 			let rules = opts.rules;
-			if (env.pkg['gh-lint'] && env.pkg['gh-lint'].rules) {
-				rules = env.pkg['gh-lint'].rules;
+			if (env.pkg[pkg.name] && env.pkg[pkg.name].rules) {
+				rules = env.pkg[pkg.name].rules;
 			}
 
 			rules = parseRules(rules);
 			const ruleIds = Object.keys(rules);
 
 			return Promise.all(ruleIds.map(ruleId => {
-				const mod = require(path.join(rulesPath, ruleId));
+				let mod;
+
+				if (opts.plugins.indexOf(ruleId) >= 0) {
+					mod = require(`${pkg.name}-plugin-${ruleId}`);
+				} else {
+					mod = require(path.join(rulesPath, ruleId));
+				}
 
 				const rule = rules[ruleId];
 
