@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (ctx) {
+module.exports = ctx => {
 	const props = [
 		'name',
 		'version',
@@ -17,10 +17,12 @@ module.exports = function (ctx) {
 
 		props.forEach(el => {
 			if (!pkg[el]) {
-				errors.push(new Error(`Missing recommended package.json property \`${el}\``));
+				errors.push({
+					message: `Missing recommended package.json property \`${el}\``
+				});
 			}
 		});
 
-		return Promise.reject(errors);
+		return errors.length > 0 ? errors : undefined;
 	});
 };

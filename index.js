@@ -77,7 +77,7 @@ module.exports = (input, opts) => {
 				// Execute the rule
 				return Promise.resolve()
 					.then(() => mod(ctx))
-					.catch(err => {
+					.then(err => {
 						if (err) {
 							err = Array.isArray(err) ? err : [err];
 

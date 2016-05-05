@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (ctx) {
+module.exports = ctx => {
 	if (ctx.files.indexOf('.travis.yml') === -1) {
 		return;
 	}
@@ -10,7 +10,9 @@ module.exports = function (ctx) {
 
 		// Validate travis build
 		if (data.repo && data.repo.last_build_state === 'errored') {
-			throw new Error('Travis build failed.');
+			return {
+				message: 'Travis build failed.'
+			};
 		}
 	});
 };

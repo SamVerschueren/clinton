@@ -1,7 +1,7 @@
 'use strict';
 const occurrences = require('string-occurrence');
 
-module.exports = function (ctx) {
+module.exports = ctx => {
 	const readme = ctx.files.find(file => file.toLowerCase().indexOf('readme') === 0);
 
 	if (!readme) {
@@ -13,7 +13,9 @@ module.exports = function (ctx) {
 		const promiseSamples = occurrences(content, ['promise', '.then', '.catch']);
 
 		if (cbSamples > promiseSamples) {
-			throw new Error('Use promises instead of callbacks');
+			return {
+				message: 'Use promises instead of callbacks'
+			};
 		}
 	});
 };
