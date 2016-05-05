@@ -23,6 +23,6 @@ module.exports = ctx => {
 			}
 		});
 
-		return errors.length > 0 ? errors : undefined;
+		return errors;
 	});
 };
