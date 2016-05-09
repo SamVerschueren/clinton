@@ -52,11 +52,11 @@
   },
   "gh-lint": {
     "rules": {
-      "use-travis": 2,
-      "license-mit": 2,
-      "pkg-files": 2,
-      "valid-version": 2,
-      "pkg-schema": 2
+      "use-travis": "error",
+      "license-mit": "error",
+      "pkg-files": "error",
+      "valid-version": "error",
+      "pkg-schema": "error"
     }
   }
 }

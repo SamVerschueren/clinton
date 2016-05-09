@@ -6,13 +6,14 @@ const context = require('./lib/context');
 const pkg = require('./package.json');
 
 function createSeverity(severity) {
-	if (typeof severity === 'string') {
-		if (severity === 'error') {
-			severity = 2;
-		} else if (severity === 'warn') {
-			severity = 1;
-		} else if (severity === 'off') {
-			severity = 0;
+	if (typeof severity === 'number') {
+		switch (severity) {
+			case 2:
+				return 'error';
+			case 1:
+				return 'warn';
+			default:
+				return 'off';
 		}
 	}
 
@@ -26,7 +27,7 @@ function parseRules(rules) {
 		const rule = Array.isArray(rules[id]) ? rules[id] : [rules[id]];
 		rule[0] = createSeverity(rule[0]);
 
-		if (rule[0] > 0) {
+		if (rule[0] !== 'off') {
 			ret[id] = rule;
 		}
 	});
