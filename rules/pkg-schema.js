@@ -16,5 +16,13 @@ module.exports = ctx => {
 		if (!isValid) {
 			return validator.getLastErrors().map(err => ({message: `${err.message} at path '${err.path}'`}));
 		}
+	}).catch(err => {
+		if (err.code === 'ENOTFOUND') {
+			return {
+				message: 'Schema for `package.json` not found.'
+			};
+		}
+
+		throw err;
 	});
 };

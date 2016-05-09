@@ -1,7 +1,8 @@
 'use strict';
 const path = require('path');
 const objectAssign = require('object-assign');
-const environment = require('./lib/environment');
+const pathExists = require('path-exists');
+const Environment = require('./lib/environment');
 const context = require('./lib/context');
 const pkg = require('./package.json');
 
@@ -35,6 +36,10 @@ function parseRules(rules) {
 }
 
 module.exports = (input, opts) => {
+	if (!pathExists(input)) {
+		return Promise.reject(new Error(`Path ${path} does not exist.`));
+	}
+
 	// Location of the default rules
 	const rulesPath = path.join(__dirname, 'rules');
 
@@ -45,7 +50,7 @@ module.exports = (input, opts) => {
 	}, opts);
 
 	// Create a new environment
-	const env = environment.create(input, opts);
+	const env = new Environment(input, opts);
 
 	const validations = [];
 
