@@ -1,6 +1,5 @@
 'use strict';
 const path = require('path');
-const objectAssign = require('object-assign');
 const pathExists = require('path-exists');
 const Environment = require('./lib/environment');
 const context = require('./lib/context');
@@ -43,7 +42,7 @@ module.exports = (input, opts) => {
 	// Location of the default rules
 	const rulesPath = path.join(__dirname, 'rules');
 
-	opts = objectAssign({
+	opts = Object.assign({
 		cwd: process.cwd(),
 		rules: {},
 		plugins: []
