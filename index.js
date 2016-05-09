@@ -36,8 +36,8 @@ function parseRules(rules) {
 }
 
 module.exports = (input, opts) => {
-	if (!pathExists(input)) {
-		return Promise.reject(new Error(`Path ${path} does not exist.`));
+	if (!pathExists.sync(input)) {
+		return Promise.reject(new Error(`Path ${input} does not exist.`));
 	}
 
 	// Location of the default rules

@@ -1,7 +1,4 @@
 language: node_js
-env:
-  global:
-    secure: okKTY4YzPu1KPNvzja2oDoTdK16JmtJhJ6/3jrNbiUwMoU/ZcS1lk9U8ee6QTCXlaKi9XKP0HyhNsCoa2+iHQyQMfOvBaVnLKAVDTFx4oM2klGGrVyhL0LJvoXZTGspeu988zqK1YnDyRr8U9hjN3Zxps09O2g10oHyztCLmJGKVfbCjZT3BHllM9hdqZ+HpcteHV5cKYnfMWKxAmvsrDuajzlvx0rrcDWZyRidRV7fLYwdfh/671/LDcmANpnbGdEnMhmyuwPdhuQuAInf5KvssHiQaRXf45M+rXqNuYVsvcwIVzz9wdKlE4L3sfNAtCv/YK3Tr3SPW1QsQD2rswUwgn+JZ/JpdzkQwYeKjAD6iCMea6XQ4g/toet52PafZYS25i+uY+jVnSHyXLiEE+ppiVAS8ykjx/kc4lVFHkCk95C/N+YpVuNWm7FSgZ2Kj1SdEjuF1NbLLN2pFvqFkjE+AYN9rd9nWv1bxiAypgDwVYdefafBtSwxr1ckjGvsSn+N4RLdzapKyB8XAWeiM7C7VQjazjgwanLPVlrsD0Hn+pxkQgLlcbGqULmbgdwxw+6p0ggAlFm3a0gy3rDaPtDY6kGdMqN9Np4ZP+L3FigkP6q+7REJ0NbfPH5ghRBb0sDmJMvH7kNFgwX9Uj3Tvw7Hn8QU6gIwC1MzrsvlLGnM=
 node_js:
-- '6'
-- '4'
+  - '6'
+  - '4'

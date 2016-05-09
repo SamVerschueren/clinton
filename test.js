@@ -1,18 +1,11 @@
 import test from 'ava';
-import fn from './';
+import m from './';
 
-test('throw if language is not javascript', async t => {
-	t.throws(fn('SamVerschueren/BB10-OAuth'), 'We can only validate JavaScript projects.');
+test('project does not exist', async t => {
+	t.throws(m('foo/bar'), 'Path foo/bar does not exist.');
 });
 
-test('remote - no errors', async t => {
-	const errors = await fn('SamVerschueren/gh-lint');
-
-	t.is(errors.length, 0);
-});
-
-test('local - no errors', async t => {
-	const errors = await fn('.', {local: true});
-
+test('no errors', async t => {
+	const errors = await m('.');
 	t.is(errors.length, 0);
 });
