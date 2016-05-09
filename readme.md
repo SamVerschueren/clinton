@@ -16,22 +16,22 @@ $ npm install --save gh-lint
 ```js
 const lint = require('gh-lint');
 
-lint('SamVerschueren/gh-lint', {token: 'my-github-token'}).then(validations => {
+lint('/Users/sam/projects/gh-lint').then(validations => {
 	console.log(validations);
-	//=> errors and warning objects
+	//=> error and warning objects
 });
 ```
 
 
 ## API
 
-### lint(input, [options])
+### lint(path, [options])
 
-#### input
+#### path
 
 Type: `string`
 
-Name of the repository or local path.
+Project path.
 
 #### options
 
@@ -46,21 +46,6 @@ List of plugin names.
 Type: `string`
 
 Current working directory when linting local projects.
-
-##### branch
-
-Type: `string`<br>
-Default: *`default branch`*
-
-Branch name of the GitHub repository.
-
-##### token
-
-Type: `string`
-
-GitHub [access token](https://github.com/settings/tokens/new).
-
-Can be overriden globally with the `GITHUB_TOKEN` environment variable.
 
 
 ## Related
