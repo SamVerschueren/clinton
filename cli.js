@@ -8,12 +8,7 @@ const cli = meow(`
 	Usage
 	  $ gh-lint <path>
 
-	Options
-	  --token		GitHub access token
-
-  Examples
-	  $ gh-lint SamVerschueren/gh-lint
-
+	Examples
 	  $ gh-lint ~/projects/gh-lint
 `);
 
@@ -22,7 +17,7 @@ if (cli.input.length === 0) {
 	process.exit(1);
 }
 
-function log(validation) {
+const log = validation => {
 	let color = 'red';
 	let message = 'error  ';
 
@@ -32,7 +27,7 @@ function log(validation) {
 	}
 
 	console.log(`  ${chalk[color](message)}  ${validation.message} ${chalk.gray('(' + validation.name + ')')}`);
-}
+};
 
 ghLint(cli.input[0], cli.flags)
 	.then(validations => {
