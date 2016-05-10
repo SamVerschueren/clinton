@@ -4,14 +4,14 @@ module.exports = ctx => {
 
 	if (!license) {
 		return {
-			message: 'Missing `license` file'
+			message: 'No MIT license found.'
 		};
 	}
 
 	return ctx.fs.readFile(license).then(content => {
 		if (content.toLowerCase().indexOf('the mit license (mit)') === -1) {
 			return {
-				message: 'No MIT license found.'
+				message: 'License is not MIT.'
 			};
 		}
 	});

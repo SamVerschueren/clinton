@@ -36,12 +36,9 @@ function parseRules(rules) {
 }
 
 module.exports = (input, opts) => {
-	if (!pathExists.sync(input)) {
-		return Promise.reject(new Error(`Path ${input} does not exist.`));
+	if (typeof input !== 'string') {
+		return Promise.reject(new TypeError('No input provided.'));
 	}
-
-	// Location of the default rules
-	const rulesPath = path.join(__dirname, 'rules');
 
 	opts = Object.assign({
 		cwd: process.cwd(),
@@ -49,8 +46,17 @@ module.exports = (input, opts) => {
 		plugins: []
 	}, opts);
 
+	const filePath = path.resolve(opts.cwd, input);
+
+	if (!pathExists.sync(filePath)) {
+		return Promise.reject(new Error(`Path ${input} does not exist.`));
+	}
+
+	// Location of the default rules
+	const rulesPath = path.join(__dirname, 'rules');
+
 	// Create a new environment
-	const env = new Environment(input, opts);
+	const env = new Environment(filePath, opts);
 
 	const validations = [];
 
