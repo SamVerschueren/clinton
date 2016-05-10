@@ -50,6 +50,9 @@
     "ava": "*",
     "xo": "*"
   },
+  "xo": {
+    "esnext": true
+  },
   "gh-lint": {
     "rules": {
       "use-travis": "error",

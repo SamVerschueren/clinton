@@ -26,7 +26,7 @@ const log = validation => {
 		message = 'warning';
 	}
 
-	console.log(`  ${chalk[color](message)}  ${validation.message} ${chalk.gray('(' + validation.name + ')')}`);
+	console.log(`  ${chalk[color](message)}  ${validation.message} ${chalk.gray(`(${validation.name})`)}`);
 };
 
 ghLint(cli.input[0], cli.flags)
