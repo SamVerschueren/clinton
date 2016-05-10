@@ -3,37 +3,8 @@ const path = require('path');
 const pathExists = require('path-exists');
 const Environment = require('./lib/environment');
 const context = require('./lib/context');
+const rules = require('./lib/rules');
 const pkg = require('./package.json');
-
-function createSeverity(severity) {
-	if (typeof severity === 'number') {
-		switch (severity) {
-			case 2:
-				return 'error';
-			case 1:
-				return 'warn';
-			default:
-				return 'off';
-		}
-	}
-
-	return severity;
-}
-
-function parseRules(rules) {
-	const ret = {};
-
-	Object.keys(rules).forEach(id => {
-		const rule = Array.isArray(rules[id]) ? rules[id] : [rules[id]];
-		rule[0] = createSeverity(rule[0]);
-
-		if (rule[0] !== 'off') {
-			ret[id] = rule;
-		}
-	});
-
-	return ret;
-}
 
 module.exports = (input, opts) => {
 	if (typeof input !== 'string') {
@@ -63,13 +34,13 @@ module.exports = (input, opts) => {
 	return env.load()
 		.then(() => {
 			// Parse the rules
-			let rules = opts.rules;
+			let ruleList = opts.rules;
 			if (env.pkg[pkg.name] && env.pkg[pkg.name].rules) {
-				rules = env.pkg[pkg.name].rules;
+				ruleList = env.pkg[pkg.name].rules;
 			}
 
-			rules = parseRules(rules);
-			const ruleIds = Object.keys(rules);
+			ruleList = rules.parse(ruleList);
+			const ruleIds = Object.keys(ruleList);
 
 			return Promise.all(ruleIds.map(ruleId => {
 				let mod;
@@ -80,7 +51,7 @@ module.exports = (input, opts) => {
 					mod = require(path.join(rulesPath, ruleId));
 				}
 
-				const rule = rules[ruleId];
+				const rule = ruleList[ruleId];
 
 				// Create a rule context
 				const ctx = context.create(env, rule.slice(1));
