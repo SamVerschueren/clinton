@@ -1,0 +1,10 @@
+{
+  "name": "license",
+  "license": "ISC",
+  "gh-lint": {
+    "rules": {
+      "license": "error",
+      "license-mit": "error"
+    }
+  }
+}

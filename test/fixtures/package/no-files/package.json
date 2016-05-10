@@ -1,0 +1,8 @@
+{
+  "name": "package",
+  "gh-lint": {
+    "rules": {
+      "pkg-files": "error"
+    }
+  }
+}

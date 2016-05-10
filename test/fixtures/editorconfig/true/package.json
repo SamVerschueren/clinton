@@ -1,0 +1,8 @@
+{
+  "name": "editorconfig",
+  "gh-lint": {
+    "rules": {
+      "editorconfig": "error"
+    }
+  }
+}

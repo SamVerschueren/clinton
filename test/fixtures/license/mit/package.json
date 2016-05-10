@@ -1,0 +1,10 @@
+{
+  "name": "license",
+  "license": "MIT",
+  "gh-lint": {
+    "rules": {
+      "license": "error",
+      "license-mit": "error"
+    }
+  }
+}

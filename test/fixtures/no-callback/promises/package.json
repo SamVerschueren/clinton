@@ -1,0 +1,8 @@
+{
+  "name": "no-callback",
+  "gh-lint": {
+    "rules": {
+      "no-callback": "error"
+    }
+  }
+}

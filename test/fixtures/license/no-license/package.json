@@ -1,0 +1,8 @@
+{
+  "name": "license",
+  "gh-lint": {
+    "rules": {
+      "license": "error"
+    }
+  }
+}

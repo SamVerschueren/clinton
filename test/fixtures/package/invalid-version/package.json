@@ -1,0 +1,9 @@
+{
+  "name": "package",
+  "version": "foo",
+  "gh-lint": {
+    "rules": {
+      "valid-version": "error"
+    }
+  }
+}
