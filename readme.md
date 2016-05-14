@@ -1,6 +1,6 @@
 # gh-lint [![Build Status](https://travis-ci.org/SamVerschueren/gh-lint.svg?branch=master)](https://travis-ci.org/SamVerschueren/gh-lint)
 
-> GitHub style linter
+> Project style linter
 
 **WIP: This is a work-in-progress library that is not yet available. Lots of things have to be added, tweaked and removed.**
 
@@ -46,6 +46,18 @@ List of plugin names.
 Type: `string`
 
 Current working directory when linting local projects.
+
+
+## CLI
+
+```
+  Usage
+    $ gh-lint <path>
+
+  Examples
+    $ gh-lint ~/projects/project
+	  error    No MIT license found. (license-mit)
+```
 
 
 ## Related
