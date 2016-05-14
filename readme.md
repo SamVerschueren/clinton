@@ -16,9 +16,17 @@ $ npm install --save clinton
 ```js
 const lint = require('clinton');
 
-lint('/Users/sam/projects/clinton').then(validations => {
+lint('/Users/sam/projects/clinton', {rules: {'license-mit': 'error'}}).then(validations => {
 	console.log(validations);
-	//=> error and warning objects
+	/*
+		[
+			{
+				name: 'license-mit',
+				severity: 'error',
+				message: 'No MIT license found.'
+			}
+		]
+	*/
 });
 ```
 
@@ -34,6 +42,12 @@ Type: `string`
 Project path.
 
 #### options
+
+##### rules
+
+Type: `object`
+
+Rules map. Overrides the rules configured in the `package.json` of the project.
 
 ##### plugins
 

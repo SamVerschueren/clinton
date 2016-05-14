@@ -35,7 +35,7 @@ module.exports = (input, opts) => {
 		.then(() => {
 			// Parse the rules
 			let ruleList = opts.rules;
-			if (env.pkg[pkg.name] && env.pkg[pkg.name].rules) {
+			if (!ruleList && env.pkg[pkg.name] && env.pkg[pkg.name].rules) {
 				ruleList = env.pkg[pkg.name].rules;
 			}
 
