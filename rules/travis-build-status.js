@@ -4,7 +4,7 @@ module.exports = ctx => {
 		return;
 	}
 
-	// TODO what if repository is not something like `SamVerschueren/gh-lint`?
+	// TODO what if repository is not something like `SamVerschueren/clinton`?
 	return ctx.travis.get(`repos/${ctx.pkg.repository}`).then(res => {
 		const data = res.body;
 

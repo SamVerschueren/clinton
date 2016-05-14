@@ -1,6 +1,6 @@
 {
   "name": "editorconfig",
-  "gh-lint": {
+  "clinton": {
     "rules": {
       "editorconfig": "error"
     }

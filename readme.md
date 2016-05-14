@@ -1,4 +1,4 @@
-# gh-lint [![Build Status](https://travis-ci.org/SamVerschueren/gh-lint.svg?branch=master)](https://travis-ci.org/SamVerschueren/gh-lint)
+# clinton [![Build Status](https://travis-ci.org/SamVerschueren/clinton.svg?branch=master)](https://travis-ci.org/SamVerschueren/clinton)
 
 > Project style linter
 
@@ -7,16 +7,16 @@
 ## Install
 
 ```
-$ npm install --save gh-lint
+$ npm install --save clinton
 ```
 
 
 ## Usage
 
 ```js
-const lint = require('gh-lint');
+const lint = require('clinton');
 
-lint('/Users/sam/projects/gh-lint').then(validations => {
+lint('/Users/sam/projects/clinton').then(validations => {
 	console.log(validations);
 	//=> error and warning objects
 });
@@ -52,10 +52,10 @@ Current working directory when linting local projects.
 
 ```
   Usage
-    $ gh-lint <path>
+    $ clinton <path>
 
   Examples
-    $ gh-lint ~/projects/project
+    $ clinton ~/projects/project
 	  error    No MIT license found. (license-mit)
 ```
 

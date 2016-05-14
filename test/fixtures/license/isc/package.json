@@ -1,7 +1,7 @@
 {
   "name": "license",
   "license": "ISC",
-  "gh-lint": {
+  "clinton": {
     "rules": {
       "license": "error",
       "license-mit": "error"

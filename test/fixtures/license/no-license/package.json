@@ -1,6 +1,6 @@
 {
   "name": "license",
-  "gh-lint": {
+  "clinton": {
     "rules": {
       "license": "error"
     }

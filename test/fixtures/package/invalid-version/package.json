@@ -1,7 +1,7 @@
 {
   "name": "package",
   "version": "foo",
-  "gh-lint": {
+  "clinton": {
     "rules": {
       "valid-version": "error"
     }

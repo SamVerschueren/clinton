@@ -1,6 +1,6 @@
 {
   "name": "no-callback",
-  "gh-lint": {
+  "clinton": {
     "rules": {
       "no-callback": "error"
     }

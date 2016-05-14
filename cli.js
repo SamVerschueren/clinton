@@ -6,10 +6,11 @@ const ghLint = require('./');
 
 const cli = meow(`
 	Usage
-	  $ gh-lint <path>
+	  $ clinton <path>
 
 	Examples
-	  $ gh-lint ~/projects/gh-lint
+	  $ clinton ~/projects/project
+	    error    No MIT license found. (license-mit)
 `);
 
 if (cli.input.length === 0) {

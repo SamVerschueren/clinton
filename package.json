@@ -1,9 +1,9 @@
 {
-  "name": "gh-lint",
+  "name": "clinton",
   "version": "0.0.0",
-  "description": "GitHub style linter",
+  "description": "Project style linter",
   "license": "MIT",
-  "repository": "SamVerschueren/gh-lint",
+  "repository": "SamVerschueren/clinton",
   "author": {
     "name": "Sam Verschueren",
     "email": "sam.verschueren@gmail.com",
@@ -53,7 +53,7 @@
   "xo": {
     "esnext": true
   },
-  "gh-lint": {
+  "clinton": {
     "rules": {
       "use-travis": "error",
       "license-mit": "error",

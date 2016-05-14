@@ -1,6 +1,6 @@
 {
   "name": "package",
-  "gh-lint": {
+  "clinton": {
     "rules": {
       "pkg-schema": "error"
     }
