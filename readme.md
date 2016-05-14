@@ -30,6 +30,20 @@ lint('/Users/sam/projects/clinton', {rules: {'license-mit': 'error'}}).then(vali
 });
 ```
 
+Instead of passing the rules as an option, you can also add them to your `package.json` file.
+
+```json
+{
+  "name": "foo",
+  "license": "ISC",
+  "clinton": {
+    "rules": {
+      "license-mit": "error"
+    }
+  }
+}
+```
+
 
 ## API
 
