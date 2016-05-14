@@ -13,6 +13,16 @@ test('no errors', async t => {
 	t.is((await m('../')).length, 0);
 });
 
+test('no rules', async t => {
+	t.throws(m('no-rules', {cwd: 'fixtures/package'}), 'No rules found');
+});
+
+test('overwrite rules', async t => {
+	const errors = await m('no-files', {cwd: 'fixtures/package', rules: {readme: 'error'}});
+	t.is(errors.length, 1);
+	t.is(errors[0].name, 'readme');
+});
+
 test('cwd option', async t => {
 	t.is((await m('.', {cwd: '../'})).length, 0);
 });

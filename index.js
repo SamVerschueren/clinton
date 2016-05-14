@@ -13,7 +13,6 @@ module.exports = (input, opts) => {
 
 	opts = Object.assign({
 		cwd: process.cwd(),
-		rules: {},
 		plugins: []
 	}, opts);
 
@@ -35,8 +34,12 @@ module.exports = (input, opts) => {
 		.then(() => {
 			// Parse the rules
 			let ruleList = opts.rules;
-			if (!ruleList && env.pkg[pkg.name] && env.pkg[pkg.name].rules) {
+			if (!opts.rules && env.pkg[pkg.name] && env.pkg[pkg.name].rules) {
 				ruleList = env.pkg[pkg.name].rules;
+			}
+
+			if (!ruleList) {
+				throw new Error('No rules found');
 			}
 
 			ruleList = rules.parse(ruleList);
