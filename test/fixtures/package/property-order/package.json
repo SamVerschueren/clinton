@@ -1,0 +1,9 @@
+{
+  "version": "0.0.0",
+  "name": "package",
+  "clinton": {
+    "rules": {
+      "pkg-property-order": "error"
+    }
+  }
+}

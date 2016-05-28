@@ -59,7 +59,8 @@
       "license-mit": "error",
       "pkg-files": "error",
       "valid-version": "error",
-      "pkg-schema": "error"
+      "pkg-schema": "error",
+      "pkg-property-order": "error"
     }
   }
 }

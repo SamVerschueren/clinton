@@ -32,3 +32,13 @@ test('invalid version', async t => {
 		}
 	]);
 });
+
+test('invalid order', async t => {
+	t.deepEqual(await m('property-order', {cwd}), [
+		{
+			name: 'pkg-property-order',
+			severity: 'error',
+			message: 'Found property \'version\' but expected \'name\'.'
+		}
+	]);
+});
