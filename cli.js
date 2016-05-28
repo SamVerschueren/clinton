@@ -22,7 +22,7 @@ const log = validation => {
 	let color = 'red';
 	let message = 'error  ';
 
-	if (validation.severity === 1) {
+	if (validation.severity === 'warn') {
 		color = 'yellow';
 		message = 'warning';
 	}
