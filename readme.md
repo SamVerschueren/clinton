@@ -1,8 +1,7 @@
 # clinton [![Build Status](https://travis-ci.org/SamVerschueren/clinton.svg?branch=master)](https://travis-ci.org/SamVerschueren/clinton)
 
-> Project style linter
+> JavaScript project style linter
 
-**WIP: This is a work-in-progress library that is not yet available. Lots of things have to be added, tweaked and removed.**
 
 ## Install
 
