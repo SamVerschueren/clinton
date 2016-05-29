@@ -119,18 +119,14 @@ Let's create a `clinton-plugin-file-exists` rule that checks if the file provide
 
 ```js
 'use strict';
-const pathExists = require('path-exists');
-
 module.exports = ctx => {
 	const fileName = ctx.options[0];
 
-	return pathExists(fileName).then(exists => {
-		if(!exists) {
-			return {
-				message: `File ${fileName} does not exist.`
-			};
-		}
-	});
+	if (ctx.files.indexOf(fileName) === -1) {
+		return {
+			message: `File ${fileName} does not exist.`
+		};
+	}
 };
 ```
 
