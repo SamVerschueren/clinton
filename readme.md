@@ -15,14 +15,14 @@ $ npm install --save clinton
 ```js
 const lint = require('clinton');
 
-lint('/Users/sam/projects/clinton', {rules: {'license-mit': 'error'}}).then(validations => {
+lint('/Users/sam/projects/clinton', {rules: {'license': ['error', 'MIT']}}).then(validations => {
 	console.log(validations);
 	/*
 		[
 			{
-				name: 'license-mit',
+				name: 'license',
 				severity: 'error',
-				message: 'No MIT license found.'
+				message: 'License is not of type MIT (http://www.opensource.org/licenses/MIT).'
 			}
 		]
 	*/
@@ -37,7 +37,7 @@ Instead of passing the rules as an option, you can also add them to your `packag
   "license": "ISC",
   "clinton": {
     "rules": {
-      "license-mit": "error"
+      "license": ["error", "MIT"]
     }
   }
 }
@@ -86,7 +86,7 @@ Current working directory when linting local projects.
       warn     Use `.editorconfig` to define and maintain consistent coding styles between editors. (editorconfig)
 
     $ clinton ~/projects/project
-      error    No MIT license found. (license-mit)
+	  error    License is not of type MIT (http://www.opensource.org/licenses/MIT). (license)
 ```
 
 
