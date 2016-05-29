@@ -109,6 +109,60 @@ Current working directory when linting local projects.
 - **valid-version** - Checks if the `version` in `package.json` is a valid semver version.
 
 
+## Plugins
+
+Everyone can create plugins or custom rules that can be validated with `Clinton`. The name of the plugin should be
+`clinton-plugin-*` where `*` is the name of the plugin.
+
+### Example
+
+Let's create a `clinton-plugin-file-exists` rule that checks if the file provided as argument really exists.
+
+```js
+'use strict';
+const pathExists = require('path-exists');
+
+module.exports = ctx => {
+	const fileName = ctx.options[0];
+
+	return pathExists(fileName).then(exists => {
+		if(!exists) {
+			return {
+				message: `File ${fileName} does not exist.`
+			};
+		}
+	});
+};
+```
+
+You can either return a promise or return an object immediately with a `message` property. The rule is successful if the function
+returns nothing.
+
+You can wrap this up in a project, publish it to [npm](https://www.npmjs.com/) and install it in every project where you
+want to check if a file in your project really exists.
+
+```json
+{
+  "name": "Unicorn",
+  "description": "My unicorn package",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "clinton"
+  },
+  "devDependencies": {
+    "clinton": "*",
+	"clinton-plugin-file-exists": "*"
+  },
+  "clinton": {
+    "file-exists": ["error", "index.js"]
+  }
+}
+```
+
+When running `npm test`, `clinton` will execute your plugin and will use `index.js` as the option argument. The first argument `error`
+indicates the severity of the error.
+
+
 ## Related
 
 - [gh-lint-brainstorm](https://github.com/SamVerschueren/gh-lint-brainstorm) - Brainstorming repository for this module
