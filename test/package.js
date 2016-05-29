@@ -42,3 +42,13 @@ test('invalid order', async t => {
 		}
 	]);
 });
+
+test('invalid main', async t => {
+	t.deepEqual(await m('invalid-main', {cwd}), [
+		{
+			name: 'pkg-main',
+			severity: 'error',
+			message: 'Main file \'index.js\' does not exist.'
+		}
+	]);
+});
