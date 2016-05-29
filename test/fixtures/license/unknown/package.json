@@ -3,7 +3,7 @@
   "license": "MIT",
   "clinton": {
     "rules": {
-      "license": ["error", "MIT"]
+      "license": ["error", "FOO"]
     }
   }
 }

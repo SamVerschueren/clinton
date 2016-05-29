@@ -1,6 +1,6 @@
 {
   "name": "license",
-  "license": "MIT",
+  "license": "ISC",
   "clinton": {
     "rules": {
       "license": ["error", "MIT"]
