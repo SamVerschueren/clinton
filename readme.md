@@ -91,6 +91,24 @@ Current working directory when linting local projects.
 ```
 
 
+## Rules
+
+- **editorconfig** - Check if a `.editorconfig` file is present.
+- **license** - Check if a license file exist.
+  - *[type]*: The type of the license. For example `MIT`.
+- **no-callback** - Check if the project uses promises instead of callbacks.
+- **pkg-files** - `files` property in `package.json` should be provided.
+- **pkg-main** - Checks if the file provided in the `main` property in `package.json` exists.
+- **pkg-property-order** - Checks the `package.json` property order.
+  - *[...order]* - Custom list of properties.
+- **pkg-schema** - Validates the schema of `package.json`
+- **readme** - Check if a `readme` file is present.
+- **test-script** - Check if the `test` script is set.
+- **use-travis** - Checks if [Travis CI](https://travis-ci.org/) is used.
+- **valid-properties** - Checks if a certain set of properties is defined in `package.json`.
+- **valid-version** - Checks if the `version` in `package.json` is a valid semver version.
+
+
 ## Related
 
 - [gh-lint-brainstorm](https://github.com/SamVerschueren/gh-lint-brainstorm) - Brainstorming repository for this module
