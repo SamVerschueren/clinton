@@ -80,11 +80,14 @@ Current working directory when linting local projects.
 
 ```
   Usage
-    $ clinton <path>
+    $ clinton [<path>]
 
   Examples
+    $ clinton
+      warn     Use `.editorconfig` to define and maintain consistent coding styles between editors. (editorconfig)
+
     $ clinton ~/projects/project
-	  error    No MIT license found. (license-mit)
+      error    No MIT license found. (license-mit)
 ```
 
 
