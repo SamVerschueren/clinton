@@ -26,3 +26,7 @@ test('overwrite rules', async t => {
 test('cwd option', async t => {
 	t.is((await m('.', {cwd: '../'})).length, 0);
 });
+
+test('unknown plugin', t => {
+	t.throws(m('.', {cwd: '../', plugins: ['foo'], rules: {foo: 'error'}}), 'Could not find module for plugin \'foo\'.');
+});

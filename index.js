@@ -34,8 +34,13 @@ module.exports = (input, opts) => {
 		.then(() => {
 			// Parse the rules
 			let ruleList = opts.rules;
+			let plugins = opts.plugins;
 			if (!opts.rules && env.pkg[pkg.name] && env.pkg[pkg.name].rules) {
 				ruleList = env.pkg[pkg.name].rules;
+			}
+
+			if (plugins.length === 0 && env.pkg[pkg.name] && env.pkg[pkg.name].plugins) {
+				plugins = env.pkg[pkg.name].plugins;
 			}
 
 			if (!ruleList) {
@@ -48,8 +53,16 @@ module.exports = (input, opts) => {
 			return Promise.all(ruleIds.map(ruleId => {
 				let mod;
 
-				if (opts.plugins.indexOf(ruleId) >= 0) {
-					mod = require(`${pkg.name}-plugin-${ruleId}`);
+				if (plugins.indexOf(ruleId) >= 0) {
+					try {
+						mod = require(`${pkg.name}-plugin-${ruleId}`);
+					} catch (err) {
+						try {
+							mod = require(ruleId);
+						} catch (err) {
+							throw new Error(`Could not find module for plugin '${ruleId}'.`);
+						}
+					}
 				} else {
 					mod = require(path.join(rulesPath, ruleId));
 				}
