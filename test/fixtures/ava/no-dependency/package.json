@@ -1,0 +1,8 @@
+{
+  "name": "no-ava-dependency",
+  "clinton": {
+    "rules": {
+      "ava": "error"
+    }
+  }
+}

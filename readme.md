@@ -92,6 +92,8 @@ Current working directory when linting local projects.
 
 ## Rules
 
+- **ava** - Check if [AVA](https://github.com/avajs/ava) is used and is used correctly.
+  - *[version]*: The minimum required `AVA` version or `*` if you want to go unicorn.
 - **editorconfig** - Check if a `.editorconfig` file is present.
 - **license** - Check if a license file exist.
   - *[type]*: The type of the license. For example `MIT`.

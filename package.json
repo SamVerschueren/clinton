@@ -59,6 +59,7 @@
   },
   "clinton": {
     "rules": {
+      "ava": ["error", "*"],
       "use-travis": "error",
       "license": [
         "error",

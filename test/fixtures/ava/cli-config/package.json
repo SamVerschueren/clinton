@@ -1,0 +1,14 @@
+{
+  "name": "ava",
+  "scripts": {
+    "test": "ava --fail-fast"
+  },
+  "devDependencies": {
+    "ava": "0.15.1"
+  },
+  "clinton": {
+    "rules": {
+      "ava": "error"
+    }
+  }
+}
