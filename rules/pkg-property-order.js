@@ -5,15 +5,28 @@ const DEFAULT_ORDER = [
 	'description',
 	'license',
 	'repository',
+	'homepage',
+	'bugs',
 	'author',
+	'maintainers',
+	'private',
+	'preferGlobal',
+	'publishConfig',
+	'config',
 	'main',
 	'bin',
+	'man',
+	'os',
+	'cpu',
 	'engines',
 	'scripts',
 	'files',
 	'keywords',
 	'dependencies',
-	'devDependencies'
+	'devDependencies',
+	'peerDependencies',
+	'bundledDependencies',
+	'optionalDependencies'
 ];
 
 module.exports = ctx => {
