@@ -1,0 +1,11 @@
+{
+  "name": "xo",
+  "devDependencies": {
+    "xo": "*"
+  },
+  "clinton": {
+    "rules": {
+      "xo": "error"
+    }
+  }
+}

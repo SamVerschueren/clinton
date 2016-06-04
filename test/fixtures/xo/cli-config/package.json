@@ -1,0 +1,14 @@
+{
+  "name": "xo",
+  "scripts": {
+    "test": "xo --space"
+  },
+  "devDependencies": {
+    "xo": "0.15.1"
+  },
+  "clinton": {
+    "rules": {
+      "xo": "error"
+    }
+  }
+}

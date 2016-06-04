@@ -1,0 +1,8 @@
+{
+  "name": "no-xo-dependency",
+  "clinton": {
+    "rules": {
+      "xo": "error"
+    }
+  }
+}
