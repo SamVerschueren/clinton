@@ -1,6 +1,6 @@
 'use strict';
-const escapeStringRegexp = require('escape-string-regexp');
 const spdxLicenseList = require('spdx-license-list/spdx-full');
+const FuzzyMatching = require('fuzzy-matching');
 
 const normalize = str => str.replace(/\n/g, ' ').replace(/[ ]{2,}/g, ' ');
 
@@ -27,16 +27,12 @@ module.exports = ctx => {
 		};
 	}
 
-	let license = escapeStringRegexp(licenseInfo.license);
-	license = license.replace(/>.*?</g, '');
-	license = license.replace(/<.*?>/g, '.*?');
-
-	const regexp = new RegExp(normalize(license), 'm');
+	const matcher = new FuzzyMatching([normalize(licenseInfo.license)]);
 
 	return ctx.fs.readFile(fileName).then(content => {
-		const isValid = regexp.test(normalize(content));
+		const match = matcher.get(normalize(content));
 
-		if (!isValid) {
+		if (match.distance < 0.9) {
 			return {
 				message: `License is not of type ${type} (${licenseInfo.url.split('\n')[0]}).`
 			};
