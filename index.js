@@ -3,6 +3,7 @@ const path = require('path');
 const pathExists = require('path-exists');
 const Environment = require('./lib/environment');
 const context = require('./lib/context');
+const config = require('./lib/config');
 const rules = require('./lib/rules');
 const pkg = require('./package.json');
 
@@ -31,23 +32,23 @@ module.exports = (input, opts) => {
 	const validations = [];
 
 	return env.load()
-		.then(() => {
-			// Parse the rules
-			let ruleList = opts.rules;
-			let plugins = opts.plugins;
-			if (!opts.rules && env.pkg[pkg.name] && env.pkg[pkg.name].rules) {
-				ruleList = env.pkg[pkg.name].rules;
-			}
+		.then(() => config.load(env))
+		.then(conf => {
+			conf = conf || {};
 
-			if (plugins.length === 0 && env.pkg[pkg.name] && env.pkg[pkg.name].plugins) {
-				plugins = env.pkg[pkg.name].plugins;
-			}
-
-			if (!ruleList) {
+			return {
+				rules: Object.assign({}, conf.rules, opts.rules),
+				plugins: [].concat(conf.plugins || [], opts.plugins || [])
+			};
+		})
+		.then(conf => {
+			if (Object.keys(conf.rules).length === 0) {
 				throw new Error('No rules found');
 			}
 
-			ruleList = rules.parse(ruleList);
+			const ruleList = rules.parse(conf.rules);
+			const plugins = conf.plugins || [];
+
 			const ruleIds = Object.keys(ruleList);
 
 			return Promise.all(ruleIds.map(ruleId => {

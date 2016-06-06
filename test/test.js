@@ -17,10 +17,11 @@ test('no rules', async t => {
 	t.throws(m('no-rules', {cwd: 'fixtures/package'}), 'No rules found');
 });
 
-test('overwrite rules', async t => {
+test('merge rules', async t => {
 	const errors = await m('no-files', {cwd: 'fixtures/package', rules: {readme: 'error'}});
-	t.is(errors.length, 1);
+	t.is(errors.length, 2);
 	t.is(errors[0].name, 'readme');
+	t.is(errors[1].name, 'pkg-files');
 });
 
 test('cwd option', async t => {
