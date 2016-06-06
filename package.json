@@ -20,6 +20,7 @@
   "files": [
     "index.js",
     "cli.js",
+    "config.js",
     "rules",
     "lib"
   ],
@@ -57,26 +58,5 @@
   },
   "xo": {
     "esnext": true
-  },
-  "clinton": {
-    "rules": {
-      "ava": [
-        "error",
-        "*"
-      ],
-      "use-travis": "error",
-      "license": [
-        "error",
-        "MIT"
-      ],
-      "pkg-files": "error",
-      "valid-version": "error",
-      "pkg-schema": "error",
-      "pkg-property-order": "error",
-      "xo": [
-        "error",
-        "*"
-      ]
-    }
   }
 }

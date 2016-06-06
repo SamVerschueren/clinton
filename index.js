@@ -43,7 +43,7 @@ module.exports = (input, opts) => {
 		})
 		.then(conf => {
 			if (Object.keys(conf.rules).length === 0) {
-				throw new Error('No rules found');
+				conf = require('./config');
 			}
 
 			const ruleList = rules.parse(conf.rules);
