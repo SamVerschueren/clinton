@@ -81,6 +81,10 @@ module.exports = (input, opts) => {
 							err = Array.isArray(err) ? err : [err];
 
 							err.forEach(e => {
+								if (!e) {
+									return;
+								}
+
 								validations.push({
 									name: ruleId,
 									severity: rule[0],

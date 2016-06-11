@@ -35,6 +35,7 @@
   ],
   "dependencies": {
     "chalk": "^1.1.3",
+    "executable": "^4.0.0",
     "fuzzy-matching": "^0.4.3",
     "gh-got": "^4.0.0",
     "globby": "^4.0.0",

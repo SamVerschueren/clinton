@@ -110,6 +110,7 @@ Current working directory when linting local projects.
 - **use-travis** - Checks if [Travis CI](https://travis-ci.org/) is used.
 - **valid-properties** - Checks if a certain set of properties is defined in `package.json`.
 - **valid-version** - Checks if the `version` in `package.json` is a valid semver version.
+- **cli** - Checks if the `bin` file specified in `package.json` exists and is executable.
 
 
 ## Plugins

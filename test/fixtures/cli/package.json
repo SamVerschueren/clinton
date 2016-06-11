@@ -1,0 +1,9 @@
+{
+  "name": "cli",
+  "bin": "bin.js",
+  "clinton": {
+    "rules": {
+      "cli": "error"
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import test from 'ava';
+import execa from 'execa';
 import m from '../';
 
 test('project does not exist', async t => {
@@ -26,4 +27,9 @@ test('cwd option', async t => {
 
 test('unknown plugin', t => {
 	t.throws(m('.', {cwd: '../', plugins: ['foo'], rules: {foo: 'error'}}), 'Could not find module for plugin \'foo\'.');
+});
+
+test('cli', async t => {
+	const result = await execa.stdout('../cli.js', ['fixtures/package/no-files']);
+	t.regex(result, /[ ]*?error[ ]*?Missing `files` property in `package.json`. \(pkg-files\)/);
 });

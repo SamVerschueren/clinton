@@ -13,6 +13,7 @@ module.exports = {
 		'readme': 'error',
 		'test-script': 'error',
 		'use-travis': 'warn',
-		'valid-version': 'error'
+		'valid-version': 'error',
+		'cli': 'error'
 	}
 };
