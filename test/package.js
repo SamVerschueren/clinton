@@ -38,7 +38,7 @@ test('invalid order', async t => {
 		{
 			name: 'pkg-property-order',
 			severity: 'error',
-			message: 'Found property \'version\' but expected \'name\'.'
+			message: 'Property \'name\' should occur before property \'version\'.'
 		}
 	]);
 });

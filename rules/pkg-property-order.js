@@ -40,7 +40,7 @@ module.exports = ctx => {
 				const keyIndex = keys.indexOf(property);
 
 				if (keyIndex !== -1 && keyIndex < value) {
-					const err = new Error(`Found property '${property}' but expected '${order[propIndex - 1]}'.`);
+					const err = new Error(`Property '${order[propIndex - 1]}' should occur before property '${property}'.`);
 					err.clinton = true;
 					throw err;
 				}
