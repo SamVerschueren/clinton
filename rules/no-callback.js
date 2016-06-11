@@ -9,7 +9,7 @@ module.exports = ctx => {
 	}
 
 	return ctx.fs.readFile(readme).then(content => {
-		const cbSamples = occurrences(content, ['callback', 'callbacks', 'cb', 'function (err', 'function(err']);
+		const cbSamples = occurrences(content, ['callback', 'callbacks', 'function (err', 'function(err']);
 		const promiseSamples = occurrences(content, ['promise', 'promises', '.then', '.catch']);
 
 		if (cbSamples > promiseSamples) {
