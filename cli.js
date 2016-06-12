@@ -28,7 +28,17 @@ const log = validation => {
 	console.log(`  ${chalk[color](message)}  ${validation.message} ${chalk.gray(`(${validation.name})`)}`);
 };
 
+const exit = validations => {
+	const hasError = validations.some(validation => validation.severity === 'error');
+
+	if (hasError) {
+		process.exit(1);
+	}
+};
+
 ghLint(cli.input[0] || '.', cli.flags)
 	.then(validations => {
 		validations.forEach(log);
+
+		exit(validations);
 	});

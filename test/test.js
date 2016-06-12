@@ -30,6 +30,9 @@ test('unknown plugin', t => {
 });
 
 test('cli', async t => {
-	const result = await execa.stdout('../cli.js', ['fixtures/package/no-files']);
-	t.regex(result, /[ ]*?error[ ]*?Missing `files` property in `package.json`. \(pkg-files\)/);
+	try {
+		await execa('../cli.js', ['fixtures/package/no-files']);
+	} catch (err) {
+		t.regex(err.message, /[ ]*?error[ ]*?Missing `files` property in `package.json`. \(pkg-files\)/);
+	}
 });
