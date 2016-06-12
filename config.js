@@ -14,6 +14,7 @@ module.exports = {
 		'test-script': 'error',
 		'use-travis': 'warn',
 		'valid-version': 'error',
-		'cli': 'error'
+		'cli': 'error',
+		'max-depth': 'warn'
 	}
 };

@@ -111,6 +111,8 @@ Current working directory when linting local projects.
 - **valid-properties** - Checks if a certain set of properties is defined in `package.json`.
 - **valid-version** - Checks if the `version` in `package.json` is a valid semver version.
 - **cli** - Checks if the `bin` file specified in `package.json` exists and is executable.
+- **max-depth** - This rule enforces a maximum depth that directories can be nested to reduce project complexity.
+  - *[max]* - (default `5`) enforces a maximum depth that directories can be nested
 
 
 ## Plugins

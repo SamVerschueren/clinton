@@ -1,0 +1,8 @@
+{
+  "name": "max-depth",
+  "clinton": {
+    "rules": {
+      "max-depth": "error"
+    }
+  }
+}
