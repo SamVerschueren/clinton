@@ -1,6 +1,6 @@
 'use strict';
 exports.assign = opts => {
-	return (...args) => {
-		return Object.assign({}, opts, ...args);
+	return function () {
+		return Object.assign.apply(Object, [{}, opts].concat(Array.from(arguments)));
 	};
 };

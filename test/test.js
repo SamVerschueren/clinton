@@ -1,3 +1,4 @@
+/* eslint-disable object-property-newline */
 import test from 'ava';
 import execa from 'execa';
 import m from '../';
