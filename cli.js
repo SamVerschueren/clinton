@@ -2,6 +2,7 @@
 'use strict';
 const meow = require('meow');
 const chalk = require('chalk');
+const updateNotifier = require('update-notifier');
 const ghLint = require('./');
 
 const cli = meow(`
@@ -18,6 +19,8 @@ const cli = meow(`
 	  $ clinton ~/projects/project
 	    error    No MIT license found. (license-mit)
 `);
+
+updateNotifier({pkg: cli.pkg}).notify();
 
 const log = validation => {
 	let color = 'red';
