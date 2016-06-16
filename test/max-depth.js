@@ -1,10 +1,16 @@
 import test from 'ava';
 import m from '../';
+import utils from './fixtures/utils';
 
-const cwd = 'fixtures/max-depth';
+const opts = {
+	cwd: 'fixtures/max-depth',
+	inherit: false
+};
+
+const inherit = utils.assign(opts);
 
 test('max depth fail', async t => {
-	t.deepEqual(await m('.', {cwd, rules: {'max-depth': ['error', 1]}}), [
+	t.deepEqual(await m('.', inherit({rules: {'max-depth': ['error', 1]}})), [
 		{
 			name: 'max-depth',
 			severity: 'error',
@@ -14,5 +20,5 @@ test('max depth fail', async t => {
 });
 
 test('max depth', async t => {
-	t.is((await m('.', {cwd})).length, 0);
+	t.is((await m('.', opts)).length, 0);
 });

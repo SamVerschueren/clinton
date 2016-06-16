@@ -1,10 +1,13 @@
 import test from 'ava';
 import m from '../';
 
-const cwd = 'fixtures/package';
+const opts = {
+	cwd: 'fixtures/package',
+	inherit: false
+};
 
 test('no `files` property', async t => {
-	t.deepEqual(await m('no-files', {cwd}), [
+	t.deepEqual(await m('no-files', opts), [
 		{
 			name: 'pkg-files',
 			severity: 'error',
@@ -14,7 +17,7 @@ test('no `files` property', async t => {
 });
 
 test('wrong schema', async t => {
-	t.deepEqual(await m('wrong-schema', {cwd}), [
+	t.deepEqual(await m('wrong-schema', opts), [
 		{
 			name: 'pkg-schema',
 			severity: 'error',
@@ -24,7 +27,7 @@ test('wrong schema', async t => {
 });
 
 test('invalid version', async t => {
-	t.deepEqual(await m('invalid-version', {cwd}), [
+	t.deepEqual(await m('invalid-version', opts), [
 		{
 			name: 'valid-version',
 			severity: 'error',
@@ -34,7 +37,7 @@ test('invalid version', async t => {
 });
 
 test('invalid order', async t => {
-	t.deepEqual(await m('property-order', {cwd}), [
+	t.deepEqual(await m('property-order', opts), [
 		{
 			name: 'pkg-property-order',
 			severity: 'error',
@@ -44,7 +47,7 @@ test('invalid order', async t => {
 });
 
 test('invalid main', async t => {
-	t.deepEqual(await m('invalid-main', {cwd}), [
+	t.deepEqual(await m('invalid-main', opts), [
 		{
 			name: 'pkg-main',
 			severity: 'error',

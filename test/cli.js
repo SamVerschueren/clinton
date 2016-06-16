@@ -1,14 +1,17 @@
 import test from 'ava';
 import m from '../';
 
-const cwd = 'fixtures/cli';
+const opts = {
+	cwd: 'fixtures/cli',
+	inherit: false
+};
 
 test('no error', async t => {
-	t.deepEqual(await m('.', {cwd}), []);
+	t.deepEqual(await m('.', opts), []);
 });
 
 test('file is not executable', async t => {
-	t.deepEqual(await m('not-executable', {cwd}), [
+	t.deepEqual(await m('not-executable', opts), [
 		{
 			name: 'cli',
 			severity: 'error',
@@ -18,7 +21,7 @@ test('file is not executable', async t => {
 });
 
 test('file not exists', async t => {
-	t.deepEqual(await m('not-exists', {cwd}), [
+	t.deepEqual(await m('not-exists', opts), [
 		{
 			name: 'cli',
 			severity: 'error',
@@ -28,7 +31,7 @@ test('file not exists', async t => {
 });
 
 test('handle `bin` object', async t => {
-	t.deepEqual(await m('bin-object', {cwd}), [
+	t.deepEqual(await m('bin-object', opts), [
 		{
 			name: 'cli',
 			severity: 'error',

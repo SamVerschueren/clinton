@@ -60,7 +60,14 @@ Project path.
 
 Type: `object`
 
-Rules map. Overrides the rules configured in the `package.json` of the project.
+Override any of the [default rules](https://github.com/SamVerschueren/clinton/blob/master/config.js).
+
+##### inherit
+
+Type: `boolean`<br>
+Default: `true`
+
+Inherit from the [default rules](https://github.com/SamVerschueren/clinton/blob/master/config.js). Set to `false` if you want to start with a clean sheet.
 
 ##### plugins
 

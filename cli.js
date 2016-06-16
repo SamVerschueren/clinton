@@ -8,6 +8,9 @@ const cli = meow(`
 	Usage
 	  $ clinton [<path>]
 
+	Options
+	  --no-inherit  Prevent inheriting from the default rules.
+
 	Examples
 	  $ clinton
 	    warn     Use \`.editorconfig\` to define and maintain consistent coding styles between editors. (editorconfig)

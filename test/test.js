@@ -15,7 +15,7 @@ test('no errors', async t => {
 });
 
 test('merge rules', async t => {
-	const errors = await m('no-files', {cwd: 'fixtures/package', rules: {readme: 'error'}});
+	const errors = await m('no-files', {cwd: 'fixtures/package', inherit: false, rules: {readme: 'error'}});
 	t.is(errors.length, 2);
 	t.is(errors[0].name, 'readme');
 	t.is(errors[1].name, 'pkg-files');
@@ -30,9 +30,5 @@ test('unknown plugin', t => {
 });
 
 test('cli', async t => {
-	try {
-		await execa('../cli.js', ['fixtures/package/no-files']);
-	} catch (err) {
-		t.regex(err.message, /[ ]*?error[ ]*?Missing `files` property in `package.json`. \(pkg-files\)/);
-	}
+	t.throws(execa('../cli.js', ['fixtures/package/no-files', '--no-inherit']), /[ ]*?error[ ]*?Missing `files` property in `package.json`. \(pkg-files\)/);
 });

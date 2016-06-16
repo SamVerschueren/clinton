@@ -1,10 +1,16 @@
 import test from 'ava';
 import m from '../';
+import utils from './fixtures/utils';
 
-const cwd = 'fixtures/ava';
+const opts = {
+	cwd: 'fixtures/ava',
+	inherit: false
+};
+
+const inherit = utils.assign(opts);
 
 test('no AVA dependency', async t => {
-	t.deepEqual(await m('no-dependency', {cwd}), [
+	t.deepEqual(await m('no-dependency', opts), [
 		{
 			name: 'ava',
 			severity: 'error',
@@ -14,7 +20,7 @@ test('no AVA dependency', async t => {
 });
 
 test('wrong version', async t => {
-	t.deepEqual(await m(cwd, {rules: {ava: ['error', '0.15.2']}}), [
+	t.deepEqual(await m('.', inherit({rules: {ava: ['error', '0.15.2']}})), [
 		{
 			name: 'ava',
 			severity: 'error',
@@ -22,7 +28,7 @@ test('wrong version', async t => {
 		}
 	]);
 
-	t.deepEqual(await m(cwd, {rules: {ava: ['error', '0.16.0']}}), [
+	t.deepEqual(await m('.', inherit({rules: {ava: ['error', '0.16.0']}})), [
 		{
 			name: 'ava',
 			severity: 'error',
@@ -32,9 +38,9 @@ test('wrong version', async t => {
 });
 
 test('unicorn version', async t => {
-	t.is((await m('unicorn', {cwd, rules: {ava: ['error', '*']}})).length, 0);
+	t.is((await m('unicorn', inherit({rules: {ava: ['error', '*']}}))).length, 0);
 
-	t.deepEqual(await m(cwd, {rules: {ava: ['error', '*']}}), [
+	t.deepEqual(await m('.', inherit({rules: {ava: ['error', '*']}})), [
 		{
 			name: 'ava',
 			severity: 'error',
@@ -44,7 +50,7 @@ test('unicorn version', async t => {
 });
 
 test('test script', async t => {
-	t.deepEqual(await m('no-script', {cwd}), [
+	t.deepEqual(await m('no-script', opts), [
 		{
 			name: 'ava',
 			severity: 'error',
@@ -54,7 +60,7 @@ test('test script', async t => {
 });
 
 test('cli config', async t => {
-	t.deepEqual(await m('cli-config', {cwd}), [
+	t.deepEqual(await m('cli-config', opts), [
 		{
 			name: 'ava',
 			severity: 'error',

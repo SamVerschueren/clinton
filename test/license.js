@@ -1,15 +1,18 @@
 import test from 'ava';
 import m from '../';
 
-const cwd = 'fixtures/license';
+const opts = {
+	cwd: 'fixtures/license',
+	inherit: false
+};
 
 test('license', async t => {
-	t.is((await m('mit', {cwd})).length, 0);
-	t.is((await m('isc', {cwd})).length, 0);
+	t.is((await m('mit', opts)).length, 0);
+	t.is((await m('isc', opts)).length, 0);
 });
 
 test('wrong license', async t => {
-	t.deepEqual(await m('wrong', {cwd}), [
+	t.deepEqual(await m('wrong', opts), [
 		{
 			name: 'license',
 			severity: 'error',
@@ -19,7 +22,7 @@ test('wrong license', async t => {
 });
 
 test('unknown license', async t => {
-	t.deepEqual(await m('unknown', {cwd}), [
+	t.deepEqual(await m('unknown', opts), [
 		{
 			name: 'license',
 			severity: 'error',
@@ -29,7 +32,7 @@ test('unknown license', async t => {
 });
 
 test('no license', async t => {
-	t.deepEqual(await m('no-license', {cwd}), [
+	t.deepEqual(await m('no-license', opts), [
 		{
 			name: 'license',
 			severity: 'error',

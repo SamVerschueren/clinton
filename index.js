@@ -5,6 +5,7 @@ const Environment = require('./lib/environment');
 const context = require('./lib/context');
 const config = require('./lib/config');
 const rules = require('./lib/rules');
+const defaultConfig = require('./config');
 const pkg = require('./package.json');
 
 module.exports = (input, opts) => {
@@ -14,7 +15,8 @@ module.exports = (input, opts) => {
 
 	opts = Object.assign({
 		cwd: process.cwd(),
-		plugins: []
+		plugins: [],
+		inherit: true
 	}, opts);
 
 	const filePath = path.resolve(opts.cwd, input);
@@ -36,16 +38,14 @@ module.exports = (input, opts) => {
 		.then(conf => {
 			conf = conf || {};
 
+			const inherit = opts.inherit ? defaultConfig : {};
+
 			return {
-				rules: Object.assign({}, conf.rules, opts.rules),
-				plugins: [].concat(conf.plugins || [], opts.plugins || [])
+				rules: Object.assign({}, inherit.rules, conf.rules, opts.rules),
+				plugins: [].concat(inherit.plugins || [], conf.plugins || [], opts.plugins || [])
 			};
 		})
 		.then(conf => {
-			if (Object.keys(conf.rules).length === 0) {
-				conf = require('./config');
-			}
-
 			const ruleList = rules.parse(conf.rules);
 			const plugins = conf.plugins || [];
 

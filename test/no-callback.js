@@ -1,10 +1,13 @@
 import test from 'ava';
 import m from '../';
 
-const cwd = 'fixtures/no-callback';
+const opts = {
+	cwd: 'fixtures/no-callback',
+	inherit: false
+};
 
 test('callback', async t => {
-	t.deepEqual(await m('cb', {cwd}), [
+	t.deepEqual(await m('cb', opts), [
 		{
 			name: 'no-callback',
 			severity: 'error',
@@ -14,5 +17,5 @@ test('callback', async t => {
 });
 
 test('promises', async t => {
-	t.is((await m('promises', {cwd})).length, 0);
+	t.is((await m('promises', opts)).length, 0);
 });

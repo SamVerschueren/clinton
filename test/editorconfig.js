@@ -1,10 +1,13 @@
 import test from 'ava';
 import m from '../';
 
-const cwd = 'fixtures/editorconfig';
+const opts = {
+	cwd: 'fixtures/editorconfig',
+	inherit: false
+};
 
 test('no editorconfig', async t => {
-	t.deepEqual(await m('false', {cwd}), [
+	t.deepEqual(await m('false', opts), [
 		{
 			name: 'editorconfig',
 			severity: 'error',
@@ -14,5 +17,5 @@ test('no editorconfig', async t => {
 });
 
 test('editorconfig', async t => {
-	t.is((await m('true', {cwd})).length, 0);
+	t.is((await m('true', opts)).length, 0);
 });
