@@ -88,6 +88,9 @@ Current working directory when linting local projects.
   Usage
     $ clinton [<path>]
 
+  Options
+    --no-inherit  Prevent inheriting from the default rules.
+
   Examples
     $ clinton
       warn     Use `.editorconfig` to define and maintain consistent coding styles between editors. (editorconfig)
@@ -160,10 +163,12 @@ want to check if a file in your project really exists.
   },
   "devDependencies": {
     "clinton": "*",
-	"clinton-plugin-file-exists": "*"
+	"clinton-plugin-file-exists": "1.0.0"
   },
   "clinton": {
-    "file-exists": ["error", "index.js"]
+    "rules": {
+      "file-exists": ["error", "index.js"]
+    }
   }
 }
 ```
