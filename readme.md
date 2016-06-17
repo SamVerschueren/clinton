@@ -115,6 +115,7 @@ Current working directory when linting local projects.
 - **pkg-property-order** - Checks the `package.json` property order.
   - *[...order]* - Custom list of properties.
 - **pkg-schema** - Validates the schema of `package.json`
+- **pkg-description** - Enforces the `description` in `package.json` to start with a capital letter and not end with a dot.
 - **readme** - Check if a `readme` file is present.
 - **test-script** - Check if the `test` script is set.
 - **use-travis** - Checks if [Travis CI](https://travis-ci.org/) is used.
@@ -123,7 +124,6 @@ Current working directory when linting local projects.
 - **cli** - Checks if the `bin` file specified in `package.json` exists and is executable.
 - **max-depth** - This rule enforces a maximum depth that directories can be nested to reduce project complexity.
   - *[max]* - (default `5`) enforces a maximum depth that directories can be nested
-
 
 ## Plugins
 

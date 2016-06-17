@@ -10,6 +10,7 @@ module.exports = {
 		'pkg-main': 'error',
 		'pkg-property-order': 'error',
 		'pkg-schema': 'error',
+		'pkg-description': 'error',
 		'readme': 'error',
 		'test-script': 'error',
 		'use-travis': 'warn',
