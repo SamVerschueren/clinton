@@ -1,9 +1,9 @@
 {
   "name": "license",
-  "license": "FOO",
+  "private": true,
   "clinton": {
     "rules": {
-      "license": ["error", "FOO"]
+      "license": "error"
     }
   }
 }

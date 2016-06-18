@@ -1,6 +1,7 @@
 {
   "name": "license",
   "license": "MIT",
+  "private": true,
   "clinton": {
     "rules": {
       "license": ["error", "MIT"]

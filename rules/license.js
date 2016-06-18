@@ -5,11 +5,24 @@ const FuzzyMatching = require('fuzzy-matching');
 const normalize = str => str.replace(/\n/g, ' ').replace(/[ ]{2,}/g, ' ');
 
 module.exports = ctx => {
+	const pkg = ctx.env.pkg;
+	const isPrivate = pkg.private;
 	const fileName = ctx.files.find(file => file.toLowerCase().indexOf('license') === 0);
+
+	if (isPrivate && !fileName) {
+		// Exit if the project is `private` and no `filename` is provided
+		return;
+	}
 
 	if (!fileName) {
 		return {
 			message: 'No license found.'
+		};
+	}
+
+	if (!pkg.license) {
+		return {
+			message: 'No `license` property defined in `package.json.'
 		};
 	}
 
@@ -20,6 +33,12 @@ module.exports = ctx => {
 
 	const type = ctx.options[0];
 	const licenseInfo = spdxLicenseList[type];
+
+	if (pkg.license !== type) {
+		return {
+			message: `Expected \`license\` property to be \`${type}\`, got \`${pkg.license}\`.`
+		};
+	}
 
 	if (!licenseInfo) {
 		return {
