@@ -16,6 +16,7 @@ module.exports = {
 		'use-travis': 'warn',
 		'valid-version': 'error',
 		'cli': 'error',
-		'max-depth': 'warn'
+		'max-depth': 'warn',
+		'gulp': ['error', 'optional']
 	}
 };

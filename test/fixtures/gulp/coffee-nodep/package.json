@@ -1,0 +1,11 @@
+{
+  "name": "license",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "clinton": {
+    "rules": {
+      "gulp": "error"
+    }
+  }
+}
