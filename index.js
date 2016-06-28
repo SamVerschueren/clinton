@@ -85,11 +85,10 @@ module.exports = (input, opts) => {
 									return;
 								}
 
-								validations.push({
+								validations.push(Object.assign(e, {
 									name: ruleId,
-									severity: rule[0],
-									message: e.message
-								});
+									severity: rule[0]
+								}));
 							});
 						}
 					});

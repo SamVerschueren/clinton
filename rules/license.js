@@ -8,6 +8,7 @@ module.exports = ctx => {
 	const pkg = ctx.env.pkg;
 	const isPrivate = pkg.private;
 	const fileName = ctx.files.find(file => file.toLowerCase().indexOf('license') === 0);
+	const file = ctx.fs.resolve(fileName || 'license');
 
 	if (isPrivate && !fileName) {
 		// Exit if the project is `private` and no `filename` is provided
@@ -16,13 +17,15 @@ module.exports = ctx => {
 
 	if (!fileName) {
 		return {
-			message: 'No license found.'
+			message: 'No license found.',
+			file
 		};
 	}
 
 	if (!pkg.license) {
 		return {
-			message: 'No `license` property defined in `package.json.'
+			message: 'No `license` property defined in `package.json.',
+			file
 		};
 	}
 
@@ -36,13 +39,15 @@ module.exports = ctx => {
 
 	if (pkg.license !== type) {
 		return {
-			message: `Expected \`license\` property to be \`${type}\`, got \`${pkg.license}\`.`
+			message: `Expected \`license\` property to be \`${type}\`, got \`${pkg.license}\`.`,
+			file
 		};
 	}
 
 	if (!licenseInfo) {
 		return {
-			message: `License ${type} is unknown.`
+			message: `License ${type} is unknown.`,
+			file
 		};
 	}
 
@@ -53,7 +58,8 @@ module.exports = ctx => {
 
 		if (match.distance < 0.9) {
 			return {
-				message: `License is not of type ${type} (${licenseInfo.url.split('\n')[0]}).`
+				message: `License is not of type ${type} (${licenseInfo.url.split('\n')[0]}).`,
+				file
 			};
 		}
 	});

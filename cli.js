@@ -2,7 +2,9 @@
 'use strict';
 const meow = require('meow');
 const chalk = require('chalk');
+const logSymbols = require('log-symbols');
 const updateNotifier = require('update-notifier');
+const groupBy = require('lodash.groupby');
 const ghLint = require('./');
 
 const cli = meow(`
@@ -14,24 +16,36 @@ const cli = meow(`
 
 	Examples
 	  $ clinton
-	    warn     Use \`.editorconfig\` to define and maintain consistent coding styles between editors. (editorconfig)
+	    ${chalk.underline('/Users/sam/projects/foo/.editorconfig')}
+	      ${logSymbols.warning}  Use \`.editorconfig\` to define and maintain consistent coding styles between editors. (editorconfig)
 
 	  $ clinton ~/projects/project
-	    error    No MIT license found. (license-mit)
+	    ${chalk.underline('/Users/sam/projects/project/license')}
+	      ${logSymbols.error}  No MIT license found. (license-mit)
 `);
 
 updateNotifier({pkg: cli.pkg}).notify();
 
-const log = validation => {
-	let color = 'red';
-	let message = 'error  ';
+const logHelper = validation => {
+	let severity = 'error';
 
 	if (validation.severity === 'warn') {
-		color = 'yellow';
-		message = 'warning';
+		severity = 'warning';
 	}
 
-	console.log(`  ${chalk[color](message)}  ${validation.message} ${chalk.gray(`(${validation.name})`)}`);
+	console.log(`    ${logSymbols[severity]} ${validation.message} ${chalk.gray(`(${validation.name})`)}`);
+};
+
+const log = validations => {
+	const files = groupBy(validations, 'file');
+
+	for (const file of Object.keys(files)) {
+		console.log(`  ${chalk.underline(file === 'undefined' ? 'unknown' : file)}`);
+
+		files[file].forEach(logHelper);
+
+		console.log();
+	}
 };
 
 const exit = validations => {
@@ -44,7 +58,6 @@ const exit = validations => {
 
 ghLint(cli.input[0] || '.', cli.flags)
 	.then(validations => {
-		validations.forEach(log);
-
+		log(validations);
 		exit(validations);
 	});

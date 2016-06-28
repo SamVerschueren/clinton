@@ -1,3 +1,4 @@
+import path from 'path';
 import test from 'ava';
 import m from '../';
 
@@ -11,7 +12,8 @@ test('no editorconfig', async t => {
 		{
 			name: 'editorconfig',
 			severity: 'error',
-			message: 'Use `.editorconfig` to define and maintain consistent coding styles between editors'
+			message: 'Use `.editorconfig` to define and maintain consistent coding styles between editors',
+			file: path.resolve(opts.cwd, 'false/.editorconfig')
 		}
 	]);
 });

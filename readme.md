@@ -33,13 +33,13 @@ Instead of passing the rules as an option, you can also add them to your `packag
 
 ```json
 {
-  "name": "foo",
-  "license": "ISC",
-  "clinton": {
-    "rules": {
-      "license": ["error", "MIT"]
-    }
-  }
+	"name": "foo",
+		"license": "ISC",
+		"clinton": {
+		"rules": {
+			"license": ["error", "MIT"]
+		}
+	}
 }
 ```
 
@@ -85,35 +85,37 @@ Current working directory when linting local projects.
 ## CLI
 
 ```
-  Usage
-    $ clinton [<path>]
+	Usage
+	  $ clinton [<path>]
 
-  Options
-    --no-inherit  Prevent inheriting from the default rules.
+	Options
+	  --no-inherit  Prevent inheriting from the default rules.
 
-  Examples
-    $ clinton
-      warn     Use `.editorconfig` to define and maintain consistent coding styles between editors. (editorconfig)
+	Examples
+	  $ clinton
+	    /Users/sam/projects/foo/.editorconfig
+	      ⚠  Use `.editorconfig` to define and maintain consistent coding styles between editors. (editorconfig)
 
-    $ clinton ~/projects/project
-	  error    License is not of type MIT (http://www.opensource.org/licenses/MIT). (license)
+	  $ clinton ~/projects/project
+	    /Users/sam/projects/project/license
+	      ✖  License is not of type MIT (http://www.opensource.org/licenses/MIT). (license)
 ```
 
 
 ## Rules
 
 - **ava** - Check if [AVA](https://github.com/avajs/ava) is used and is used correctly.
-  - *[version]*: The minimum required `AVA` version or `*` if you want to go unicorn.
+	- *[version]*: The minimum required `AVA` version or `*` if you want to go unicorn.
 - **xo** - Check if [XO](https://github.com/sindresorhus/xo) is used and is used correctly.
-  - *[version]*: The minimum required `XO` version or `*` if you want to go unicorn.
-- **editorconfig** - Check if a `.editorconfig` file is present.
+	- *[version]*: The minimum required `XO` version or `*` if you want to go unicorn.
+- **editorconfig** - Check if a `.editorconfig` file is present and if the project files adhere to the `.editorconfig` settings.
 - **license** - Check if a license file exist.
-  - *[type]*: The type of the license. For example `MIT`.
+	- *[type]*: The type of the license. For example `MIT`.
 - **no-callback** - Check if the project uses promises instead of callbacks.
 - **pkg-files** - `files` property in `package.json` should be provided.
 - **pkg-main** - Checks if the file provided in the `main` property in `package.json` exists.
 - **pkg-property-order** - Checks the `package.json` property order.
-  - *[...order]* - Custom list of properties.
+	- *[...order]* - Custom list of properties.
 - **pkg-schema** - Validates the schema of `package.json`
 - **pkg-description** - Enforces the `description` in `package.json` to start with a capital letter and not end with a dot.
 - **readme** - Check if a `readme` file is present.
@@ -123,7 +125,7 @@ Current working directory when linting local projects.
 - **valid-version** - Checks if the `version` in `package.json` is a valid semver version.
 - **cli** - Checks if the `bin` file specified in `package.json` exists and is executable.
 - **max-depth** - This rule enforces a maximum depth that directories can be nested to reduce project complexity.
-  - *[max]* - (default `5`) enforces a maximum depth that directories can be nested
+	- *[max]* - (default `5`) enforces a maximum depth that directories can be nested
 
 ## Plugins
 
@@ -155,21 +157,21 @@ want to check if a file in your project really exists.
 
 ```json
 {
-  "name": "Unicorn",
-  "description": "My unicorn package",
-  "version": "1.0.0",
-  "scripts": {
-    "test": "clinton"
-  },
-  "devDependencies": {
-    "clinton": "*",
-	"clinton-plugin-file-exists": "1.0.0"
-  },
-  "clinton": {
-    "rules": {
-      "file-exists": ["error", "index.js"]
-    }
-  }
+	"name": "Unicorn",
+	"description": "My unicorn package",
+	"version": "1.0.0",
+	"scripts": {
+		"test": "clinton"
+	},
+	"devDependencies": {
+		"clinton": "*",
+		"clinton-plugin-file-exists": "1.0.0"
+	},
+	"clinton": {
+		"rules": {
+			"file-exists": ["error", "index.js"]
+		}
+	}
 }
 ```
 
