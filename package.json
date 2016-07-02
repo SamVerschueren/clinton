@@ -12,7 +12,7 @@
   "main": "index.js",
   "bin": "cli.js",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=4"
   },
   "scripts": {
     "test": "xo && ava"
