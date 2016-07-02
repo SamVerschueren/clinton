@@ -40,7 +40,7 @@ const log = validations => {
 	const files = groupBy(validations, 'file');
 
 	for (const file of Object.keys(files)) {
-		console.log(`  ${chalk.underline(file === 'undefined' ? 'unknown' : file)}`);
+		console.log(`  ${chalk.underline(file === 'undefined' ? process.cwd() : file)}`);
 
 		files[file].forEach(logHelper);
 

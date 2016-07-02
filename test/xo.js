@@ -1,3 +1,4 @@
+import path from 'path';
 import test from 'ava';
 import m from '../';
 import utils from './fixtures/utils';
@@ -14,7 +15,8 @@ test('no XO dependency', async t => {
 		{
 			name: 'xo',
 			severity: 'error',
-			message: 'XO is not installed as devDependency.'
+			message: 'XO is not installed as devDependency.',
+			file: path.resolve(opts.cwd, 'no-dependency/package.json')
 		}
 	]);
 });
@@ -24,7 +26,8 @@ test('wrong version', async t => {
 		{
 			name: 'xo',
 			severity: 'error',
-			message: 'Expected version \'0.15.2\' but found \'0.15.1\'.'
+			message: 'Expected version \'0.15.2\' but found \'0.15.1\'.',
+			file: path.resolve(opts.cwd, 'package.json')
 		}
 	]);
 
@@ -32,7 +35,8 @@ test('wrong version', async t => {
 		{
 			name: 'xo',
 			severity: 'error',
-			message: 'Expected version \'0.16.0\' but found \'0.15.1\'.'
+			message: 'Expected version \'0.16.0\' but found \'0.15.1\'.',
+			file: path.resolve(opts.cwd, 'package.json')
 		}
 	]);
 });
@@ -44,7 +48,8 @@ test('unicorn version', async t => {
 		{
 			name: 'xo',
 			severity: 'error',
-			message: 'Expected unicorn version \'*\' but found \'0.15.1\'.'
+			message: 'Expected unicorn version \'*\' but found \'0.15.1\'.',
+			file: path.resolve(opts.cwd, 'package.json')
 		}
 	]);
 });
@@ -54,7 +59,8 @@ test('test script', async t => {
 		{
 			name: 'xo',
 			severity: 'error',
-			message: 'XO is not used in the test script.'
+			message: 'XO is not used in the test script.',
+			file: path.resolve(opts.cwd, 'no-script/package.json')
 		}
 	]);
 });
@@ -64,7 +70,8 @@ test('cli config', async t => {
 		{
 			name: 'xo',
 			severity: 'error',
-			message: 'Specify XO config in `package.json` instead of passing it through via the CLI.'
+			message: 'Specify XO config in `package.json` instead of passing it through via the CLI.',
+			file: path.resolve(opts.cwd, 'cli-config/package.json')
 		}
 	]);
 });

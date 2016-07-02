@@ -51,7 +51,8 @@ module.exports = ctx => {
 		.catch(err => {
 			if (err.clinton) {
 				return {
-					message: err.message
+					message: err.message,
+					file: ctx.fs.resolve('package.json')
 				};
 			}
 

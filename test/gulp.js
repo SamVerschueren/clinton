@@ -1,3 +1,4 @@
+import path from 'path';
 import test from 'ava';
 import m from '../';
 
@@ -28,7 +29,8 @@ test('mandatory', async t => {
 		{
 			name: 'gulp',
 			severity: 'error',
-			message: '`gulp` dependency not found in `devDependencies`.'
+			message: '`gulp` dependency not found in `devDependencies`.',
+			file: path.resolve(opts.cwd, 'package.json')
 		}
 	]);
 });
@@ -42,7 +44,8 @@ test('typescript gulpfile - no dependency', async t => {
 		{
 			name: 'gulp',
 			severity: 'error',
-			message: 'Expected one of `ts-node`, `typescript-node`, `typescript-register`, `typescript-require` in `devDependencies`.'
+			message: 'Expected one of `ts-node`, `typescript-node`, `typescript-register`, `typescript-require` in `devDependencies`.',
+			file: path.resolve(opts.cwd, 'ts-nodep/package.json')
 		}
 	]);
 });
@@ -56,7 +59,8 @@ test('coffee gulpfile - no dependency', async t => {
 		{
 			name: 'gulp',
 			severity: 'error',
-			message: 'Expected `coffee-script` in `devDependencies`.'
+			message: 'Expected `coffee-script` in `devDependencies`.',
+			file: path.resolve(opts.cwd, 'coffee-nodep/package.json')
 		}
 	]);
 });

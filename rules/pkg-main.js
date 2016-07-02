@@ -8,7 +8,8 @@ module.exports = ctx => ctx.fs.readFile('package.json').then(pkg => {
 
 	if (!fileName) {
 		return {
-			message: `Main file '${pkg.main}' does not exist.`
+			message: `Main file '${pkg.main}' does not exist.`,
+			file: ctx.fs.resolve('package.json')
 		};
 	}
 });

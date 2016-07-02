@@ -30,7 +30,8 @@ module.exports = ctx => {
 
 	if (!pkg.devDependencies.gulp) {
 		messages.push({
-			message: '`gulp` dependency not found in `devDependencies`.'
+			message: '`gulp` dependency not found in `devDependencies`.',
+			file: ctx.fs.resolve('package.json')
 		});
 	}
 
@@ -40,7 +41,8 @@ module.exports = ctx => {
 
 		if (dependencies.length === 0) {
 			messages.push({
-				message: `Expected one of \`${TS_PEERS.join('`, `')}\` in \`devDependencies\`.`
+				message: `Expected one of \`${TS_PEERS.join('`, `')}\` in \`devDependencies\`.`,
+				file: ctx.fs.resolve('package.json')
 			});
 		}
 	}
@@ -49,7 +51,8 @@ module.exports = ctx => {
 	if (fileName === 'gulpfile.coffee') {
 		if (!pkg.devDependencies['coffee-script']) {
 			messages.push({
-				message: `Expected \`coffee-script\` in \`devDependencies\`.`
+				message: `Expected \`coffee-script\` in \`devDependencies\`.`,
+				file: ctx.fs.resolve('package.json')
 			});
 		}
 	}

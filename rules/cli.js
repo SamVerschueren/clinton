@@ -19,14 +19,16 @@ module.exports = ctx => {
 	return Promise.all(files.map(file => {
 		if (ctx.files.indexOf(file) === -1) {
 			return {
-				message: `Executable file \`${file}\` does not exist.`
+				message: `Executable file \`${file}\` does not exist.`,
+				file: ctx.fs.resolve('package.json')
 			};
 		}
 
 		return executable(ctx.fs.resolve(file)).then(isExecutable => {
 			if (!isExecutable) {
 				return {
-					message: `File \`${file}\` is not executable.`
+					message: `File \`${file}\` is not executable.`,
+					file: ctx.fs.resolve(file)
 				};
 			}
 		});

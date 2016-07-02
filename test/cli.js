@@ -1,3 +1,4 @@
+import path from 'path';
 import test from 'ava';
 import m from '../';
 
@@ -15,7 +16,8 @@ test('file is not executable', async t => {
 		{
 			name: 'cli',
 			severity: 'error',
-			message: 'File `bin.js` is not executable.'
+			message: 'File `bin.js` is not executable.',
+			file: path.resolve(opts.cwd, 'not-executable/bin.js')
 		}
 	]);
 });
@@ -25,7 +27,8 @@ test('file not exists', async t => {
 		{
 			name: 'cli',
 			severity: 'error',
-			message: 'Executable file `bin.js` does not exist.'
+			message: 'Executable file `bin.js` does not exist.',
+			file: path.resolve(opts.cwd, 'not-exists/package.json')
 		}
 	]);
 });
@@ -35,7 +38,8 @@ test('handle `bin` object', async t => {
 		{
 			name: 'cli',
 			severity: 'error',
-			message: 'Executable file `bin.js` does not exist.'
+			message: 'Executable file `bin.js` does not exist.',
+			file: path.resolve(opts.cwd, 'bin-object/package.json')
 		}
 	]);
 });

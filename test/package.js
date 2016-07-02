@@ -1,3 +1,4 @@
+import path from 'path';
 import test from 'ava';
 import m from '../';
 
@@ -11,7 +12,8 @@ test('no `files` property', async t => {
 		{
 			name: 'pkg-files',
 			severity: 'error',
-			message: 'Missing `files` property in `package.json`.'
+			message: 'Missing `files` property in `package.json`.',
+			file: path.resolve(opts.cwd, 'no-files/package.json')
 		}
 	]);
 });
@@ -21,7 +23,8 @@ test('wrong schema', async t => {
 		{
 			name: 'pkg-schema',
 			severity: 'error',
-			message: 'Missing required property: version at path \'#/\''
+			message: 'Missing required property: version at path \'#/\'',
+			file: path.resolve(opts.cwd, 'wrong-schema/package.json')
 		}
 	]);
 });
@@ -31,7 +34,8 @@ test('invalid version', async t => {
 		{
 			name: 'valid-version',
 			severity: 'error',
-			message: 'The specified `version` in package.json is invalid.'
+			message: 'The specified `version` in package.json is invalid.',
+			file: path.resolve(opts.cwd, 'invalid-version/package.json')
 		}
 	]);
 });
@@ -41,7 +45,8 @@ test('invalid order', async t => {
 		{
 			name: 'pkg-property-order',
 			severity: 'error',
-			message: 'Property \'name\' should occur before property \'version\'.'
+			message: 'Property \'name\' should occur before property \'version\'.',
+			file: path.resolve(opts.cwd, 'property-order/package.json')
 		}
 	]);
 });
@@ -51,7 +56,8 @@ test('invalid main', async t => {
 		{
 			name: 'pkg-main',
 			severity: 'error',
-			message: 'Main file \'index.js\' does not exist.'
+			message: 'Main file \'index.js\' does not exist.',
+			file: path.resolve(opts.cwd, 'invalid-main/package.json')
 		}
 	]);
 });
