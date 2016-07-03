@@ -8,6 +8,15 @@ module.exports = ctx => {
 	return ctx.fs.readFile('package.json').then(pkg => {
 		const installedVersion = pkg.devDependencies && pkg.devDependencies.xo;
 
+		if (pkg.engines && pkg.engines.node && !semver.satisfies('0.0.12', pkg.engines.node)) {
+			if (!pkg.xo || pkg.xo.esnext !== true) {
+				return {
+					message: 'Enforce ES2015+ rules in XO with the `esnext` option.',
+					file
+				};
+			}
+		}
+
 		if (!installedVersion) {
 			return {
 				message: 'XO is not installed as devDependency.',

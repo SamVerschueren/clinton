@@ -10,6 +10,17 @@ const opts = {
 
 const inherit = utils.assign(opts);
 
+test('no esnext', async t => {
+	t.deepEqual(await m('no-esnext', opts), [
+		{
+			name: 'xo',
+			severity: 'error',
+			message: 'Enforce ES2015+ rules in XO with the `esnext` option.',
+			file: path.resolve(opts.cwd, 'no-esnext/package.json')
+		}
+	]);
+});
+
 test('no XO dependency', async t => {
 	t.deepEqual(await m('no-dependency', opts), [
 		{

@@ -1,0 +1,14 @@
+{
+  "name": "xo",
+  "engines": {
+    "node": ">=4"
+  },
+  "devDependencies": {
+    "xo": "*"
+  },
+  "clinton": {
+    "rules": {
+      "xo": "error"
+    }
+  }
+}
