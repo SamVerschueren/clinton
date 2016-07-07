@@ -141,7 +141,7 @@ Let's create a `clinton-plugin-file-exists` rule that checks if the file provide
 module.exports = ctx => {
 	const fileName = ctx.options[0];
 
-	if (ctx.files.indexOf(fileName) === -1) {
+	if (!ctx.files.includes(fileName)) {
 		return {
 			message: `File ${fileName} does not exist.`
 		};
