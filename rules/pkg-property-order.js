@@ -30,32 +30,25 @@ const DEFAULT_ORDER = [
 ];
 
 module.exports = ctx => {
-	const order = ctx.options.length > 0 ? ctx.options : DEFAULT_ORDER;
+	const keys = ctx.options.length > 0 ? ctx.options : DEFAULT_ORDER;
+	const file = ctx.fs.resolve('package.json');
 
 	return ctx.fs.readFile('package.json')
 		.then(pkg => {
-			const keys = Object.keys(pkg);
+			const pkgKeys = Object.keys(pkg);
+			const order = keys.filter(x => pkgKeys.indexOf(x) !== -1);
 
-			order.reduce((value, property, propIndex) => {
-				const keyIndex = keys.indexOf(property);
+			let index = 0;
 
-				if (keyIndex !== -1 && keyIndex < value) {
-					const err = new Error(`Property '${order[propIndex - 1]}' should occur before property '${property}'.`);
-					err.clinton = true;
-					throw err;
+			for (const key of order) {
+				if (key !== pkgKeys[index]) {
+					return {
+						message: `Property '${key}' should occur before property '${pkgKeys[index]}'.`,
+						file
+					};
 				}
 
-				return keyIndex;
-			}, 0);
-		})
-		.catch(err => {
-			if (err.clinton) {
-				return {
-					message: err.message,
-					file: ctx.fs.resolve('package.json')
-				};
+				index++;
 			}
-
-			throw err;
 		});
 };
