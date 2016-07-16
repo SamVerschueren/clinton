@@ -75,6 +75,12 @@ Type: `string[]`
 
 List of plugin names.
 
+##### ignores
+
+Type: `string[]`
+
+Paths in `.gitignore` are ignored by default. Additional ignores can be added here.
+
 ##### cwd
 
 Type: `string`

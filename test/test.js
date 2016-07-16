@@ -22,8 +22,20 @@ test('merge rules', async t => {
 	t.is(errors[1].name, 'pkg-files');
 });
 
-test('cwd option', async t => {
+test('`cwd` option', async t => {
 	t.is((await m('.', {cwd: '../'})).length, 0);
+});
+
+test('`ignores` option', async t => {
+	const result = await m('.', {
+		cwd: 'fixtures/ignores',
+		inherit: false,
+		ignores: [
+			'unicorn/**'
+		]
+	});
+
+	t.is(result.length, 0);
 });
 
 test('unknown plugin', t => {

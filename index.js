@@ -16,7 +16,8 @@ module.exports = (input, opts) => {
 	opts = Object.assign({
 		cwd: process.cwd(),
 		plugins: [],
-		inherit: true
+		inherit: true,
+		ignores: []
 	}, opts);
 
 	const filePath = path.resolve(opts.cwd, input);
