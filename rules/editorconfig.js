@@ -1,7 +1,4 @@
 'use strict';
-const eclint = require('eclint');
-const vfs = require('vinyl-fs');
-
 module.exports = ctx => {
 	if (ctx.files.indexOf('.editorconfig') === -1) {
 		return {
@@ -10,23 +7,24 @@ module.exports = ctx => {
 		};
 	}
 
-	return new Promise(resolve => {
-		const errors = [];
+	// https://github.com/SamVerschueren/clinton/issues/26
+	// return new Promise(resolve => {
+	// 	const errors = [];
 
-		const stream = vfs.src(['**/*', '!node_modules', '!node_modules/**'], {cwd: ctx.env.path})
-			.pipe(eclint.check({
-				reporter: (file, message) => {
-					errors.push({
-						message,
-						file: file.path
-					});
-				}
-			}));
+	// 	const stream = vfs.src(['**/*', '!node_modules', '!node_modules/**'], {cwd: ctx.env.path})
+	// 		.pipe(eclint.check({
+	// 			reporter: (file, message) => {
+	// 				errors.push({
+	// 					message,
+	// 					file: file.path
+	// 				});
+	// 			}
+	// 		}));
 
-		stream.on('data', () => {});
+	// 	stream.on('data', () => {});
 
-		stream.on('finish', () => {
-			resolve(errors);
-		});
-	});
+	// 	stream.on('finish', () => {
+	// 		resolve(errors);
+	// 	});
+	// });
 };
