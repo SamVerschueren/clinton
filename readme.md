@@ -131,7 +131,9 @@ Current working directory when linting local projects.
 - **valid-version** - Checks if the `version` in `package.json` is a valid semver version.
 - **cli** - Checks if the `bin` file specified in `package.json` exists and is executable.
 - **max-depth** - This rule enforces a maximum depth that directories can be nested to reduce project complexity.
-	- *[max]* - (default `5`) enforces a maximum depth that directories can be nested
+	- *[max]* - (default `5`) enforces a maximum depth that directories can be nested.
+- **filename-case** - Enforces all linted files to have their names in a certain case style. Default is `kebabCase`.
+	- *{case: _type_}* - _type_ can be one of `kebabCase`, `camelCase`, `snakeCase` or `pascalCase`.
 
 ## Plugins
 

@@ -1,0 +1,8 @@
+{
+  "name": "filename-case",
+  "clinton": {
+    "rules": {
+      "filename-case": ["error", {"case": "kebabCase"}]
+    }
+  }
+}

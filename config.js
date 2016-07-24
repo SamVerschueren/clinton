@@ -17,6 +17,7 @@ module.exports = {
 		'valid-version': 'error',
 		'cli': 'error',
 		'max-depth': 'warn',
-		'gulp': ['error', 'optional']
+		'gulp': ['error', 'optional'],
+		'filename-case': ['error', {case: 'kebabCase'}]
 	}
 };
