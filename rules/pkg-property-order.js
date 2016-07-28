@@ -1,4 +1,6 @@
 'use strict';
+const detectIndent = require('detect-indent');
+
 const DEFAULT_ORDER = [
 	'name',
 	'version',
@@ -50,5 +52,36 @@ module.exports = ctx => {
 
 				index++;
 			}
+		});
+};
+
+module.exports.fix = ctx => {
+	const keys = ctx.options.length > 0 ? ctx.options : DEFAULT_ORDER;
+
+	return ctx.fs.readFile('package.json', false)
+		.then(pkg => {
+			// Detect formatting options
+			const indentation = detectIndent(pkg).indent;
+			const lastchar = pkg.split('\n').pop().trim().length === 0 ? '\n' : '';
+
+			pkg = JSON.parse(pkg);
+
+			const ret = Object.create(null);
+			const pkgProps = Object.keys(pkg);
+
+			// Order the known package properties
+			const knownProps = keys.filter(key => pkgProps.includes(key));
+			for (const prop of knownProps) {
+				ret[prop] = pkg[prop];
+			}
+
+			// Order to unknown package properties
+			const unknownProps = pkgProps.filter(prop => !keys.includes(prop)).sort();
+			for (const prop of unknownProps) {
+				ret[prop] = pkg[prop];
+			}
+
+			const contents = JSON.stringify(ret, undefined, indentation);
+			return ctx.fs.writeFile('package.json', `${contents}${lastchar}`, 'utf8');
 		});
 };
