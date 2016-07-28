@@ -8,6 +8,23 @@ const rules = require('./lib/rules');
 const defaultConfig = require('./config');
 const pkg = require('./package.json');
 
+const merge = (options, config) => {
+	const opts = Object.assign({}, options);
+
+	opts.inherit = opts.inherit === undefined ? config.inherit || true : opts.inherit;
+
+	const inherit = opts.inherit ? defaultConfig : {};
+
+	opts.rules = Object.assign({}, inherit.rules, config.rules, opts.rules);
+	opts.plugins = [].concat(inherit.plugins || [], config.plugins || [], opts.plugins || []);
+
+	delete config.rules;
+	delete config.plugins;
+	delete config.inherit;
+
+	return Object.assign(opts, config);
+};
+
 module.exports = (input, opts) => {
 	if (typeof input !== 'string') {
 		return Promise.reject(new TypeError('No input provided.'));
@@ -16,7 +33,7 @@ module.exports = (input, opts) => {
 	opts = Object.assign({
 		cwd: process.cwd(),
 		plugins: [],
-		inherit: true,
+		inherit: undefined,
 		ignores: []
 	}, opts);
 
@@ -34,21 +51,15 @@ module.exports = (input, opts) => {
 
 	const validations = [];
 
-	return env.load()
-		.then(() => config.load(env))
-		.then(conf => {
-			conf = conf || {};
+	return config.load(env)
+		.then(config => {
+			opts = merge(opts, config);
 
-			const inherit = opts.inherit ? defaultConfig : {};
-
-			return {
-				rules: Object.assign({}, inherit.rules, conf.rules, opts.rules),
-				plugins: [].concat(inherit.plugins || [], conf.plugins || [], opts.plugins || [])
-			};
+			return env.load(opts);
 		})
-		.then(conf => {
-			const ruleList = rules.parse(conf.rules);
-			const plugins = conf.plugins || [];
+		.then(() => {
+			const ruleList = rules.parse(opts.rules);
+			const plugins = opts.plugins || [];
 
 			const ruleIds = Object.keys(ruleList);
 
