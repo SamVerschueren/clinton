@@ -96,6 +96,7 @@ Current working directory when linting local projects.
 
 	Options
 	  --no-inherit  Prevent inheriting from the default rules.
+	  --fix         Automatically fix problems.
 
 	Examples
 	  $ clinton

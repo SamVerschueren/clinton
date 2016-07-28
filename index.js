@@ -8,6 +8,14 @@ const rules = require('./lib/rules');
 const defaultConfig = require('./config');
 const pkg = require('./package.json');
 
+const fix = (mod, ctx, err) => {
+	if (!mod.fix) {
+		return;
+	}
+
+	return mod.fix(ctx, err);
+};
+
 const merge = (options, config) => {
 	const opts = Object.assign({}, options);
 
@@ -89,8 +97,13 @@ module.exports = (input, opts) => {
 				return Promise.resolve()
 					.then(() => mod(ctx))
 					.then(err => {
-						if (err) {
-							err = Array.isArray(err) ? err : [err];
+						err = Array.isArray(err) ? err : [err];
+						err = err.filter(Boolean);
+
+						if (err.length > 0) {
+							if (opts.fix) {
+								return fix(mod, ctx, err);
+							}
 
 							err.forEach(e => {
 								if (!e) {

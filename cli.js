@@ -13,6 +13,7 @@ const cli = meow(`
 
 	Options
 	  --no-inherit  Prevent inheriting from the default rules.
+	  --fix         Automatically fix problems.
 
 	Examples
 	  $ clinton
@@ -22,7 +23,12 @@ const cli = meow(`
 	  $ clinton ~/projects/project
 	    ${chalk.underline('/Users/sam/projects/project/license')}
 	      ${logSymbols.error}  No MIT license found. (license-mit)
-`);
+`, {
+	boolean: ['inherit', 'fix'],
+	default: {
+		inherit: true
+	}
+});
 
 updateNotifier({pkg: cli.pkg}).notify();
 
