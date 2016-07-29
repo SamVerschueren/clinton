@@ -61,6 +61,7 @@
     "update-notifier": "^1.0.0",
     "vinyl-fs": "^2.4.3",
     "yaml": "^0.3.0",
+    "yargs-parser": "^2.4.1",
     "z-schema": "^3.17.0"
   },
   "devDependencies": {

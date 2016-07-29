@@ -1,5 +1,8 @@
 {
   "name": "xo",
+  "scripts": {
+    "test": "xo"
+  },
   "engines": {
     "node": ">=4"
   },
