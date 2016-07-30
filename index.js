@@ -110,10 +110,8 @@ module.exports = (input, opts) => {
 									return;
 								}
 
-								delete e.fix;
-
 								validations.push(Object.assign(e, {
-									name: ruleId,
+									ruleId,
 									severity: rule[0]
 								}));
 							});

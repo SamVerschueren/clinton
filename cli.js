@@ -39,7 +39,7 @@ const logHelper = validation => {
 		severity = 'warning';
 	}
 
-	console.log(`    ${logSymbols[severity]} ${validation.message} ${chalk.gray(`(${validation.name})`)}`);
+	console.log(`    ${logSymbols[severity]} ${validation.message} ${chalk.gray(`(${validation.ruleId})`)}`);
 };
 
 const log = validations => {
