@@ -1,5 +1,5 @@
 import test from 'ava';
-import m from '../';
+import {lint as m} from '../';
 import utils from './fixtures/utils';
 
 const opts = {
@@ -12,7 +12,7 @@ const inherit = utils.assign(opts);
 test('max depth fail', async t => {
 	t.deepEqual(await m('.', inherit({rules: {'max-depth': ['error', 1]}})), [
 		{
-			name: 'max-depth',
+			ruleId: 'max-depth',
 			severity: 'error',
 			message: 'Directories are nested too deeply (2).'
 		}

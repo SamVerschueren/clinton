@@ -5,16 +5,8 @@ const Environment = require('./lib/environment');
 const context = require('./lib/context');
 const config = require('./lib/config');
 const rules = require('./lib/rules');
+const ruleUtil = require('./lib/utils/rule');
 const defaultConfig = require('./config');
-const pkg = require('./package.json');
-
-const fix = (mod, ctx, err) => {
-	if (!mod.fix) {
-		return;
-	}
-
-	return mod.fix(ctx, err);
-};
 
 const merge = (options, config) => {
 	const opts = Object.assign({}, options);
@@ -33,7 +25,7 @@ const merge = (options, config) => {
 	return Object.assign(opts, config);
 };
 
-module.exports = (input, opts) => {
+const lint = exports.lint = (input, opts) => {
 	if (typeof input !== 'string') {
 		return Promise.reject(new TypeError('No input provided.'));
 	}
@@ -51,9 +43,6 @@ module.exports = (input, opts) => {
 		return Promise.reject(new Error(`Path ${input} does not exist.`));
 	}
 
-	// Location of the default rules
-	const rulesPath = path.join(__dirname, 'rules');
-
 	// Create a new environment
 	const env = new Environment(filePath, opts);
 
@@ -67,26 +56,11 @@ module.exports = (input, opts) => {
 		})
 		.then(() => {
 			const ruleList = rules.parse(opts.rules);
-			const plugins = opts.plugins || [];
 
 			const ruleIds = Object.keys(ruleList);
 
 			return Promise.all(ruleIds.map(ruleId => {
-				let mod;
-
-				if (plugins.indexOf(ruleId) >= 0) {
-					try {
-						mod = require(`${pkg.name}-plugin-${ruleId}`);
-					} catch (err) {
-						try {
-							mod = require(ruleId);
-						} catch (err) {
-							throw new Error(`Could not find module for plugin '${ruleId}'.`);
-						}
-					}
-				} else {
-					mod = require(path.join(rulesPath, ruleId));
-				}
+				const mod = ruleUtil.resolve(ruleId, opts);
 
 				const rule = ruleList[ruleId];
 
@@ -101,10 +75,6 @@ module.exports = (input, opts) => {
 						err = err.filter(Boolean);
 
 						if (err.length > 0) {
-							if (opts.fix) {
-								return fix(mod, ctx, err);
-							}
-
 							err.forEach(e => {
 								if (!e) {
 									return;
@@ -120,4 +90,13 @@ module.exports = (input, opts) => {
 			}));
 		})
 		.then(() => validations);
+};
+
+exports.fix = (input, opts) => {
+	return lint(input, opts)
+		.then(validations => {
+			validations = validations.filter(x => x.fix);
+
+			return validations.reduce((ret, validation) => ret.then(() => validation.fix()), Promise.resolve());
+		});
 };

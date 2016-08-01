@@ -13,14 +13,14 @@ $ npm install --save clinton
 ## Usage
 
 ```js
-const lint = require('clinton');
+const clinton = require('clinton');
 
-lint('/Users/sam/projects/clinton', {rules: {'license': ['error', 'MIT']}}).then(validations => {
+clinton.lint('/Users/sam/projects/clinton', {rules: {'license': ['error', 'MIT']}}).then(validations => {
 	console.log(validations);
 	/*
 		[
 			{
-				name: 'license',
+				ruleId: 'license',
 				severity: 'error',
 				message: 'License is not of type MIT (http://www.opensource.org/licenses/MIT).'
 			}
@@ -46,7 +46,7 @@ Instead of passing the rules as an option, you can also add them to your `packag
 
 ## API
 
-### lint(path, [options])
+### .lint(path, [options])
 
 #### path
 

@@ -1,7 +1,7 @@
 /* eslint-disable object-property-newline */
 import test from 'ava';
 import execa from 'execa';
-import m from '../';
+import {lint as m} from '../';
 
 test('project does not exist', async t => {
 	t.throws(m('foo/bar'), 'Path foo/bar does not exist.');
@@ -18,8 +18,8 @@ test('no errors', async t => {
 test('merge rules', async t => {
 	const errors = await m('no-files', {cwd: 'fixtures/package', inherit: false, rules: {readme: 'error'}});
 	t.is(errors.length, 2);
-	t.is(errors[0].name, 'readme');
-	t.is(errors[1].name, 'pkg-files');
+	t.is(errors[0].ruleId, 'readme');
+	t.is(errors[1].ruleId, 'pkg-files');
 });
 
 test('`cwd` option', async t => {

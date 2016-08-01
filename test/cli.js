@@ -1,6 +1,6 @@
 import path from 'path';
 import test from 'ava';
-import m from '../';
+import {lint as m} from '../';
 
 const opts = {
 	cwd: 'fixtures/cli',
@@ -14,7 +14,7 @@ test('no error', async t => {
 test('file is not executable', async t => {
 	t.deepEqual(await m('not-executable', opts), [
 		{
-			name: 'cli',
+			ruleId: 'cli',
 			severity: 'error',
 			message: 'File `bin.js` is not executable.',
 			file: path.resolve(opts.cwd, 'not-executable/bin.js')
@@ -25,7 +25,7 @@ test('file is not executable', async t => {
 test('file not exists', async t => {
 	t.deepEqual(await m('not-exists', opts), [
 		{
-			name: 'cli',
+			ruleId: 'cli',
 			severity: 'error',
 			message: 'Executable file `bin.js` does not exist.',
 			file: path.resolve(opts.cwd, 'not-exists/package.json')
@@ -36,7 +36,7 @@ test('file not exists', async t => {
 test('handle `bin` object', async t => {
 	t.deepEqual(await m('bin-object', opts), [
 		{
-			name: 'cli',
+			ruleId: 'cli',
 			severity: 'error',
 			message: 'Executable file `bin.js` does not exist.',
 			file: path.resolve(opts.cwd, 'bin-object/package.json')

@@ -1,6 +1,6 @@
 import path from 'path';
 import test from 'ava';
-import m from '../';
+import {lint as m} from '../';
 
 const opts = {
 	cwd: 'fixtures/license',
@@ -15,7 +15,7 @@ test('license', async t => {
 test('license property does not match', async t => {
 	t.deepEqual(await m('wrong', Object.assign({rules: {license: ['error', 'ISC']}}, opts)), [
 		{
-			name: 'license',
+			ruleId: 'license',
 			severity: 'error',
 			message: 'Expected `license` property to be `ISC`, got `MIT`.',
 			file: path.resolve(opts.cwd, 'wrong/license')
@@ -26,7 +26,7 @@ test('license property does not match', async t => {
 test('wrong license', async t => {
 	t.deepEqual(await m('wrong', opts), [
 		{
-			name: 'license',
+			ruleId: 'license',
 			severity: 'error',
 			message: 'License is not of type MIT (http://www.opensource.org/licenses/MIT).',
 			file: path.resolve(opts.cwd, 'wrong/license')
@@ -37,7 +37,7 @@ test('wrong license', async t => {
 test('unknown license', async t => {
 	t.deepEqual(await m('unknown', opts), [
 		{
-			name: 'license',
+			ruleId: 'license',
 			severity: 'error',
 			message: 'License FOO is unknown.',
 			file: path.resolve(opts.cwd, 'unknown/license')
@@ -48,7 +48,7 @@ test('unknown license', async t => {
 test('no license', async t => {
 	t.deepEqual(await m('no-license', opts), [
 		{
-			name: 'license',
+			ruleId: 'license',
 			severity: 'error',
 			message: 'No license found.',
 			file: path.resolve(opts.cwd, 'no-license/license')
@@ -63,7 +63,7 @@ test('no license with private package', async t => {
 test('license with private package', async t => {
 	t.deepEqual(await m('private-license', opts), [
 		{
-			name: 'license',
+			ruleId: 'license',
 			severity: 'error',
 			message: 'License is not of type MIT (http://www.opensource.org/licenses/MIT).',
 			file: path.resolve(opts.cwd, 'private-license/license')

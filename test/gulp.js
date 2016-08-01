@@ -1,6 +1,6 @@
 import path from 'path';
 import test from 'ava';
-import m from '../';
+import {lint as m} from '../';
 
 const opts = {
 	cwd: 'fixtures/gulp',
@@ -22,12 +22,12 @@ test('mandatory', async t => {
 
 	t.deepEqual(result, [
 		{
-			name: 'gulp',
+			ruleId: 'gulp',
 			severity: 'error',
 			message: 'No Gulpfile found.'
 		},
 		{
-			name: 'gulp',
+			ruleId: 'gulp',
 			severity: 'error',
 			message: '`gulp` dependency not found in `devDependencies`.',
 			file: path.resolve(opts.cwd, 'package.json')
@@ -42,7 +42,7 @@ test('typescript gulpfile', async t => {
 test('typescript gulpfile - no dependency', async t => {
 	t.deepEqual(await m('ts-nodep', opts), [
 		{
-			name: 'gulp',
+			ruleId: 'gulp',
 			severity: 'error',
 			message: 'Expected one of `ts-node`, `typescript-node`, `typescript-register`, `typescript-require` in `devDependencies`.',
 			file: path.resolve(opts.cwd, 'ts-nodep/package.json')
@@ -57,7 +57,7 @@ test('coffee gulpfile', async t => {
 test('coffee gulpfile - no dependency', async t => {
 	t.deepEqual(await m('coffee-nodep', opts), [
 		{
-			name: 'gulp',
+			ruleId: 'gulp',
 			severity: 'error',
 			message: 'Expected `coffee-script` in `devDependencies`.',
 			file: path.resolve(opts.cwd, 'coffee-nodep/package.json')

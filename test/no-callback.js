@@ -1,5 +1,5 @@
 import test from 'ava';
-import m from '../';
+import {lint as m} from '../';
 
 const opts = {
 	cwd: 'fixtures/no-callback',
@@ -9,7 +9,7 @@ const opts = {
 test('callback', async t => {
 	t.deepEqual(await m('cb', opts), [
 		{
-			name: 'no-callback',
+			ruleId: 'no-callback',
 			severity: 'error',
 			message: 'Use promises instead of callbacks'
 		}

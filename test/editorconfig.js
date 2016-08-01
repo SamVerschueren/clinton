@@ -1,6 +1,6 @@
 import path from 'path';
 import test from 'ava';
-import m from '../';
+import {lint as m} from '../';
 
 const opts = {
 	cwd: 'fixtures/editorconfig',
@@ -10,7 +10,7 @@ const opts = {
 test('no editorconfig', async t => {
 	t.deepEqual(await m('false', opts), [
 		{
-			name: 'editorconfig',
+			ruleId: 'editorconfig',
 			severity: 'error',
 			message: 'Use `.editorconfig` to define and maintain consistent coding styles between editors',
 			file: path.resolve(opts.cwd, 'false/.editorconfig')
