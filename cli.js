@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 'use strict';
+const path = require('path');
 const meow = require('meow');
 const chalk = require('chalk');
 const logSymbols = require('log-symbols');
@@ -32,6 +33,8 @@ const cli = meow(`
 
 updateNotifier({pkg: cli.pkg}).notify();
 
+const root = path.resolve(cli.flags.cwd || process.cwd(), cli.input[0] || '.');
+
 const logHelper = validation => {
 	let severity = 'error';
 
@@ -45,8 +48,17 @@ const logHelper = validation => {
 const log = validations => {
 	const files = groupBy(validations, 'file');
 
+	if (files.undefined) {
+		console.log(`  ${chalk.underline('Project')}`);
+		(files.undefined || []).forEach(logHelper);
+
+		delete files.undefined;
+
+		console.log();
+	}
+
 	for (const file of Object.keys(files)) {
-		console.log(`  ${chalk.underline(file === 'undefined' ? process.cwd() : file)}`);
+		console.log(`  ${chalk.underline(path.relative(root, file))}`);
 
 		files[file].forEach(logHelper);
 
