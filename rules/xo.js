@@ -69,7 +69,7 @@ module.exports = ctx => {
 
 		const errors = [];
 
-		if (pkg.engines && pkg.engines.node && !semver.satisfies('0.0.10', pkg.engines.node) && !semver.satisfies('0.0.12', pkg.engines.node)) {
+		if (pkg.engines && pkg.engines.node && !semver.satisfies('0.10.0', pkg.engines.node) && !semver.satisfies('0.12.0', pkg.engines.node)) {
 			if (!pkg.xo || pkg.xo.esnext !== true) {
 				errors.push({
 					message: 'Enforce ES2015+ rules in XO with the `esnext` option.',
