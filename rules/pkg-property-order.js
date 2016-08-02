@@ -47,13 +47,13 @@ const fix = ctx => {
 				const pkgProps = Object.keys(pkg);
 
 				// Order the known package properties
-				const knownProps = keys.filter(key => pkgProps.includes(key));
+				const knownProps = keys.filter(key => pkgProps.indexOf(key) !== -1);
 				for (const prop of knownProps) {
 					ret[prop] = pkg[prop];
 				}
 
 				// Order to unknown package properties
-				const unknownProps = pkgProps.filter(prop => !keys.includes(prop)).sort();
+				const unknownProps = pkgProps.filter(prop => keys.indexOf(prop) === -1).sort();
 				for (const prop of unknownProps) {
 					ret[prop] = pkg[prop];
 				}
