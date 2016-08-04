@@ -14,6 +14,7 @@ module.exports = {
 		'readme': 'error',
 		'test-script': 'error',
 		'use-travis': 'warn',
+		'travis': 'error',
 		'valid-version': 'error',
 		'cli': 'error',
 		'max-depth': 'warn',

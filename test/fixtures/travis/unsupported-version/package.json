@@ -1,0 +1,11 @@
+{
+  "name": "travis",
+  "engines": {
+    "node": ">=4"
+  },
+  "clinton": {
+    "rules": {
+      "travis": "error"
+    }
+  }
+}

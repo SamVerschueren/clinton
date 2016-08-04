@@ -44,6 +44,7 @@
     "globby": "^4.0.0",
     "got": "^6.2.0",
     "is-d": "^1.0.0",
+    "js-yaml": "^3.6.1",
     "lodash.camelcase": "^4.1.1",
     "lodash.groupby": "^4.4.0",
     "lodash.kebabcase": "^4.0.1",
@@ -60,7 +61,6 @@
     "travis-got": "^1.0.0",
     "update-notifier": "^1.0.0",
     "vinyl-fs": "^2.4.3",
-    "yaml": "^0.3.0",
     "yargs-parser": "^2.4.1",
     "z-schema": "^3.17.0"
   },
