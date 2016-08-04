@@ -125,9 +125,11 @@ Current working directory when linting local projects.
 	- *[...order]* - Custom list of properties.
 - **pkg-schema** - Validates the schema of `package.json`
 - **pkg-description** - Enforces the `description` in `package.json` to start with a capital letter and not end with a dot.
+- **pkg-shorthand-repository** - Enforces the `repository` field in `package.json` to be `SamVerschueren/clinton` instead of an object or the full blown url.
 - **readme** - Check if a `readme` file is present.
 - **test-script** - Check if the `test` script is set.
 - **use-travis** - Checks if [Travis CI](https://travis-ci.org/) is used.
+- **travis** - Checks if the correct versions are being tested in `.travis.yml`.
 - **valid-properties** - Checks if a certain set of properties is defined in `package.json`.
 - **valid-version** - Checks if the `version` in `package.json` is a valid semver version.
 - **cli** - Checks if the `bin` file specified in `package.json` exists and is executable.
