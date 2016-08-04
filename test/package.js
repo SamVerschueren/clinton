@@ -1,21 +1,11 @@
 import path from 'path';
 import test from 'ava';
 import {lint as m} from '../';
+import {fix} from './fixtures/utils';
 
 const opts = {
 	cwd: 'fixtures/package',
 	inherit: false
-};
-
-const mFix = async (t, input, opts) => {
-	const validations = await m(input, opts);
-
-	for (const validation of validations) {
-		t.true(typeof validation.fix === 'function');
-		delete validation.fix;
-	}
-
-	return validations;
 };
 
 test('no `files` property', async t => {
@@ -52,7 +42,7 @@ test('invalid version', async t => {
 });
 
 test('invalid order', async t => {
-	t.deepEqual(await mFix(t, 'property-order', opts), [
+	t.deepEqual(fix(await m('property-order', opts)), [
 		{
 			ruleId: 'pkg-property-order',
 			severity: 'error',
@@ -71,4 +61,60 @@ test('invalid main', async t => {
 			file: path.resolve(opts.cwd, 'invalid-main/package.json')
 		}
 	]);
+});
+
+test('object repository field', async t => {
+	t.deepEqual(fix(await m('shorthand-repo/object', opts)), [
+		{
+			ruleId: 'pkg-shorthand-repository',
+			severity: 'error',
+			message: 'Use the shorthand notation `SamVerschueren/clinton` for the `repository` field.',
+			file: path.resolve(opts.cwd, 'shorthand-repo/object/package.json')
+		}
+	]);
+
+	t.deepEqual(fix(await m('shorthand-repo/git-object', opts)), [
+		{
+			ruleId: 'pkg-shorthand-repository',
+			severity: 'error',
+			message: 'Use the shorthand notation `SamVerschueren/clinton` for the `repository` field.',
+			file: path.resolve(opts.cwd, 'shorthand-repo/git-object/package.json')
+		}
+	]);
+
+	t.deepEqual(fix(await m('shorthand-repo/shorthand-object', opts)), [
+		{
+			ruleId: 'pkg-shorthand-repository',
+			severity: 'error',
+			message: 'Use the shorthand notation `SamVerschueren/clinton` for the `repository` field.',
+			file: path.resolve(opts.cwd, 'shorthand-repo/shorthand-object/package.json')
+		}
+	]);
+});
+
+test('string repository field', async t => {
+	t.deepEqual(fix(await m('shorthand-repo/string', opts)), [
+		{
+			ruleId: 'pkg-shorthand-repository',
+			severity: 'error',
+			message: 'Use the shorthand notation `SamVerschueren/clinton` for the `repository` field.',
+			file: path.resolve(opts.cwd, 'shorthand-repo/string/package.json')
+		}
+	]);
+
+	t.deepEqual(fix(await m('shorthand-repo/git-string', opts)), [
+		{
+			ruleId: 'pkg-shorthand-repository',
+			severity: 'error',
+			message: 'Use the shorthand notation `SamVerschueren/clinton` for the `repository` field.',
+			file: path.resolve(opts.cwd, 'shorthand-repo/git-string/package.json')
+		}
+	]);
+
+	t.deepEqual(fix(await m('shorthand-repo', opts)), []);
+});
+
+test('shorthand bitbucket repository', async t => {
+	t.deepEqual(fix(await m('shorthand-repo/bitbucket-string', opts)), []);
+	t.deepEqual(fix(await m('shorthand-repo/bitbucket-object', opts)), []);
 });

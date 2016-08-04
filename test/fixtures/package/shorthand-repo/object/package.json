@@ -1,0 +1,12 @@
+{
+  "name": "package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SamVerschueren/clinton"
+  },
+  "clinton": {
+    "rules": {
+      "pkg-shorthand-repository": "error"
+    }
+  }
+}
