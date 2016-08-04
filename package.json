@@ -45,6 +45,7 @@
     "got": "^6.2.0",
     "is-d": "^1.0.0",
     "js-yaml": "^3.6.1",
+    "junk": "^1.0.3",
     "lodash.camelcase": "^4.1.1",
     "lodash.groupby": "^4.4.0",
     "lodash.kebabcase": "^4.0.1",
