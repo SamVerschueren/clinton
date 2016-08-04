@@ -1,21 +1,11 @@
 import path from 'path';
 import test from 'ava';
 import {lint as m} from '../';
+import {fix} from './fixtures/utils';
 
 const opts = {
 	cwd: 'fixtures/travis',
 	inherit: false
-};
-
-const mFix = async (t, input, opts) => {
-	const validations = await m(input, opts);
-
-	for (const validation of validations) {
-		t.true(typeof validation.fix === 'function');
-		delete validation.fix;
-	}
-
-	return validations;
 };
 
 test('use travis', async t => {
@@ -35,7 +25,7 @@ test('no engine specified', async t => {
 test('unsupported version', async t => {
 	const file = path.resolve(opts.cwd, 'unsupported-version/.travis.yml');
 
-	t.deepEqual(await mFix(t, 'unsupported-version', opts), [
+	t.deepEqual(fix(await m('unsupported-version', opts)), [
 		{
 			message: 'Unsupported version `0.12` is being tested.',
 			ruleId: 'travis',
@@ -54,7 +44,7 @@ test('unsupported version', async t => {
 test('untested versions', async t => {
 	const file = path.resolve(opts.cwd, 'untested/.travis.yml');
 
-	t.deepEqual(await mFix(t, 'untested', opts), [
+	t.deepEqual(fix(await m('untested', opts)), [
 		{
 			message: 'Supported version `0.10` not being tested.',
 			ruleId: 'travis',

@@ -1,28 +1,17 @@
 import path from 'path';
 import test from 'ava';
 import {lint as m} from '../';
-import utils from './fixtures/utils';
+import {assign, fix} from './fixtures/utils';
 
 const opts = {
 	cwd: 'fixtures/xo',
 	inherit: false
 };
 
-const inherit = utils.assign(opts);
-
-const mFix = async (t, input, opts) => {
-	const validations = await m(input, opts);
-
-	for (const validation of validations) {
-		t.true(typeof validation.fix === 'function');
-		delete validation.fix;
-	}
-
-	return validations;
-};
+const inherit = assign(opts);
 
 test('no esnext', async t => {
-	t.deepEqual(await mFix(t, 'no-esnext', opts), [
+	t.deepEqual(fix(await m('no-esnext', opts)), [
 		{
 			ruleId: 'xo',
 			severity: 'error',
@@ -77,7 +66,7 @@ test('unicorn version', async t => {
 });
 
 test('test script', async t => {
-	t.deepEqual(await mFix(t, 'no-script', opts), [
+	t.deepEqual(fix(await m('no-script', opts)), [
 		{
 			ruleId: 'xo',
 			severity: 'error',
@@ -88,7 +77,7 @@ test('test script', async t => {
 });
 
 test('cli config', async t => {
-	t.deepEqual(await mFix(t, 'cli-config', opts), [
+	t.deepEqual(fix(await m('cli-config', opts)), [
 		{
 			ruleId: 'xo',
 			severity: 'error',
