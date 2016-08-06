@@ -11,6 +11,7 @@ const DEFAULT_ORDER = [
 	'bugs',
 	'author',
 	'maintainers',
+	'contributors',
 	'private',
 	'preferGlobal',
 	'publishConfig',
