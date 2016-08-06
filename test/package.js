@@ -118,3 +118,28 @@ test('shorthand bitbucket repository', async t => {
 	t.deepEqual(fix(await m('shorthand-repo/bitbucket-string', opts)), []);
 	t.deepEqual(fix(await m('shorthand-repo/bitbucket-object', opts)), []);
 });
+
+test('user property order', async t => {
+	const file = path.resolve(opts.cwd, 'user-order/package.json');
+
+	t.deepEqual(fix(await m('user-order', opts)), [
+		{
+			message: 'Property `author.name` should occur before property `author.email`.',
+			file,
+			ruleId: 'pkg-user-order',
+			severity: 'error'
+		},
+		{
+			message: 'Property `maintainers[0].email` should occur before property `maintainers[0].url`.',
+			file,
+			ruleId: 'pkg-user-order',
+			severity: 'error'
+		},
+		{
+			message: 'Property `contributors[0].name` should occur before property `contributors[0].url`.',
+			file,
+			ruleId: 'pkg-user-order',
+			severity: 'error'
+		}
+	]);
+});

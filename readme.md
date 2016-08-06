@@ -123,6 +123,8 @@ Current working directory when linting local projects.
 - **pkg-main** - Checks if the file provided in the `main` property in `package.json` exists.
 - **pkg-property-order** - Checks the `package.json` property order.
 	- *[...order]* - Custom list of properties.
+- **pkg-user-order** - Checks the order of the properties of user objects in `package.json` like `author`, `contributors` and `maintainers`.
+	- *[...order]* - (default `['name', 'email', 'url']`) Custom property order.
 - **pkg-schema** - Validates the schema of `package.json`
 - **pkg-description** - Enforces the `description` in `package.json` to start with a capital letter and not end with a dot.
 - **pkg-shorthand-repository** - Enforces the `repository` field in `package.json` to be `SamVerschueren/clinton` instead of an object or the full blown url.

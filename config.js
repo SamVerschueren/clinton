@@ -9,6 +9,7 @@ module.exports = {
 		'pkg-files': 'error',
 		'pkg-main': 'error',
 		'pkg-property-order': 'error',
+		'pkg-user-order': 'error',
 		'pkg-schema': 'error',
 		'pkg-description': 'error',
 		'pkg-shorthand-repository': 'error',
