@@ -1,0 +1,9 @@
+{
+  "name": "package",
+  "bugs": "github.com/SamVerschueren/clinton/issues",
+  "clinton": {
+    "rules": {
+      "pkg-normalize": "error"
+    }
+  }
+}

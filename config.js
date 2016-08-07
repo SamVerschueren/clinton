@@ -11,6 +11,7 @@ module.exports = {
 		'pkg-property-order': 'error',
 		'pkg-user-order': 'error',
 		'pkg-schema': 'error',
+		'pkg-normalize': 'warn',
 		'pkg-description': 'error',
 		'pkg-shorthand-repository': 'error',
 		'readme': 'error',

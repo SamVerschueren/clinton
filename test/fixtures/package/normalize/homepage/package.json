@@ -1,0 +1,10 @@
+{
+  "name": "package",
+  "repository": "SamVerschueren/clinton",
+  "homepage": "github.com/SamVerschueren/clinton/issues",
+  "clinton": {
+    "rules": {
+      "pkg-normalize": "error"
+    }
+  }
+}

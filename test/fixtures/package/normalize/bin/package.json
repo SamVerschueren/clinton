@@ -1,0 +1,11 @@
+{
+  "name": "package",
+  "bin": {
+    "package": "cli.js"
+  },
+  "clinton": {
+    "rules": {
+      "pkg-normalize": "error"
+    }
+  }
+}

@@ -143,3 +143,53 @@ test('user property order', async t => {
 		}
 	]);
 });
+
+test('normalize `version` field', async t => {
+	t.deepEqual(fix(await m('normalize/version', opts)), [
+		{
+			message: 'Set `version` property to `1.0.0`.',
+			file: path.resolve(opts.cwd, 'normalize/version/package.json'),
+			ruleId: 'pkg-normalize',
+			severity: 'error'
+		}
+	]);
+});
+
+test('normalize `bin` field', async t => {
+	t.deepEqual(fix(await m('normalize/bin', opts)), [
+		{
+			message: 'Set `bin` property to `cli.js` instead of providing an object.',
+			file: path.resolve(opts.cwd, 'normalize/bin/package.json'),
+			ruleId: 'pkg-normalize',
+			severity: 'error'
+		}
+	]);
+});
+
+test('normalize `bugs` field', async t => {
+	t.deepEqual(await m('normalize/bugs/no-repository', opts), []);
+	t.deepEqual(await m('normalize/bugs/jira', opts), []);
+
+	t.deepEqual(fix(await m('normalize/bugs', opts)), [
+		{
+			message: 'Remove moot property `bugs`.',
+			file: path.resolve(opts.cwd, 'normalize/bugs/package.json'),
+			ruleId: 'pkg-normalize',
+			severity: 'error'
+		}
+	]);
+});
+
+test('normalize `homepage` field', async t => {
+	t.deepEqual(await m('normalize/homepage/no-repository', opts), []);
+	t.deepEqual(await m('normalize/homepage/custom', opts), []);
+
+	t.deepEqual(fix(await m('normalize/homepage', opts)), [
+		{
+			message: 'Remove moot property `homepage`.',
+			file: path.resolve(opts.cwd, 'normalize/homepage/package.json'),
+			ruleId: 'pkg-normalize',
+			severity: 'error'
+		}
+	]);
+});

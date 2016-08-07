@@ -121,6 +121,7 @@ Current working directory when linting local projects.
 - **no-callback** - Check if the project uses promises instead of callbacks.
 - **pkg-files** - `files` property in `package.json` should be provided.
 - **pkg-main** - Checks if the file provided in the `main` property in `package.json` exists.
+- **pkg-normalize** - Enforces package [normalization](https://github.com/npm/normalize-package-data#what-normalization-currently-entails) and warns on moot properties.
 - **pkg-property-order** - Checks the `package.json` property order.
 	- *[...order]* - Custom list of properties.
 - **pkg-user-order** - Checks the order of the properties of user objects in `package.json` like `author`, `contributors` and `maintainers`.
