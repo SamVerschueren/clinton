@@ -22,7 +22,7 @@ const isGitRepository = repository => {
 		return false;
 	}
 
-	return repository.indexOf('github.com') !== -1 || /^\w+\/\w+$/.test(repository);
+	return repository.includes('github.com') || /^\w+\/\w+$/.test(repository);
 };
 
 module.exports = ctx => {

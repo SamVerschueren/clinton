@@ -18,7 +18,7 @@ const fix = (ctx, method) => {
 					pkg.scripts = {};
 				}
 
-				if (pkg.scripts.test && pkg.scripts.test.length !== 0 && pkg.scripts.test.indexOf('exit 1') === -1) {
+				if (pkg.scripts.test && pkg.scripts.test.length !== 0 && !pkg.scripts.test.includes('exit 1')) {
 					pkg.scripts.test = `xo && ${pkg.scripts.test}`;
 				} else {
 					pkg.scripts.test = `xo`;

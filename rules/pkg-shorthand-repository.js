@@ -26,7 +26,7 @@ module.exports = ctx => ctx.fs.readFile('package.json').then(pkg => {
 	const parsed = url.parse(isObject ? pkg.repository.url : pkg.repository);
 	const shorthand = parsed.path.match(/^(?:\/)?(.*?)(?:\.git)?$/)[1];
 
-	if (parsed.host === null || parsed.host.indexOf('github.com') !== -1) {
+	if (parsed.host === null || parsed.host.includes('github.com')) {
 		if (isObject || parsed.path !== shorthand) {
 			return {
 				message: `Use the shorthand notation \`${shorthand}\` for the \`repository\` field.`,
