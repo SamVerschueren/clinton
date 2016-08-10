@@ -43,5 +43,5 @@ test('unknown plugin', t => {
 });
 
 test('cli', async t => {
-	t.throws(execa('../cli.js', ['fixtures/package/no-files', '--no-inherit']), /[ ]*?✖[ ]*?Missing `files` property in `package.json`. \(pkg-files\)/);
+	t.throws(execa('../cli.js', ['fixtures/package/no-files', '--no-inherit']), /[ ]*?✖[ ]*?Missing files property in package.json.[ ]*pkg-files/);
 });

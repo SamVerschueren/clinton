@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 'use strict';
-const path = require('path');
 const meow = require('meow');
 const chalk = require('chalk');
 const logSymbols = require('log-symbols');
 const updateNotifier = require('update-notifier');
 const groupBy = require('lodash.groupby');
+const formatter = require('eslint-formatter-pretty');
 const ghLint = require('./');
 
 const cli = meow(`
@@ -14,16 +14,21 @@ const cli = meow(`
 
 	Options
 	  --no-inherit  Prevent inheriting from the default rules.
+	  --ignores     Ignore files. Can be added multiple times.
 	  --fix         Automatically fix problems.
 
 	Examples
 	  $ clinton
-	    ${chalk.underline('/Users/sam/projects/foo/.editorconfig')}
-	      ${logSymbols.warning}  Use \`.editorconfig\` to define and maintain consistent coding styles between editors. (editorconfig)
+	    ${chalk.underline('.editorconfig')}
+	    ${logSymbols.warning}  Use ${chalk.bold('.editorconfig')} to define and maintain consistent coding styles between editors. 	${chalk.dim('editorconfig')}
+
+	    ${chalk.yellow('1  warning')}
 
 	  $ clinton ~/projects/project
-	    ${chalk.underline('/Users/sam/projects/project/license')}
-	      ${logSymbols.error}  No MIT license found. (license-mit)
+	    ${chalk.underline('license')}
+	    ${logSymbols.error}  No MIT license found. 	${chalk.dim('license-mit')}
+
+	    ${chalk.red('1  error')}
 `, {
 	boolean: ['inherit', 'fix'],
 	default: {
@@ -33,37 +38,23 @@ const cli = meow(`
 
 updateNotifier({pkg: cli.pkg}).notify();
 
-const root = path.resolve(cli.flags.cwd || process.cwd(), cli.input[0] || '.');
-
-const logHelper = validation => {
-	let severity = 'error';
-
-	if (validation.severity === 'warn') {
-		severity = 'warning';
-	}
-
-	console.log(`    ${logSymbols[severity]} ${validation.message} ${chalk.gray(`(${validation.ruleId})`)}`);
-};
-
 const log = validations => {
 	const files = groupBy(validations, 'file');
 
-	if (files.undefined) {
-		console.log(`  ${chalk.underline('Project')}`);
-		(files.undefined || []).forEach(logHelper);
+	const filePaths = Object.keys(files);
 
-		delete files.undefined;
+	const ret = [];
 
-		console.log();
+	for (const filePath of filePaths) {
+		ret.push({
+			filePath: filePath === 'undefined' ? 'Project' : filePath,
+			errorCount: files[filePath].reduce((c, m) => c + (m.severity === 'error' ? 1 : 0), 0),
+			warningCount: files[filePath].reduce((c, m) => c + (m.severity === 'warn' ? 1 : 0), 0),
+			messages: files[filePath]
+		});
 	}
 
-	for (const file of Object.keys(files)) {
-		console.log(`  ${chalk.underline(path.relative(root, file))}`);
-
-		files[file].forEach(logHelper);
-
-		console.log();
-	}
+	console.log(formatter(ret));
 };
 
 const exit = validations => {

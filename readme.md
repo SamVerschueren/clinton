@@ -96,16 +96,21 @@ Current working directory when linting local projects.
 
 	Options
 	  --no-inherit  Prevent inheriting from the default rules.
+	  --ignores     Ignore files. Can be added multiple times.
 	  --fix         Automatically fix problems.
 
 	Examples
 	  $ clinton
-	    /Users/sam/projects/foo/.editorconfig
-	      ⚠  Use `.editorconfig` to define and maintain consistent coding styles between editors. (editorconfig)
+        .editorconfig
+        ⚠  Use .editorconfig to define and maintain consistent coding styles between editors.     editorconfig
+
+        1  warning
 
 	  $ clinton ~/projects/project
-	    /Users/sam/projects/project/license
-	      ✖  License is not of type MIT (http://www.opensource.org/licenses/MIT). (license)
+        license
+        ✖  No MIT license found.  license-mit
+
+        1  error
 ```
 
 
