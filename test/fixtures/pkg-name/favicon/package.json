@@ -1,0 +1,8 @@
+{
+  "name": "favicon.ico",
+  "clinton": {
+    "rules": {
+      "pkg-name": "error"
+    }
+  }
+}

@@ -61,6 +61,7 @@
     "string-occurrence": "^1.1.1",
     "travis-got": "^1.0.0",
     "update-notifier": "^1.0.0",
+    "validate-npm-package-name": "^2.2.2",
     "vinyl-fs": "^2.4.3",
     "yargs-parser": "^2.4.1",
     "z-schema": "^3.17.0"

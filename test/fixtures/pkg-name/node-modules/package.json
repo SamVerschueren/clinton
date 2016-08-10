@@ -1,0 +1,8 @@
+{
+  "name": "node_modules",
+  "clinton": {
+    "rules": {
+      "pkg-name": "error"
+    }
+  }
+}
