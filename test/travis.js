@@ -59,3 +59,22 @@ test('untested versions', async t => {
 		}
 	]);
 });
+
+test('deprecated versions', async t => {
+	const file = path.resolve(opts.cwd, 'deprecated/.travis.yml');
+
+	t.deepEqual(await m('deprecated', opts), [
+		{
+			message: 'Version `stable` is deprecated.',
+			file,
+			ruleId: 'travis',
+			severity: 'error'
+		},
+		{
+			message: 'Version `iojs` is deprecated.',
+			file,
+			ruleId: 'travis',
+			severity: 'error'
+		}
+	]);
+});

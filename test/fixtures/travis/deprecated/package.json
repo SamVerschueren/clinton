@@ -1,0 +1,8 @@
+{
+  "name": "travis",
+  "clinton": {
+    "rules": {
+      "travis": "error"
+    }
+  }
+}

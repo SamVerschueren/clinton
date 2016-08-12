@@ -4,6 +4,7 @@ const detectIndent = require('detect-indent');
 const yaml = require('js-yaml');
 
 const SUPPORTED_VERSIONS = ['0.10', '0.12', '4', '6'];
+const DEPRECATED_VERSIONS = ['iojs', 'stable'];
 
 /**
  * Normalize a semantic version to be a valid version. 0.10 -> 0.10.0
@@ -67,7 +68,7 @@ const fix = (ctx, method, arg) => {
 module.exports = ctx => {
 	const engine = (ctx.env.pkg.engines || {}).node;
 
-	if (ctx.files.indexOf('.travis.yml') === -1 || !engine) {
+	if (ctx.files.indexOf('.travis.yml') === -1) {
 		return;
 	}
 
@@ -94,7 +95,12 @@ module.exports = ctx => {
 			const versions = Array.isArray(travis.node_js) ? travis.node_js : [travis.node_js];
 
 			for (const version of versions) {
-				if (!semver.satisfies(normalize(version), engine)) {
+				if (DEPRECATED_VERSIONS.indexOf(version) !== -1) {
+					errors.push({
+						message: `Version \`${version}\` is deprecated.`,
+						file
+					});
+				} else if (version !== 'node' && engine && !semver.satisfies(normalize(version), engine)) {
 					errors.push({
 						message: `Unsupported version \`${version}\` is being tested.`,
 						fix: fix(ctx, 'unsupported', version),
@@ -103,13 +109,15 @@ module.exports = ctx => {
 				}
 			}
 
-			for (const version of SUPPORTED_VERSIONS) {
-				if (semver.satisfies(normalize(version), engine) && !isSupported(version, versions)) {
-					errors.push({
-						message: `Supported version \`${version}\` not being tested.`,
-						fix: fix(ctx, 'supported', version),
-						file
-					});
+			if (engine) {
+				for (const version of SUPPORTED_VERSIONS) {
+					if (semver.satisfies(normalize(version), engine) && !isSupported(version, versions)) {
+						errors.push({
+							message: `Supported version \`${version}\` not being tested.`,
+							fix: fix(ctx, 'supported', version),
+							file
+						});
+					}
 				}
 			}
 
