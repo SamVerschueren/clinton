@@ -70,6 +70,7 @@
   "devDependencies": {
     "ava": "*",
     "execa": "^0.4.0",
+    "figures": "^1.7.0",
     "xo": "*"
   },
   "xo": {

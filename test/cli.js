@@ -12,14 +12,16 @@ test('no error', async t => {
 });
 
 test('file is not executable', async t => {
-	t.deepEqual(await m('not-executable', opts), [
+	const expectedResult = process.platform === 'win32' ? [] : [
 		{
 			ruleId: 'cli',
 			severity: 'error',
 			message: 'File `bin.js` is not executable.',
 			file: path.resolve(opts.cwd, 'not-executable/bin.js')
 		}
-	]);
+	];
+
+	t.deepEqual(await m('not-executable', opts), expectedResult);
 });
 
 test('file not exists', async t => {
