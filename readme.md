@@ -1,6 +1,6 @@
 # clinton
 
-[![Build Status: Linux](https://travis-ci.org/SamVerschueren/clinton.svg?branch=master)](https://travis-ci.org/SamVerschueren/clinton) [![Build status: Windows](https://ci.appveyor.com/api/projects/status/1lcv1c0eqjtcg83s/branch/master?svg=true)](https://ci.appveyor.com/project/SamVerschueren/clinton/branch/master)
+[![Build Status: Linux](https://travis-ci.org/SamVerschueren/clinton.svg?branch=master)](https://travis-ci.org/SamVerschueren/clinton) [![Build status: Windows](https://ci.appveyor.com/api/projects/status/1lcv1c0eqjtcg83s/branch/master?svg=true)](https://ci.appveyor.com/project/SamVerschueren/clinton/branch/master) [![Coverage Status](https://coveralls.io/repos/github/SamVerschueren/clinton/badge.svg?branch=master)](https://coveralls.io/github/SamVerschueren/clinton?branch=master)
 
 
 > JavaScript project style linter
