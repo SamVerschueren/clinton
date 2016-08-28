@@ -54,7 +54,9 @@ const log = validations => {
 		});
 	}
 
-	console.log(formatter(ret));
+	if (ret.length > 0) {
+		console.log(formatter(ret));
+	}
 };
 
 const exit = validations => {
