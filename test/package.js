@@ -193,3 +193,7 @@ test('normalize `homepage` field', async t => {
 		}
 	]);
 });
+
+test('normalize `repository` field', async t => {
+	t.deepEqual(fix(await m('normalize/repository', opts)), []);
+});

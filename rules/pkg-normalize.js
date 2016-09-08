@@ -22,6 +22,14 @@ const isGitRepository = repository => {
 		return false;
 	}
 
+	if (typeof repository !== 'string' && (typeof repository !== 'object' || repository.url === undefined)) {
+		return false;
+	}
+
+	if (typeof repository === 'object') {
+		repository = repository.url;
+	}
+
 	return repository.includes('github.com') || /^\w+\/\w+$/.test(repository);
 };
 
