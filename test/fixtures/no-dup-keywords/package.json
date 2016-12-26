@@ -1,0 +1,12 @@
+{
+  "name": "package",
+  "keywords": [
+    "foo",
+    "bar"
+  ],
+  "clinton": {
+    "rules": {
+      "no-dup-keywords": "error"
+    }
+  }
+}

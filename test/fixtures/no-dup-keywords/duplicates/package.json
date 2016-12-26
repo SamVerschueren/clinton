@@ -1,0 +1,17 @@
+{
+  "name": "package",
+  "keywords": [
+    "foo",
+    "bar",
+    "foo",
+    "unicorn",
+    "rainbow",
+    "bar",
+    "foo"
+  ],
+  "clinton": {
+    "rules": {
+      "no-dup-keywords": "error"
+    }
+  }
+}

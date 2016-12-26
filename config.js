@@ -23,6 +23,7 @@ module.exports = {
 		cli: 'error',
 		'max-depth': 'warn',
 		gulp: ['error', 'optional'],
-		'filename-case': ['error', {case: 'kebabCase'}]
+		'filename-case': ['error', {case: 'kebabCase'}],
+		'no-dup-keywords': 'error'
 	}
 };

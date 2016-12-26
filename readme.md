@@ -149,6 +149,7 @@ Current working directory when linting local projects.
 	- *[max]* - (default `5`) enforces a maximum depth that directories can be nested.
 - **filename-case** - Enforces all linted files to have their names in a certain case style. Default is `kebabCase`.
 	- *{case: _type_}* - _type_ can be one of `kebabCase`, `camelCase`, `snakeCase` or `pascalCase`.
+- **no-dup-keywords** - Checks that `package.json` does not have duplicate keywords.
 
 ## Plugins
 
