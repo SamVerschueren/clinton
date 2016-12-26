@@ -2,7 +2,7 @@ import test from 'ava';
 import {lint as m} from '../';
 
 const opts = {
-	cwd: 'fixtures/no-callback',
+	cwd: 'test/fixtures/no-callback',
 	inherit: false
 };
 

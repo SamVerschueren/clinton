@@ -1,10 +1,10 @@
 'use strict';
 module.exports = {
 	rules: {
-		'ava': ['error', '*'],
-		'xo': ['error', '*'],
-		'editorconfig': 'error',
-		'license': ['error', 'MIT'],
+		ava: ['error', '*'],
+		xo: ['error', '*'],
+		editorconfig: 'error',
+		license: ['error', 'MIT'],
 		'no-callback': 'error',
 		'pkg-files': 'error',
 		'pkg-main': 'error',
@@ -15,14 +15,14 @@ module.exports = {
 		'pkg-description': 'error',
 		'pkg-name': 'error',
 		'pkg-shorthand-repository': 'error',
-		'readme': 'error',
+		readme: 'error',
 		'test-script': 'error',
 		'use-travis': 'warn',
-		'travis': 'error',
+		travis: 'error',
 		'valid-version': 'error',
-		'cli': 'error',
+		cli: 'error',
 		'max-depth': 'warn',
-		'gulp': ['error', 'optional'],
+		gulp: ['error', 'optional'],
 		'filename-case': ['error', {case: 'kebabCase'}]
 	}
 };

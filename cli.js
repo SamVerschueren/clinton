@@ -69,11 +69,10 @@ const exit = validations => {
 
 if (cli.flags.fix) {
 	ghLint.fix(cli.input[0] || '.', cli.flags);
-	return;
+} else {
+	ghLint.lint(cli.input[0] || '.', cli.flags)
+		.then(validations => {
+			log(validations);
+			exit(validations);
+		});
 }
-
-ghLint.lint(cli.input[0] || '.', cli.flags)
-	.then(validations => {
-		log(validations);
-		exit(validations);
-	});

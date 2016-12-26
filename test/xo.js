@@ -4,7 +4,7 @@ import {lint as m} from '../';
 import {assign, fix} from './fixtures/utils';
 
 const opts = {
-	cwd: 'fixtures/xo',
+	cwd: 'test/fixtures/xo',
 	inherit: false
 };
 

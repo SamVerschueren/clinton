@@ -3,7 +3,7 @@ import test from 'ava';
 import {lint as m} from '../';
 
 const opts = {
-	cwd: 'fixtures/gulp',
+	cwd: 'test/fixtures/gulp',
 	inherit: false
 };
 

@@ -101,7 +101,7 @@ module.exports = ctx => {
 			});
 		}
 
-		if (pkg.scripts && pkg.scripts.test && /\bxo\b[^&]*[\-]{2}/.test(pkg.scripts.test)) {
+		if (pkg.scripts && pkg.scripts.test && /\bxo\b[^&]*[-]{2}/.test(pkg.scripts.test)) {
 			errors.push({
 				message: 'Specify XO config in `package.json` instead of passing it through via the CLI.',
 				fix: fix(ctx, 'clioptions'),

@@ -3,7 +3,7 @@ import test from 'ava';
 import {lint as m} from '../';
 
 const opts = {
-	cwd: 'fixtures/pkg-name',
+	cwd: 'test/fixtures/pkg-name',
 	inherit: false
 };
 

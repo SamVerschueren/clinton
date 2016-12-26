@@ -3,7 +3,7 @@ import {lint as m} from '../';
 import utils from './fixtures/utils';
 
 const opts = {
-	cwd: 'fixtures/max-depth',
+	cwd: 'test/fixtures/max-depth',
 	inherit: false
 };
 
