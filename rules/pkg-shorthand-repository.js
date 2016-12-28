@@ -28,11 +28,11 @@ module.exports = ctx => ctx.fs.readFile('package.json').then(pkg => {
 
 	if (parsed.host === null || parsed.host.includes('github.com')) {
 		if (isObject || parsed.path !== shorthand) {
-			return {
+			ctx.report({
 				message: `Use the shorthand notation \`${shorthand}\` for the \`repository\` field.`,
 				file: ctx.fs.resolve('package.json'),
 				fix: fix(ctx, shorthand)
-			};
+			});
 		}
 	}
 });

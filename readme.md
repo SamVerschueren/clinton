@@ -166,18 +166,16 @@ module.exports = ctx => {
 	const fileName = ctx.options[0];
 
 	if (!ctx.files.includes(fileName)) {
-		return {
+		ctx.report({
 			message: `File ${fileName} does not exist.`
-		};
+		});
 	}
 };
 ```
 
-You can either return a promise or return an object immediately with a `message` property. The rule is successful if the function
-returns nothing.
+You can also return a promise if you are performing asynchronous operations.
 
-You can wrap this up in a project, publish it to [npm](https://www.npmjs.com/) and install it in every project where you
-want to check if a file in your project really exists.
+You can wrap this up in a project, publish it to [npm](https://www.npmjs.com/) and install it in every project where you want to check if a file in your project really exists.
 
 ```json
 {
@@ -199,8 +197,7 @@ want to check if a file in your project really exists.
 }
 ```
 
-When running `npm test`, `clinton` will execute your plugin and will use `index.js` as the option argument. The first argument `error`
-indicates the severity of the error.
+When running `npm test`, `clinton` will execute your plugin and will use `index.js` as the option argument. The first argument `error` indicates the severity of the error.
 
 
 ## Related

@@ -16,17 +16,19 @@ module.exports = ctx => {
 	}
 
 	if (!fileName) {
-		return {
+		ctx.report({
 			message: 'No license found.',
 			file
-		};
+		});
+		return;
 	}
 
 	if (!pkg.license) {
-		return {
+		ctx.report({
 			message: 'No `license` property defined in `package.json.',
 			file
-		};
+		});
+		return;
 	}
 
 	if (ctx.options.length === 0) {
@@ -38,17 +40,19 @@ module.exports = ctx => {
 	const licenseInfo = spdxLicenseList[type];
 
 	if (pkg.license !== type) {
-		return {
+		ctx.report({
 			message: `Expected \`license\` property to be \`${type}\`, got \`${pkg.license}\`.`,
 			file
-		};
+		});
+		return;
 	}
 
 	if (!licenseInfo) {
-		return {
+		ctx.report({
 			message: `License ${type} is unknown.`,
 			file
-		};
+		});
+		return;
 	}
 
 	const matcher = new FuzzyMatching([normalize(licenseInfo.license)]);
@@ -57,10 +61,10 @@ module.exports = ctx => {
 		const match = matcher.get(normalize(content));
 
 		if (match.distance < 0.9) {
-			return {
+			ctx.report({
 				message: `License is not of type ${type} (${licenseInfo.url.split('\n')[0]}).`,
 				file
-			};
+			});
 		}
 	});
 };

@@ -38,10 +38,8 @@ module.exports = ctx => {
 
 	return ctx.fs.readFile('package.json')
 		.then(pkg => {
-			const errors = [];
-
 			if (pkg.version && semver.clean(pkg.version) !== pkg.version) {
-				errors.push({
+				ctx.report({
 					message: `Set \`version\` property to \`${semver.clean(pkg.version)}\`.`,
 					fix: fix(ctx, 'version', semver.clean(pkg.version)),
 					file
@@ -52,7 +50,7 @@ module.exports = ctx => {
 				const keys = Object.keys(pkg.bin);
 
 				if (keys.length === 1 && keys[0] === pkg.name) {
-					errors.push({
+					ctx.report({
 						message: `Set \`bin\` property to \`${pkg.bin[keys[0]]}\` instead of providing an object.`,
 						fix: fix(ctx, 'bin', pkg.bin[keys[0]]),
 						file
@@ -61,7 +59,7 @@ module.exports = ctx => {
 			}
 
 			if (isGitRepository(pkg.bugs) && isGitRepository(pkg.repository)) {
-				errors.push({
+				ctx.report({
 					message: 'Remove moot property `bugs`.',
 					fix: fix(ctx, 'bugs'),
 					file
@@ -69,13 +67,11 @@ module.exports = ctx => {
 			}
 
 			if (isGitRepository(pkg.homepage) && isGitRepository(pkg.repository)) {
-				errors.push({
+				ctx.report({
 					message: 'Remove moot property `homepage`.',
 					fix: fix(ctx, 'homepage'),
 					file
 				});
 			}
-
-			return errors;
 		});
 };

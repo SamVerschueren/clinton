@@ -78,11 +78,12 @@ module.exports = ctx => {
 
 			for (const key of order) {
 				if (key !== pkgKeys[index]) {
-					return {
+					ctx.report({
 						message: `Property '${key}' should occur before property '${pkgKeys[index]}'.`,
 						fix: fix(ctx),
 						file
-					};
+					});
+					return;
 				}
 
 				index++;

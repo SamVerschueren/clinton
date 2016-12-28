@@ -8,16 +8,16 @@ module.exports = ctx => {
 	}
 
 	if (pkg.description[0] !== pkg.description[0].toUpperCase()) {
-		return {
+		ctx.report({
 			message: 'Package `description` should start with a capital letter',
 			file
-		};
+		});
 	}
 
 	if (/\.$/.test(pkg.description)) {
-		return {
+		ctx.report({
 			message: 'Package `description` should not end with a dot',
 			file
-		};
+		});
 	}
 };

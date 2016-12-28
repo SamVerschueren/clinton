@@ -49,7 +49,6 @@ const fix = (ctx, field) => {
 
 const checkOrder = (ctx, pkg, order) => {
 	const file = ctx.fs.resolve('package.json');
-	const ret = [];
 
 	for (const field of FIELDS) {
 		const isArray = Array.isArray(pkg[field]);
@@ -68,7 +67,7 @@ const checkOrder = (ctx, pkg, order) => {
 			if (i < keyOrder.length) {
 				const index = isArray ? `[${ci}]` : '';
 
-				ret.push({
+				ctx.report({
 					message: `Property \`${field}${index}.${keyOrder[i]}\` should occur before property \`${field}${index}.${userKeys[i]}\`.`,
 					file,
 					fix: fix(ctx, field)
@@ -76,8 +75,6 @@ const checkOrder = (ctx, pkg, order) => {
 			}
 		});
 	}
-
-	return ret;
 };
 
 module.exports = ctx => {

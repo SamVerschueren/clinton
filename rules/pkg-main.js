@@ -7,9 +7,9 @@ module.exports = ctx => ctx.fs.readFile('package.json').then(pkg => {
 	const fileName = ctx.files.find(file => file.toLowerCase().indexOf(pkg.main) === 0);
 
 	if (!fileName) {
-		return {
+		ctx.report({
 			message: `Main file '${pkg.main}' does not exist.`,
 			file: ctx.fs.resolve('package.json')
-		};
+		});
 	}
 });

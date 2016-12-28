@@ -71,8 +71,6 @@ const splitFilename = filename => {
 module.exports = ctx => {
 	const chosenCase = cases[ctx.options[0].case || 'camelCase'];
 
-	const errors = [];
-
 	for (const file of ctx.files) {
 		const extension = path.extname(file);
 		const filename = path.basename(file, extension);
@@ -81,12 +79,10 @@ module.exports = ctx => {
 		const renameFilename = splitName.leading + fixedFilename + extension;
 
 		if (fixedFilename !== splitName.trailing) {
-			errors.push({
+			ctx.report({
 				message: `Filename is not in ${chosenCase.name}. Rename it to \`${renameFilename}\`.`,
 				file: ctx.fs.resolve(file)
 			});
 		}
 	}
-
-	return errors;
 };

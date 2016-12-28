@@ -61,17 +61,16 @@ module.exports = ctx => {
 		const installedVersion = pkg.devDependencies && pkg.devDependencies.xo;
 
 		if (!installedVersion) {
-			return {
+			ctx.report({
 				message: 'XO is not installed as devDependency.',
 				file
-			};
+			});
+			return;
 		}
-
-		const errors = [];
 
 		if (pkg.engines && pkg.engines.node && !semver.satisfies('0.10.0', pkg.engines.node) && !semver.satisfies('0.12.0', pkg.engines.node)) {
 			if (!pkg.xo || pkg.xo.esnext !== true) {
-				errors.push({
+				ctx.report({
 					message: 'Enforce ES2015+ rules in XO with the `esnext` option.',
 					fix: fix(ctx, 'esnext'),
 					file
@@ -81,12 +80,12 @@ module.exports = ctx => {
 
 		if (requiredVersion) {
 			if (requiredVersion === '*' && installedVersion !== '*') {
-				errors.push({
+				ctx.report({
 					message: `Expected unicorn version '*' but found '${installedVersion}'.`,
 					file
 				});
 			} else if (requiredVersion !== '*' && !semver.gte(installedVersion, requiredVersion)) {
-				errors.push({
+				ctx.report({
 					message: `Expected version '${requiredVersion}' but found '${installedVersion}'.`,
 					file
 				});
@@ -94,7 +93,7 @@ module.exports = ctx => {
 		}
 
 		if (!pkg.scripts || !pkg.scripts.test || !/\bxo\b/.test(pkg.scripts.test)) {
-			errors.push({
+			ctx.report({
 				message: 'XO is not used in the test script.',
 				fix: fix(ctx, 'script'),
 				file
@@ -102,13 +101,11 @@ module.exports = ctx => {
 		}
 
 		if (pkg.scripts && pkg.scripts.test && /\bxo\b[^&]*[-]{2}/.test(pkg.scripts.test)) {
-			errors.push({
+			ctx.report({
 				message: 'Specify XO config in `package.json` instead of passing it through via the CLI.',
 				fix: fix(ctx, 'clioptions'),
 				file
 			});
 		}
-
-		return errors;
 	});
 };

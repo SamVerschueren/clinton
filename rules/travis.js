@@ -76,17 +76,15 @@ module.exports = ctx => {
 
 	return ctx.fs.readFile('.travis.yml')
 		.then(travis => {
-			const errors = [];
-
 			if (travis.language !== 'node_js') {
-				errors.push({
+				ctx.report({
 					message: 'Language is not set to `node_js`.',
 					file
 				});
 			}
 
 			if (!travis.node_js) {
-				errors.push({
+				ctx.report({
 					message: 'No Node.js versions specified.',
 					file
 				});
@@ -96,12 +94,12 @@ module.exports = ctx => {
 
 			for (const version of versions) {
 				if (DEPRECATED_VERSIONS.indexOf(version) !== -1) {
-					errors.push({
+					ctx.report({
 						message: `Version \`${version}\` is deprecated.`,
 						file
 					});
 				} else if (version !== 'node' && engine && !semver.satisfies(normalize(version), engine)) {
-					errors.push({
+					ctx.report({
 						message: `Unsupported version \`${version}\` is being tested.`,
 						fix: fix(ctx, 'unsupported', version),
 						file
@@ -112,7 +110,7 @@ module.exports = ctx => {
 			if (engine) {
 				for (const version of SUPPORTED_VERSIONS) {
 					if (semver.satisfies(normalize(version), engine) && !isSupported(version, versions)) {
-						errors.push({
+						ctx.report({
 							message: `Supported version \`${version}\` not being tested.`,
 							fix: fix(ctx, 'supported', version),
 							file
@@ -120,7 +118,5 @@ module.exports = ctx => {
 					}
 				}
 			}
-
-			return errors;
 		});
 };

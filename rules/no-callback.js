@@ -13,9 +13,9 @@ module.exports = ctx => {
 		const promiseSamples = occurrences(content, ['promise', 'promises', '.then', '.catch']);
 
 		if (cbSamples > promiseSamples) {
-			return {
+			ctx.report({
 				message: 'Use promises instead of callbacks'
-			};
+			});
 		}
 	});
 };

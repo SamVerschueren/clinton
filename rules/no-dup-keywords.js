@@ -48,17 +48,13 @@ module.exports = ctx => {
 		keywordMap[keyword]++;
 	}
 
-	const ret = [];
-
 	for (const keyword of Object.keys(keywordMap)) {
 		if (keywordMap[keyword] > 1) {
-			ret.push({
+			ctx.report({
 				message: `No duplicate keywords. Found \`${keyword}\` ${keywordMap[keyword]} times.`,
 				file,
 				fix: fix(ctx, keyword)
 			});
 		}
 	}
-
-	return ret;
 };

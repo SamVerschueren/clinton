@@ -13,8 +13,8 @@ module.exports = ctx => {
 	});
 
 	if (maxDepth > allowedDepth) {
-		return {
+		ctx.report({
 			message: `Directories are nested too deeply (${maxDepth}).`
-		};
+		});
 	}
 };

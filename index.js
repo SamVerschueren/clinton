@@ -70,22 +70,13 @@ const lint = exports.lint = (input, opts) => {
 				// Execute the rule
 				return Promise.resolve()
 					.then(() => mod(ctx))
-					.then(err => {
-						err = Array.isArray(err) ? err : [err];
-						err = err.filter(Boolean);
-
-						if (err.length > 0) {
-							err.forEach(e => {
-								if (!e) {
-									return;
-								}
-
-								validations.push(Object.assign(e, {
-									ruleId,
-									severity: rule[0]
-								}));
-							});
-						}
+					.then(() => {
+						ctx.reports.forEach(report => {
+							validations.push(Object.assign(report, {
+								ruleId,
+								severity: rule[0]
+							}));
+						});
 					});
 			}));
 		})

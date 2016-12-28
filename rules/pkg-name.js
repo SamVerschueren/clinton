@@ -20,8 +20,10 @@ module.exports = ctx => ctx.fs.readFile('package.json').then(pkg => {
 
 	const errors = validate(pkg.name).errors || [];
 
-	return errors.map(message => ({
-		message: normalize(message),
-		file
-	}));
+	for (const error of errors) {
+		ctx.report({
+			message: normalize(error),
+			file
+		});
+	}
 });

@@ -54,22 +54,23 @@ module.exports = ctx => {
 		const installedVersion = pkg.devDependencies && pkg.devDependencies.ava;
 
 		if (!installedVersion) {
-			return {
+			ctx.report({
 				message: 'AVA is not installed as devDependency.',
 				file
-			};
+			});
+			return;
 		}
 
 		const errors = [];
 
 		if (requiredVersion) {
 			if (requiredVersion === '*' && installedVersion !== '*') {
-				errors.push({
+				ctx.report({
 					message: `Expected unicorn version '*' but found '${installedVersion}'.`,
 					file
 				});
 			} else if (requiredVersion !== '*' && !semver.gte(installedVersion, requiredVersion)) {
-				errors.push({
+				ctx.report({
 					message: `Expected version '${requiredVersion}' but found '${installedVersion}'.`,
 					file
 				});
@@ -77,7 +78,7 @@ module.exports = ctx => {
 		}
 
 		if (!pkg.scripts || !pkg.scripts.test || !/\bava\b/.test(pkg.scripts.test)) {
-			errors.push({
+			ctx.report({
 				message: 'AVA is not used in the test script.',
 				fix: fix(ctx, 'script'),
 				file
@@ -85,7 +86,7 @@ module.exports = ctx => {
 		}
 
 		if (pkg.scripts && pkg.scripts.test && /\bava\b[^&]*[-]{2}/.test(pkg.scripts.test)) {
-			errors.push({
+			ctx.report({
 				message: 'Specify AVA config in `package.json` instead of passing it through via the CLI.',
 				fix: fix(ctx, 'clioptions'),
 				file

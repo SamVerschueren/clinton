@@ -1,10 +1,10 @@
 'use strict';
 module.exports = ctx => {
 	if (ctx.files.indexOf('.editorconfig') === -1) {
-		return {
+		ctx.report({
 			message: 'Use `.editorconfig` to define and maintain consistent coding styles between editors',
 			file: ctx.fs.resolve('.editorconfig')
-		};
+		});
 	}
 
 	// https://github.com/SamVerschueren/clinton/issues/26

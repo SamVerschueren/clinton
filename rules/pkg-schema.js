@@ -15,14 +15,20 @@ module.exports = ctx => {
 		const isValid = validator.validate(pkg, schema);
 
 		if (!isValid) {
-			return validator.getLastErrors().map(err => ({message: `${err.message} at path '${err.path}'`, file}));
+			for (const error of validator.getLastErrors()) {
+				ctx.report({
+					message: `${error.message} at path '${error.path}'`,
+					file
+				});
+			}
 		}
 	}).catch(err => {
 		if (err.code === 'ENOTFOUND') {
-			return {
+			ctx.report({
 				message: 'Schema for `package.json` not found.',
 				file
-			};
+			});
+			return;
 		}
 
 		throw err;
