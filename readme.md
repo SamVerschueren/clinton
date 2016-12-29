@@ -119,37 +119,31 @@ Current working directory when linting local projects.
 
 ## Rules
 
-- **ava** - Check if [AVA](https://github.com/avajs/ava) is used and is used correctly.
-	- *[version]*: The minimum required `AVA` version or `*` if you want to go unicorn.
-- **xo** - Check if [XO](https://github.com/sindresorhus/xo) is used and is used correctly.
-	- *[version]*: The minimum required `XO` version or `*` if you want to go unicorn.
-- **editorconfig** - Check if a `.editorconfig` file is present and if the project files adhere to the `.editorconfig` settings.
-- **license** - Check if a license file exist.
-	- *[type]*: The type of the license. For example `MIT`.
-- **no-callback** - Check if the project uses promises instead of callbacks.
-- **pkg-main** - Checks if the file provided in the `main` property in `package.json` exists.
-- **pkg-normalize** - Enforces package [normalization](https://github.com/npm/normalize-package-data#what-normalization-currently-entails) and warns on moot properties.
-- **pkg-property-order** - Checks the `package.json` property order.
-	- *[...order]* - Custom list of properties.
-- **pkg-user-order** - Checks the order of the properties of user objects in `package.json` like `author`, `contributors` and `maintainers`.
-	- *[...order]* - (default `['name', 'email', 'url']`) Custom property order.
-- **pkg-schema** - Validates the schema of `package.json`
-- **pkg-name** - [Validates](https://github.com/npm/normalize-package-data#rules-for-name-field) the `name` property of `package.json`.
-- **pkg-description** - Enforces the `description` in `package.json` to start with a capital letter and not end with a dot.
-- **pkg-shorthand-repository** - Enforces the `repository` field in `package.json` to be `SamVerschueren/clinton` instead of an object or the full blown url.
-- **readme** - Check if a `readme` file is present.
-- **test-script** - Check if the `test` script is set.
-- **use-travis** - Checks if [Travis CI](https://travis-ci.org/) is used.
-- **travis** - Checks if the correct versions are being tested in `.travis.yml`.
-- **valid-properties** - Checks if a certain set of properties is defined in `package.json`.
-- **valid-version** - Checks if the `version` in `package.json` is a valid semver version.
-- **cli** - Checks if the `bin` file specified in `package.json` exists and is executable.
-- **max-depth** - This rule enforces a maximum depth that directories can be nested to reduce project complexity.
-	- *[max]* - (default `5`) enforces a maximum depth that directories can be nested.
-- **filename-case** - Enforces all linted files to have their names in a certain case style. Default is `kebabCase`.
-	- *{case: _type_}* - _type_ can be one of `kebabCase`, `camelCase`, `snakeCase` or `pascalCase`.
-- **no-dup-keywords** - Checks that `package.json` does not have duplicate keywords.
-- **no-git-merge-conflict** - Checks all the files for Git merge conflict indications.
+- [ava](docs/rules/ava.md) - Enforces the use of [AVA](https://github.com/avajs/ava). *(fixable)*
+- [cli](docs/rules/cli.md) - Enforces the existance and executability of the cli file.
+- [editorconfig](docs/rules/editorconfig.md) - Enforces the use of  [EditorConfig](http://editorconfig.org).
+- [filename-case](docs/rules/filename-case.md) - Enforce a case style for filenames.
+- [gulp](docs/rules/gulp.md) - Enforces the correct `devDependencies` when Gulp is detected.
+- [license](docs/rules/license.md) - Enforce the use of a specific license.
+- [max-depth](docs/rules/max-depth.md) - Enforce the maximum depth of the directory structure.
+- [no-callback](docs/rules/no-callback.md) - Enforces the use of promises instead of callbacks.
+- [no-dup-keywords](docs/rules/no-dup-keywords.md) - Enforce not having duplicate keywords in `package.json`. *(fixable)*
+- [no-git-merge-conflict](docs/rules/no-git-merge-conflict.md) - Prevents having Git merge conflict markers.
+- [pkg-description](docs/rules/pkg-description.md) - Enforces the description to start with a capital letter and not end with a dot.
+- [pkg-main](docs/rules/pkg-main.md) - Enforces the existance of the main file.
+- [pkg-name](docs/rules/pkg-name.md) - Enforces a valid package name.
+- [pkg-normalize](docs/rules/pkg-normalize.md) - Enforces package normalization. *(fixable)*
+- [pkg-property-order](docs/rules/pkg-property-order) - Enforces order of properties in in `package.json`. *(fixable)*
+- [pkg-schema](docs/rules/pkg-schema.md) - Enforces a valid `package.json`.
+- [pkg-shorthand-repository](docs/rules/pkg-shorthand-repository.md) - Enforces the use of the shorthand repository URL. *(fixable)*
+- [pkg-user-order](docs/rules/pkg-user-order.md) - Enforces order of properties in user objects in `package.json`. *(fixable)*
+- [readme](docs/rules/readme.md) - Enforce having a readme.
+- [test-script](docs/rules/test-script.md) - Enforces the use of tests.
+- [travis](docs/rules/travis.md) - Enforces the correct versions in `.travis.yml`. *(fixable)*
+- [use-travis](docs/rules/use-travis.md) - Enforces the use of [Travis CI](https://travis-ci.org/).
+- [valid-properties](docs/rules/valid-properties.md) - Enforce recommended properties in `package.json`.
+- [valid-version](docs/rules/valid-version.md) - Enforces a valid version identifier in `package.json`.
+- [xo](docs/rules/xo.md) - Enforces the use of [XO](https://github.com/sindresorhus/xo). *(fixable)*
 
 
 ## Plugins
