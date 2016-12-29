@@ -129,7 +129,7 @@ Current working directory when linting local projects.
 - [no-callback](docs/rules/no-callback.md) - Enforces the use of promises instead of callbacks.
 - [no-dup-keywords](docs/rules/no-dup-keywords.md) - Enforce not having duplicate keywords in `package.json`. *(fixable)*
 - [no-git-merge-conflict](docs/rules/no-git-merge-conflict.md) - Prevents having Git merge conflict markers.
-- [pkg-description](docs/rules/pkg-description.md) - Enforces the description to start with a capital letter and not end with a dot.
+- [pkg-description](docs/rules/pkg-description.md) - Enforces the description to start with a capital letter and not end with a dot. *(fixable)*
 - [pkg-main](docs/rules/pkg-main.md) - Enforces the existance of the main file.
 - [pkg-name](docs/rules/pkg-name.md) - Enforces a valid package name.
 - [pkg-normalize](docs/rules/pkg-normalize.md) - Enforces package normalization. *(fixable)*
