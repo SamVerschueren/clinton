@@ -13,7 +13,7 @@ test('no project provided', async t => {
 });
 
 test('no errors', async t => {
-	t.is((await m('./', {ignores: ['test/**']})).length, 0);
+	t.is((await m('./', {ignores: ['test/**', 'docs/**']})).length, 0);
 });
 
 test('merge rules', async t => {
@@ -24,7 +24,7 @@ test('merge rules', async t => {
 });
 
 test('`cwd` option', async t => {
-	t.is((await m('.', {cwd: './', ignores: ['test/**']})).length, 0);
+	t.is((await m('.', {cwd: './', ignores: ['test/**', 'docs/**']})).length, 0);
 });
 
 test('`ignores` option', async t => {
