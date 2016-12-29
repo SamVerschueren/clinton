@@ -1,0 +1,8 @@
+{
+  "name": "package",
+  "clinton": {
+    "rules": {
+      "no-git-merge-conflict": "error"
+    }
+  }
+}

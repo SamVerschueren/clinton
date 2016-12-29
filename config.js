@@ -24,6 +24,7 @@ module.exports = {
 		'max-depth': 'warn',
 		gulp: ['error', 'optional'],
 		'filename-case': ['error', {case: 'kebabCase'}],
-		'no-dup-keywords': 'error'
+		'no-dup-keywords': 'error',
+		'no-git-merge-conflict': 'error'
 	}
 };

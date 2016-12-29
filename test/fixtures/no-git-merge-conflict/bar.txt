@@ -1,0 +1,3 @@
+<<<<<<< HEAD
+Foo
+Bar
