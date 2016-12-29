@@ -15,7 +15,10 @@ const createError = file => ({
 });
 
 test(async t => {
-	t.deepEqual(await m('.', opts), [
+	const result = await m('.', opts);
+	result.sort((a, b) => a.file.localeCompare(b.file));
+
+	t.deepEqual(result, [
 		createError('bar.txt'),
 		createError('rainbow.txt'),
 		createError('test.txt'),

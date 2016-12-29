@@ -1,6 +1,7 @@
 import path from 'path';
 import test from 'ava';
 import {lint as m} from '../';
+import {fix} from './fixtures/utils';
 
 const opts = {
 	cwd: 'test/fixtures/pkg-description',
@@ -8,7 +9,7 @@ const opts = {
 };
 
 test('package description starts with lowercase', async t => {
-	t.deepEqual(await m('lowercase', opts), [
+	t.deepEqual(fix(await m('lowercase', opts)), [
 		{
 			ruleId: 'pkg-description',
 			severity: 'error',
@@ -19,7 +20,7 @@ test('package description starts with lowercase', async t => {
 });
 
 test('package description ends with a dot', async t => {
-	t.deepEqual(await m('dot', opts), [
+	t.deepEqual(fix(await m('dot', opts)), [
 		{
 			ruleId: 'pkg-description',
 			severity: 'error',
