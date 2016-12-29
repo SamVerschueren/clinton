@@ -190,7 +190,7 @@ You can wrap this up in a project, publish it to [npm](https://www.npmjs.com/) a
 		"clinton-plugin-file-exists": "1.0.0"
 	},
 	"clinton": {
-		"rules": {
+		"plugins": {
 			"file-exists": ["error", "index.js"]
 		}
 	}
