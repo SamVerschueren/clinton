@@ -116,6 +116,8 @@ Current working directory when linting local projects.
         1  error
 ```
 
+> Tip: Use the config in `package.json` whenever possible for maintainability and to make it easier for eventual other tools to read the config.
+
 
 ## Rules
 
