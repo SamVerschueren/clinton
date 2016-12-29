@@ -8,17 +8,6 @@ const opts = {
 	inherit: false
 };
 
-test('no `files` property', async t => {
-	t.deepEqual(await m('no-files', opts), [
-		{
-			ruleId: 'pkg-files',
-			severity: 'error',
-			message: 'Missing `files` property in `package.json`.',
-			file: path.resolve(opts.cwd, 'no-files/package.json')
-		}
-	]);
-});
-
 test('wrong schema', async t => {
 	t.deepEqual(await m('wrong-schema', opts), [
 		{

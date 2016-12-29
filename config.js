@@ -6,7 +6,6 @@ module.exports = {
 		editorconfig: 'error',
 		license: ['error', 'MIT'],
 		'no-callback': 'error',
-		'pkg-files': 'error',
 		'pkg-main': 'error',
 		'pkg-property-order': 'error',
 		'pkg-user-order': 'error',
