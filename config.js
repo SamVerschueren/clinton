@@ -24,6 +24,7 @@ module.exports = {
 		gulp: ['error', 'optional'],
 		'filename-case': ['error', {case: 'kebabCase'}],
 		'no-dup-keywords': 'error',
-		'no-git-merge-conflict': 'error'
+		'no-git-merge-conflict': 'error',
+		gitignore: 'error'
 	}
 };

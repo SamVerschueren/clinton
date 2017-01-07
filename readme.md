@@ -125,6 +125,7 @@ Current working directory when linting local projects.
 - [cli](docs/rules/cli.md) - Enforces the existance and executability of the cli file.
 - [editorconfig](docs/rules/editorconfig.md) - Enforces the use of  [EditorConfig](http://editorconfig.org).
 - [filename-case](docs/rules/filename-case.md) - Enforce a case style for filenames.
+- [gitignore](docs/rules/gitignore.md) - Enforce the use of `.gitignore`. *(fixable)*
 - [gulp](docs/rules/gulp.md) - Enforces the correct `devDependencies` when Gulp is detected.
 - [license](docs/rules/license.md) - Enforce the use of a specific license.
 - [max-depth](docs/rules/max-depth.md) - Enforce the maximum depth of the directory structure.
