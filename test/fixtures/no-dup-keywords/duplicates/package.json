@@ -8,10 +8,5 @@
     "rainbow",
     "bar",
     "foo"
-  ],
-  "clinton": {
-    "rules": {
-      "no-dup-keywords": "error"
-    }
-  }
+  ]
 }

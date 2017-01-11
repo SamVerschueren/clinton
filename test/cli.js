@@ -1,14 +1,18 @@
 import path from 'path';
 import test from 'ava';
-import {lint as m} from '../';
+import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
 	cwd: 'test/fixtures/cli',
-	inherit: false
+	rules: {
+		cli: 'error'
+	}
 };
 
+const ruleTester = clintonRuleTester(opts);
+
 test('no error', async t => {
-	t.deepEqual(await m('.', opts), []);
+	await ruleTester(t, '.', []);
 });
 
 test('file is not executable', async t => {
@@ -21,27 +25,31 @@ test('file is not executable', async t => {
 		}
 	];
 
-	t.deepEqual(await m('not-executable', opts), expectedResult);
+	await ruleTester(t, 'not-executable', expectedResult);
 });
 
 test('file not exists', async t => {
-	t.deepEqual(await m('not-exists', opts), [
-		{
-			ruleId: 'cli',
-			severity: 'error',
-			message: 'Executable file `bin.js` does not exist.',
-			file: path.resolve(opts.cwd, 'not-exists/package.json')
-		}
-	]);
+	await ruleTester(t, 'not-exists',
+		[
+			{
+				ruleId: 'cli',
+				severity: 'error',
+				message: 'Executable file `bin.js` does not exist.',
+				file: path.resolve(opts.cwd, 'not-exists/package.json')
+			}
+		]
+	);
 });
 
 test('handle `bin` object', async t => {
-	t.deepEqual(await m('bin-object', opts), [
-		{
-			ruleId: 'cli',
-			severity: 'error',
-			message: 'Executable file `bin.js` does not exist.',
-			file: path.resolve(opts.cwd, 'bin-object/package.json')
-		}
-	]);
+	await ruleTester(t, 'bin-object',
+		[
+			{
+				ruleId: 'cli',
+				severity: 'error',
+				message: 'Executable file `bin.js` does not exist.',
+				file: path.resolve(opts.cwd, 'bin-object/package.json')
+			}
+		]
+	);
 });

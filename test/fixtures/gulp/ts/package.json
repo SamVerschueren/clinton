@@ -3,10 +3,5 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "ts-node": "0.9.1"
-  },
-  "clinton": {
-    "rules": {
-      "gulp": "error"
-    }
   }
 }

@@ -1,23 +1,29 @@
 import path from 'path';
 import test from 'ava';
-import {lint as m} from '../';
+import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
 	cwd: 'test/fixtures/editorconfig',
-	inherit: false
+	rules: {
+		editorconfig: 'error'
+	}
 };
 
+const ruleTester = clintonRuleTester(opts);
+
 test('no editorconfig', async t => {
-	t.deepEqual(await m('false', opts), [
-		{
-			ruleId: 'editorconfig',
-			severity: 'error',
-			message: 'Use `.editorconfig` to define and maintain consistent coding styles between editors',
-			file: path.resolve(opts.cwd, 'false/.editorconfig')
-		}
-	]);
+	await ruleTester(t, 'false',
+		[
+			{
+				ruleId: 'editorconfig',
+				severity: 'error',
+				message: 'Use `.editorconfig` to define and maintain consistent coding styles between editors',
+				file: path.resolve(opts.cwd, 'false/.editorconfig')
+			}
+		]
+	);
 });
 
 test('editorconfig', async t => {
-	t.is((await m('true', opts)).length, 0);
+	await ruleTester(t, 'true', []);
 });

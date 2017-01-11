@@ -1,35 +1,54 @@
 import path from 'path';
 import test from 'ava';
-import {lint as m} from '../';
-import {fix} from './fixtures/utils';
+import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
 	cwd: 'test/fixtures/pkg-description',
-	inherit: false
+	rules: {
+		'pkg-description': 'error'
+	}
 };
 
+const ruleTester = clintonRuleTester(opts);
+
 test('package description starts with lowercase', async t => {
-	t.deepEqual(fix(await m('lowercase', opts)), [
-		{
-			ruleId: 'pkg-description',
-			severity: 'error',
-			message: 'Package `description` should start with a capital letter',
-			file: path.resolve(opts.cwd, 'lowercase/package.json')
-		}
-	]);
+	await ruleTester(t, 'lowercase',
+		[
+			{
+				ruleId: 'pkg-description',
+				severity: 'error',
+				message: 'Package `description` should start with a capital letter',
+				file: path.resolve(opts.cwd, 'lowercase/package.json')
+			}
+		],
+		[
+			{
+				name: 'package',
+				description: 'Foo'
+			}
+		]
+	);
 });
 
 test('package description ends with a dot', async t => {
-	t.deepEqual(fix(await m('dot', opts)), [
-		{
-			ruleId: 'pkg-description',
-			severity: 'error',
-			message: 'Package `description` should not end with a dot',
-			file: path.resolve(opts.cwd, 'dot/package.json')
-		}
-	]);
+	await ruleTester(t, 'dot',
+		[
+			{
+				ruleId: 'pkg-description',
+				severity: 'error',
+				message: 'Package `description` should not end with a dot',
+				file: path.resolve(opts.cwd, 'dot/package.json')
+			}
+		],
+		[
+			{
+				name: 'package',
+				description: 'Foo'
+			}
+		]
+	);
 });
 
 test('package description', async t => {
-	t.deepEqual(await m('.', opts), []);
+	await ruleTester(t, '.', []);
 });

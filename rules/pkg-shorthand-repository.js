@@ -1,21 +1,5 @@
 'use strict';
 const url = require('url');
-const detectIndent = require('detect-indent');
-
-const fix = (ctx, shorthand) => {
-	return () => ctx.fs.readFile('package.json', false)
-		.then(pkg => {
-			// Detect formatting options
-			const indentation = detectIndent(pkg).indent;
-			const lastchar = pkg.split('\n').pop().trim().length === 0 ? '\n' : '';
-
-			pkg = JSON.parse(pkg);
-			pkg.repository = shorthand;
-
-			const contents = JSON.stringify(pkg, undefined, indentation);
-			return ctx.fs.writeFile('package.json', `${contents}${lastchar}`, 'utf8');
-		});
-};
 
 module.exports = ctx => ctx.fs.readFile('package.json').then(pkg => {
 	if (!pkg.repository) {
@@ -31,7 +15,10 @@ module.exports = ctx => ctx.fs.readFile('package.json').then(pkg => {
 			ctx.report({
 				message: `Use the shorthand notation \`${shorthand}\` for the \`repository\` field.`,
 				file: ctx.fs.resolve('package.json'),
-				fix: fix(ctx, shorthand)
+				fix: pkg => {
+					pkg.repository = shorthand;
+					return pkg;
+				}
 			});
 		}
 	}

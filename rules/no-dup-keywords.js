@@ -1,32 +1,20 @@
 'use strict';
-const detectIndent = require('detect-indent');
+const fix = keyword => {
+	return pkg => {
+		const keywords = [];
+		let found = false;
 
-const fix = (ctx, keyword) => {
-	return () => {
-		return ctx.fs.readFile('package.json', false)
-			.then(pkg => {
-				// Detect formatting options
-				const indentation = detectIndent(pkg).indent;
-				const lastchar = pkg.split('\n').pop().trim().length === 0 ? '\n' : '';
+		for (const key of pkg.keywords) {
+			if (key !== keyword || !found) {
+				keywords.push(key);
+			}
 
-				pkg = JSON.parse(pkg);
+			found = found || key === keyword;
+		}
 
-				const keywords = [];
-				let found = false;
+		pkg.keywords = keywords;
 
-				for (const key of pkg.keywords) {
-					if (key !== keyword || !found) {
-						keywords.push(key);
-					}
-
-					found = found || key === keyword;
-				}
-
-				pkg.keywords = keywords;
-
-				const contents = JSON.stringify(pkg, undefined, indentation);
-				return ctx.fs.writeFile('package.json', `${contents}${lastchar}`, 'utf8');
-			});
+		return pkg;
 	};
 };
 
@@ -53,7 +41,7 @@ module.exports = ctx => {
 			ctx.report({
 				message: `No duplicate keywords. Found \`${keyword}\` ${keywordMap[keyword]} times.`,
 				file,
-				fix: fix(ctx, keyword)
+				fix: fix(keyword)
 			});
 		}
 	}

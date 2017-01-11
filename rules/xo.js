@@ -1,57 +1,6 @@
 'use strict';
 const semver = require('semver');
-const detectIndent = require('detect-indent');
 const parseArgs = require('yargs-parser');
-
-const fix = (ctx, method) => {
-	return () => {
-		const fixers = {
-			esnext: pkg => {
-				if (!pkg.xo) {
-					pkg.xo = {};
-				}
-
-				pkg.xo.esnext = true;
-			},
-			script: pkg => {
-				if (!pkg.scripts) {
-					pkg.scripts = {};
-				}
-
-				if (pkg.scripts.test && pkg.scripts.test.length !== 0 && !pkg.scripts.test.includes('exit 1')) {
-					pkg.scripts.test = `xo && ${pkg.scripts.test}`;
-				} else {
-					pkg.scripts.test = `xo`;
-				}
-			},
-			clioptions: pkg => {
-				const regex = /\bxo\b([^&]*)/;
-
-				const command = pkg.scripts.test.match(regex)[1];
-				const args = parseArgs(command.trim());
-
-				delete args._;
-
-				pkg.xo = Object.assign({}, pkg.xo, args);
-				pkg.scripts.test = pkg.scripts.test.replace(regex, 'xo ').trim();
-			}
-		};
-
-		return ctx.fs.readFile('package.json', false)
-			.then(pkg => {
-				// Detect formatting options
-				const indentation = detectIndent(pkg).indent;
-				const lastchar = pkg.split('\n').pop().trim().length === 0 ? '\n' : '';
-
-				pkg = JSON.parse(pkg);
-
-				fixers[method](pkg);
-
-				const contents = JSON.stringify(pkg, undefined, indentation);
-				return ctx.fs.writeFile('package.json', `${contents}${lastchar}`, 'utf8');
-			});
-	};
-};
 
 module.exports = ctx => {
 	const requiredVersion = ctx.options[0];
@@ -72,8 +21,11 @@ module.exports = ctx => {
 			if (!pkg.xo || pkg.xo.esnext !== true) {
 				ctx.report({
 					message: 'Enforce ES2015+ rules in XO with the `esnext` option.',
-					fix: fix(ctx, 'esnext'),
-					file
+					file,
+					fix: pkg => {
+						pkg.xo = Object.assign({}, pkg.xo, {esnext: true});
+						return pkg;
+					}
 				});
 			}
 		}
@@ -95,16 +47,46 @@ module.exports = ctx => {
 		if (!pkg.scripts || !pkg.scripts.test || !/\bxo\b/.test(pkg.scripts.test)) {
 			ctx.report({
 				message: 'XO is not used in the test script.',
-				fix: fix(ctx, 'script'),
-				file
+				file,
+				fix: pkg => {
+					if (!pkg.scripts) {
+						pkg.scripts = {};
+					}
+
+					if (pkg.scripts.test && pkg.scripts.test.length !== 0 && !pkg.scripts.test.includes('exit 1')) {
+						pkg.scripts.test = `xo && ${pkg.scripts.test}`;
+					} else {
+						pkg.scripts.test = `xo`;
+					}
+
+					return pkg;
+				}
 			});
 		}
 
 		if (pkg.scripts && pkg.scripts.test && /\bxo\b[^&]*[-]{2}/.test(pkg.scripts.test)) {
 			ctx.report({
 				message: 'Specify XO config in `package.json` instead of passing it through via the CLI.',
-				fix: fix(ctx, 'clioptions'),
-				file
+				file,
+				fix: pkg => {
+					const regex = /\bxo\b([^&]*)/;
+
+					const command = pkg.scripts.test.match(regex)[1];
+					const args = parseArgs(command.trim());
+
+					delete args._;
+
+					for (const arg of Object.keys(args)) {
+						if (arg.indexOf('-') !== -1) {
+							delete args[arg];
+						}
+					}
+
+					pkg.xo = Object.assign({}, pkg.xo, args);
+					pkg.scripts.test = pkg.scripts.test.replace(regex, 'xo ').trim();
+
+					return pkg;
+				}
 			});
 		}
 	});

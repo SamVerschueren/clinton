@@ -2,10 +2,5 @@
   "name": "travis",
   "engines": {
     "node": ">=0.10"
-  },
-  "clinton": {
-    "rules": {
-      "travis": "error"
-    }
   }
 }

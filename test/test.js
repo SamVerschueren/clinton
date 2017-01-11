@@ -17,7 +17,7 @@ test('no errors', async t => {
 });
 
 test('merge rules', async t => {
-	const errors = await m('invalid-version', {cwd: 'test/fixtures/package', inherit: false, rules: {readme: 'error'}});
+	const errors = await m('invalid-version', {cwd: 'test/fixtures/valid-version', inherit: false, rules: {readme: 'error'}});
 	t.is(errors.length, 2);
 	t.is(errors[0].ruleId, 'readme');
 	t.is(errors[1].ruleId, 'valid-version');
@@ -44,5 +44,5 @@ test('unknown plugin', t => {
 });
 
 test('cli', t => {
-	t.throws(execa('./cli.js', ['test/fixtures/package/invalid-version', '--no-inherit']), new RegExp(`[ ]*?${figures.cross}[ ]*?The specified version in package.json is invalid.[ ]*valid-version`));
+	t.throws(execa('./cli.js', ['test/fixtures/valid-version/invalid-version', '--no-inherit']), new RegExp(`[ ]*?${figures.cross}[ ]*?The specified version in package.json is invalid.[ ]*valid-version`));
 });

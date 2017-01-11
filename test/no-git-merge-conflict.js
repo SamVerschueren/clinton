@@ -1,11 +1,15 @@
 import path from 'path';
 import test from 'ava';
-import {lint as m} from '../';
+import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
 	cwd: 'test/fixtures/no-git-merge-conflict',
-	inherit: false
+	rules: {
+		'no-git-merge-conflict': 'error'
+	}
 };
+
+const ruleTester = clintonRuleTester(opts);
 
 const createError = file => ({
 	message: 'Resolve all Git merge conflicts.',
@@ -15,7 +19,7 @@ const createError = file => ({
 });
 
 test(async t => {
-	const result = await m('.', opts);
+	const result = await ruleTester(t, '.');
 	result.sort((a, b) => a.file.localeCompare(b.file));
 
 	t.deepEqual(result, [

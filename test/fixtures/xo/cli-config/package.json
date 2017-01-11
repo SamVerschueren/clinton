@@ -1,14 +1,9 @@
 {
   "name": "xo",
   "scripts": {
-    "test": "xo --space"
+    "test": "xo --space --no-semicolon --foo-bar"
   },
   "devDependencies": {
     "xo": "0.15.1"
-  },
-  "clinton": {
-    "rules": {
-      "xo": "error"
-    }
   }
 }

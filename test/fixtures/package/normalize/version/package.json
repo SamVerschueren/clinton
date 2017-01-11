@@ -1,9 +1,0 @@
-{
-  "name": "package",
-  "version": "v1.0.0",
-  "clinton": {
-    "rules": {
-      "pkg-normalize": "error"
-    }
-  }
-}

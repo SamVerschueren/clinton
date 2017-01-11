@@ -1,21 +1,27 @@
 import test from 'ava';
-import {lint as m} from '../';
+import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
 	cwd: 'test/fixtures/no-callback',
-	inherit: false
+	rules: {
+		'no-callback': 'error'
+	}
 };
 
+const ruleTester = clintonRuleTester(opts);
+
 test('callback', async t => {
-	t.deepEqual(await m('cb', opts), [
-		{
-			ruleId: 'no-callback',
-			severity: 'error',
-			message: 'Use promises instead of callbacks'
-		}
-	]);
+	await ruleTester(t, 'cb',
+		[
+			{
+				ruleId: 'no-callback',
+				severity: 'error',
+				message: 'Use promises instead of callbacks'
+			}
+		]
+	);
 });
 
 test('promises', async t => {
-	t.is((await m('promises', opts)).length, 0);
+	await ruleTester(t, 'promises', []);
 });

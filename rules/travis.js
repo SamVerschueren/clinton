@@ -1,7 +1,5 @@
 'use strict';
 const semver = require('semver');
-const detectIndent = require('detect-indent');
-const yaml = require('js-yaml');
 
 const SUPPORTED_VERSIONS = ['0.10', '0.12', '4', '6'];
 const DEPRECATED_VERSIONS = ['iojs', 'stable'];
@@ -31,38 +29,26 @@ const isSupported = (version, engines) => {
 	return false;
 };
 
-const fix = (ctx, method, arg) => {
-	return () => {
-		const fixers = {
-			unsupported: (yaml, version) => {
-				const index = yaml.node_js.indexOf(version);
+const fixers = {
+	unsupported: version => {
+		return yaml => {
+			const index = yaml.node_js.indexOf(version);
 
-				if (index !== -1) {
-					yaml.node_js.splice(index, 1);
-				}
-			},
-			supported: (yaml, version) => {
-				yaml.node_js.push(version);
-				yaml.node_js.sort((a, b) => semver.lt(normalize(a), normalize(b)));
+			if (index !== -1) {
+				yaml.node_js.splice(index, 1);
 			}
+
+			return yaml;
 		};
+	},
+	supported: version => {
+		return yaml => {
+			yaml.node_js.push(version);
+			yaml.node_js.sort((a, b) => semver.lt(normalize(a), normalize(b)));
 
-		return ctx.fs.readFile('.travis.yml', false)
-			.then(travis => {
-				// Detect formatting options
-				const indent = detectIndent(travis).indent.length;
-
-				travis = yaml.safeLoad(travis);
-
-				fixers[method](travis, arg);
-
-				const contents = yaml.safeDump(travis, {
-					indent
-				});
-
-				return ctx.fs.writeFile('.travis.yml', contents, 'utf8');
-			});
-	};
+			return yaml;
+		};
+	}
 };
 
 module.exports = ctx => {
@@ -101,7 +87,7 @@ module.exports = ctx => {
 				} else if (version !== 'node' && engine && !semver.satisfies(normalize(version), engine)) {
 					ctx.report({
 						message: `Unsupported version \`${version}\` is being tested.`,
-						fix: fix(ctx, 'unsupported', version),
+						fix: fixers.unsupported(version),
 						file
 					});
 				}
@@ -112,7 +98,7 @@ module.exports = ctx => {
 					if (semver.satisfies(normalize(version), engine) && !isSupported(version, versions)) {
 						ctx.report({
 							message: `Supported version \`${version}\` not being tested.`,
-							fix: fix(ctx, 'supported', version),
+							fix: fixers.supported(version),
 							file
 						});
 					}

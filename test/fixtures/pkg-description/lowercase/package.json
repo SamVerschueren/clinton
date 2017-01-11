@@ -1,9 +1,4 @@
 {
   "name": "package",
-  "description": "foo",
-  "clinton": {
-    "rules": {
-      "pkg-description": "error"
-    }
-  }
+  "description": "foo"
 }

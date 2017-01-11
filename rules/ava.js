@@ -1,49 +1,40 @@
 'use strict';
 const semver = require('semver');
-const detectIndent = require('detect-indent');
 const parseArgs = require('yargs-parser');
 
-const fix = (ctx, method) => {
-	return () => {
-		const fixers = {
-			script: pkg => {
-				if (!pkg.scripts) {
-					pkg.scripts = {};
-				}
+const fixers = {
+	script: pkg => {
+		if (!pkg.scripts) {
+			pkg.scripts = {};
+		}
 
-				if (pkg.scripts.test && pkg.scripts.test.length !== 0 && !pkg.scripts.test.includes('exit 1')) {
-					pkg.scripts.test = `${pkg.scripts.test} && ava`;
-				} else {
-					pkg.scripts.test = `ava`;
-				}
-			},
-			clioptions: pkg => {
-				const regex = /\bava\b([^&]*)/;
+		if (pkg.scripts.test && pkg.scripts.test.length !== 0 && !pkg.scripts.test.includes('exit 1')) {
+			pkg.scripts.test = `${pkg.scripts.test} && ava`;
+		} else {
+			pkg.scripts.test = `ava`;
+		}
 
-				const command = pkg.scripts.test.match(regex)[1];
-				const args = parseArgs(command.trim());
+		return pkg;
+	},
+	clioptions: pkg => {
+		const regex = /\bava\b([^&]*)/;
 
-				delete args._;
+		const command = pkg.scripts.test.match(regex)[1];
+		const args = parseArgs(command.trim());
 
-				pkg.ava = Object.assign({}, pkg.ava, args);
-				pkg.scripts.test = pkg.scripts.test.replace(regex, 'ava ').trim();
+		delete args._;
+
+		for (const arg of Object.keys(args)) {
+			if (arg.indexOf('-') !== -1) {
+				delete args[arg];
 			}
-		};
+		}
 
-		return ctx.fs.readFile('package.json', false)
-			.then(pkg => {
-				// Detect formatting options
-				const indentation = detectIndent(pkg).indent;
-				const lastchar = pkg.split('\n').pop().trim().length === 0 ? '\n' : '';
+		pkg.ava = Object.assign({}, pkg.ava, args);
+		pkg.scripts.test = pkg.scripts.test.replace(regex, 'ava ').trim();
 
-				pkg = JSON.parse(pkg);
-
-				fixers[method](pkg);
-
-				const contents = JSON.stringify(pkg, undefined, indentation);
-				return ctx.fs.writeFile('package.json', `${contents}${lastchar}`, 'utf8');
-			});
-	};
+		return pkg;
+	}
 };
 
 module.exports = ctx => {
@@ -80,7 +71,7 @@ module.exports = ctx => {
 		if (!pkg.scripts || !pkg.scripts.test || !/\bava\b/.test(pkg.scripts.test)) {
 			ctx.report({
 				message: 'AVA is not used in the test script.',
-				fix: fix(ctx, 'script'),
+				fix: fixers.script,
 				file
 			});
 		}
@@ -88,7 +79,7 @@ module.exports = ctx => {
 		if (pkg.scripts && pkg.scripts.test && /\bava\b[^&]*[-]{2}/.test(pkg.scripts.test)) {
 			ctx.report({
 				message: 'Specify AVA config in `package.json` instead of passing it through via the CLI.',
-				fix: fix(ctx, 'clioptions'),
+				fix: fixers.clioptions,
 				file
 			});
 		}

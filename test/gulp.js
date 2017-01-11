@@ -1,66 +1,72 @@
 import path from 'path';
 import test from 'ava';
-import {lint as m} from '../';
+import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
 	cwd: 'test/fixtures/gulp',
-	inherit: false
+	rules: {
+		gulp: 'error'
+	}
 };
 
+const ruleTester = clintonRuleTester(opts);
+
 test('optional', async t => {
-	t.is((await m('.', Object.assign({rules: {gulp: ['error', 'optional']}}, opts))).length, 0);
+	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {gulp: ['error', 'optional']}}));
+
+	await ruleTester(t, '.', []);
 });
 
 test('mandatory', async t => {
-	const result = await m('.', Object.assign(
-		{
-			rules: {
-				gulp: ['error', 'mandatory']
-			}
-		}, opts)
-	);
+	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {gulp: ['error', 'mandatory']}}));
 
-	t.deepEqual(result, [
-		{
-			ruleId: 'gulp',
-			severity: 'error',
-			message: 'No Gulpfile found.'
-		},
-		{
-			ruleId: 'gulp',
-			severity: 'error',
-			message: '`gulp` dependency not found in `devDependencies`.',
-			file: path.resolve(opts.cwd, 'package.json')
-		}
-	]);
+	await ruleTester(t, '.',
+		[
+			{
+				ruleId: 'gulp',
+				severity: 'error',
+				message: 'No Gulpfile found.'
+			},
+			{
+				ruleId: 'gulp',
+				severity: 'error',
+				message: '`gulp` dependency not found in `devDependencies`.',
+				file: path.resolve(opts.cwd, 'package.json')
+			}
+		]
+	);
 });
 
 test('typescript gulpfile', async t => {
-	t.is((await m('ts', opts)).length, 0);
+	await ruleTester(t, 'ts', []);
 });
 
 test('typescript gulpfile - no dependency', async t => {
-	t.deepEqual(await m('ts-nodep', opts), [
-		{
-			ruleId: 'gulp',
-			severity: 'error',
-			message: 'Expected one of `ts-node`, `typescript-node`, `typescript-register`, `typescript-require` in `devDependencies`.',
-			file: path.resolve(opts.cwd, 'ts-nodep/package.json')
-		}
-	]);
+	await ruleTester(t, 'ts-nodep',
+		[
+			{
+				ruleId: 'gulp',
+				severity: 'error',
+				message: 'Expected one of `ts-node`, `typescript-node`, `typescript-register`, `typescript-require` in `devDependencies`.',
+				file: path.resolve(opts.cwd, 'ts-nodep/package.json')
+			}
+		]
+	);
 });
 
 test('coffee gulpfile', async t => {
-	t.is((await m('coffee', opts)).length, 0);
+	await ruleTester(t, 'coffee', []);
 });
 
 test('coffee gulpfile - no dependency', async t => {
-	t.deepEqual(await m('coffee-nodep', opts), [
-		{
-			ruleId: 'gulp',
-			severity: 'error',
-			message: 'Expected `coffee-script` in `devDependencies`.',
-			file: path.resolve(opts.cwd, 'coffee-nodep/package.json')
-		}
-	]);
+	await ruleTester(t, 'coffee-nodep',
+		[
+			{
+				ruleId: 'gulp',
+				severity: 'error',
+				message: 'Expected `coffee-script` in `devDependencies`.',
+				file: path.resolve(opts.cwd, 'coffee-nodep/package.json')
+			}
+		]
+	);
 });

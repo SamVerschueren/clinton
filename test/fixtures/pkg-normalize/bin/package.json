@@ -1,0 +1,6 @@
+{
+  "name": "package",
+  "bin": {
+    "package": "cli.js"
+  }
+}

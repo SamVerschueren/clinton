@@ -1,39 +1,48 @@
 import path from 'path';
 import test from 'ava';
-import {lint as m} from '../';
-import {fix} from './fixtures/utils';
+import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
 	cwd: 'test/fixtures/gitignore',
-	inherit: false
+	rules: {
+		gitignore: 'error'
+	}
 };
 
+const ruleTester = clintonRuleTester(opts);
+
 test('valid .gitignore', async t => {
-	t.deepEqual(await m('.', opts), []);
+	await ruleTester(t, '.', []);
 });
 
 test('no .gitignore found', async t => {
-	const file = path.resolve(opts.cwd, 'no-gitignore/.gitignore');
-
-	t.deepEqual(fix(await m('no-gitignore', opts)), [
-		{
-			ruleId: 'gitignore',
-			severity: 'error',
-			message: 'No `.gitignore` file found. Add it to the root of your project.',
-			file
-		}
-	]);
+	await ruleTester(t, 'no-gitignore',
+		[
+			{
+				ruleId: 'gitignore',
+				severity: 'error',
+				message: 'No `.gitignore` file found. Add it to the root of your project.',
+				file: path.resolve(opts.cwd, 'no-gitignore/.gitignore')
+			}
+		],
+		[
+			'node_modules\n'
+		]
+	);
 });
 
 test('`node_modules` not ignored', async t => {
-	const file = path.resolve(opts.cwd, 'no-modules/.gitignore');
-
-	t.deepEqual(fix(await m('no-modules', opts)), [
-		{
-			ruleId: 'gitignore',
-			severity: 'error',
-			message: '`node_modules` is not being ignored. Add it to `.gitignore`.',
-			file
-		}
-	]);
+	await ruleTester(t, 'no-modules',
+		[
+			{
+				ruleId: 'gitignore',
+				severity: 'error',
+				message: '`node_modules` is not being ignored. Add it to `.gitignore`.',
+				file: path.resolve(opts.cwd, 'no-modules/.gitignore')
+			}
+		],
+		[
+			'foo.txt\nnode_modules\n'
+		]
+	);
 });

@@ -1,6 +1,4 @@
 'use strict';
-const detectIndent = require('detect-indent');
-
 const DEFAULT_ORDER = [
 	'name',
 	'email',
@@ -24,26 +22,16 @@ const fixUser = (user, order) => {
 };
 
 const fix = (ctx, field) => {
-	return () => {
+	return pkg => {
 		const order = ctx.options.length > 0 ? ctx.options : DEFAULT_ORDER;
 
-		return ctx.fs.readFile('package.json', false)
-			.then(pkg => {
-				// Detect formatting options
-				const indentation = detectIndent(pkg).indent;
-				const lastchar = pkg.split('\n').pop().trim().length === 0 ? '\n' : '';
+		if (Array.isArray(pkg[field])) {
+			pkg[field] = pkg[field].map(user => fixUser(user, order));
+		} else {
+			pkg[field] = fixUser(pkg[field], order);
+		}
 
-				pkg = JSON.parse(pkg);
-
-				if (Array.isArray(pkg[field])) {
-					pkg[field] = pkg[field].map(user => fixUser(user, order));
-				} else {
-					pkg[field] = fixUser(pkg[field], order);
-				}
-
-				const contents = JSON.stringify(pkg, undefined, indentation);
-				return ctx.fs.writeFile('package.json', `${contents}${lastchar}`, 'utf8');
-			});
+		return pkg;
 	};
 };
 

@@ -1,6 +1,16 @@
 'use strict';
-const fix = (ctx, contents) => {
-	return () => ctx.fs.writeFile('.gitignore', contents, 'utf8');
+const fix = contents => {
+	const lines = contents.split(/\r?\n/);
+	const nrOfLines = lines.length;
+	const emptyLine = lines[nrOfLines - 1].trim() === '';
+
+	if (emptyLine) {
+		lines.splice(nrOfLines - 1, 0, ['node_modules']);
+	} else {
+		lines.push(['node_modules']);
+	}
+
+	return lines.join('\n');
 };
 
 module.exports = ctx => {
@@ -10,7 +20,7 @@ module.exports = ctx => {
 		ctx.report({
 			message: 'No `.gitignore` file found. Add it to the root of your project.',
 			file,
-			fix: fix(ctx, 'node_modules')
+			fix
 		});
 		return;
 	}
@@ -20,12 +30,10 @@ module.exports = ctx => {
 			const lines = contents.split(/\r?\n/).filter(Boolean);
 
 			if (lines.indexOf('node_modules') === -1 && lines.indexOf('node_modules/')) {
-				lines.push('node_modules');
-
 				ctx.report({
 					message: '`node_modules` is not being ignored. Add it to `.gitignore`.',
 					file,
-					fix: fix(ctx, lines.join('\n'))
+					fix
 				});
 			}
 		});

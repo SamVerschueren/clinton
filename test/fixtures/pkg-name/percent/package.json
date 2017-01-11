@@ -1,8 +1,3 @@
 {
-  "name": "foo%bar",
-  "clinton": {
-    "rules": {
-      "pkg-name": "error"
-    }
-  }
+  "name": "foo%bar"
 }

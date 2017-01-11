@@ -1,8 +1,3 @@
 {
-  "name": "editorconfig",
-  "clinton": {
-    "rules": {
-      "editorconfig": "error"
-    }
-  }
+  "name": "editorconfig"
 }

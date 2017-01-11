@@ -2,10 +2,5 @@
   "name": "cli",
   "bin": {
     "cli": "bin.js"
-  },
-  "clinton": {
-    "rules": {
-      "cli": "error"
-    }
   }
 }

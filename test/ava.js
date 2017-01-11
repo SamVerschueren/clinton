@@ -1,77 +1,120 @@
 import path from 'path';
 import test from 'ava';
-import {lint as m} from '../';
-import {assign, fix} from './fixtures/utils';
+import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
 	cwd: 'test/fixtures/ava',
-	inherit: false
+	rules: {
+		ava: 'error'
+	}
 };
 
-const inherit = assign(opts);
+const ruleTester = clintonRuleTester(opts);
 
 test('no AVA dependency', async t => {
-	t.deepEqual(await m('no-dependency', opts), [
-		{
-			ruleId: 'ava',
-			severity: 'error',
-			message: 'AVA is not installed as devDependency.',
-			file: path.resolve(opts.cwd, 'no-dependency/package.json')
-		}
-	]);
+	await ruleTester(t, 'no-dependency',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'AVA is not installed as devDependency.',
+				file: path.resolve(opts.cwd, 'no-dependency/package.json')
+			}
+		]
+	);
 });
 
 test('wrong version', async t => {
-	t.deepEqual(await m('.', inherit({rules: {ava: ['error', '0.15.2']}})), [
-		{
-			ruleId: 'ava',
-			severity: 'error',
-			message: 'Expected version \'0.15.2\' but found \'0.15.1\'.',
-			file: path.resolve(opts.cwd, 'package.json')
-		}
-	]);
+	const ruleTester1 = clintonRuleTester(Object.assign({}, opts, {rules: {ava: ['error', '0.15.2']}}));
+	const ruleTester2 = clintonRuleTester(Object.assign({}, opts, {rules: {ava: ['error', '0.16.0']}}));
 
-	t.deepEqual(await m('.', inherit({rules: {ava: ['error', '0.16.0']}})), [
-		{
-			ruleId: 'ava',
-			severity: 'error',
-			message: 'Expected version \'0.16.0\' but found \'0.15.1\'.',
-			file: path.resolve(opts.cwd, 'package.json')
-		}
-	]);
+	await ruleTester1(t, '.',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'Expected version \'0.15.2\' but found \'0.15.1\'.',
+				file: path.resolve(opts.cwd, 'package.json')
+			}
+		]
+	);
+
+	await ruleTester2(t, '.',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'Expected version \'0.16.0\' but found \'0.15.1\'.',
+				file: path.resolve(opts.cwd, 'package.json')
+			}
+		]
+	);
 });
 
 test('unicorn version', async t => {
-	t.is((await m('unicorn', inherit({rules: {ava: ['error', '*']}}))).length, 0);
+	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {ava: ['error', '*']}}));
 
-	t.deepEqual(await m('.', inherit({rules: {ava: ['error', '*']}})), [
-		{
-			ruleId: 'ava',
-			severity: 'error',
-			message: 'Expected unicorn version \'*\' but found \'0.15.1\'.',
-			file: path.resolve(opts.cwd, 'package.json')
-		}
-	]);
+	await ruleTester(t, 'unicorn', []);
+
+	await ruleTester(t, '.',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'Expected unicorn version \'*\' but found \'0.15.1\'.',
+				file: path.resolve(opts.cwd, 'package.json')
+			}
+		]
+	);
 });
 
 test('test script', async t => {
-	t.deepEqual(fix(await m('no-script', opts)), [
-		{
-			ruleId: 'ava',
-			severity: 'error',
-			message: 'AVA is not used in the test script.',
-			file: path.resolve(opts.cwd, 'no-script/package.json')
-		}
-	]);
+	await ruleTester(t, 'no-script',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'AVA is not used in the test script.',
+				file: path.resolve(opts.cwd, 'no-script/package.json')
+			}
+		],
+		[
+			{
+				name: 'ava',
+				devDependencies: {
+					ava: '*'
+				},
+				scripts: {
+					test: 'ava'
+				}
+			}
+		]
+	);
 });
 
 test('cli config', async t => {
-	t.deepEqual(fix(await m('cli-config', opts)), [
-		{
-			ruleId: 'ava',
-			severity: 'error',
-			message: 'Specify AVA config in `package.json` instead of passing it through via the CLI.',
-			file: path.resolve(opts.cwd, 'cli-config/package.json')
-		}
-	]);
+	await ruleTester(t, 'cli-config',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'Specify AVA config in `package.json` instead of passing it through via the CLI.',
+				file: path.resolve(opts.cwd, 'cli-config/package.json')
+			}
+		],
+		[
+			{
+				name: 'ava',
+				scripts: {
+					test: 'ava'
+				},
+				devDependencies: {
+					ava: '0.15.1'
+				},
+				ava: {
+					failFast: true
+				}
+			}
+		]
+	);
 });

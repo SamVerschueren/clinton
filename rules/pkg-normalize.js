@@ -1,20 +1,16 @@
 'use strict';
-const detectIndent = require('detect-indent');
 const semver = require('semver');
 
-const fix = (ctx, key, value) => {
-	return () => ctx.fs.readFile('package.json', false)
-		.then(pkg => {
-			// Detect formatting options
-			const indentation = detectIndent(pkg).indent;
-			const lastchar = pkg.split('\n').pop().trim().length === 0 ? '\n' : '';
-
-			pkg = JSON.parse(pkg);
+const fix = (key, value) => {
+	return pkg => {
+		if (value === undefined) {
+			delete pkg[key];
+		} else {
 			pkg[key] = value;
+		}
 
-			const contents = JSON.stringify(pkg, undefined, indentation);
-			return ctx.fs.writeFile('package.json', `${contents}${lastchar}`, 'utf8');
-		});
+		return pkg;
+	};
 };
 
 const isGitRepository = repository => {
@@ -41,7 +37,7 @@ module.exports = ctx => {
 			if (pkg.version && semver.clean(pkg.version) !== pkg.version) {
 				ctx.report({
 					message: `Set \`version\` property to \`${semver.clean(pkg.version)}\`.`,
-					fix: fix(ctx, 'version', semver.clean(pkg.version)),
+					fix: fix('version', semver.clean(pkg.version)),
 					file
 				});
 			}
@@ -52,7 +48,7 @@ module.exports = ctx => {
 				if (keys.length === 1 && keys[0] === pkg.name) {
 					ctx.report({
 						message: `Set \`bin\` property to \`${pkg.bin[keys[0]]}\` instead of providing an object.`,
-						fix: fix(ctx, 'bin', pkg.bin[keys[0]]),
+						fix: fix('bin', pkg.bin[keys[0]]),
 						file
 					});
 				}
@@ -61,7 +57,7 @@ module.exports = ctx => {
 			if (isGitRepository(pkg.bugs) && isGitRepository(pkg.repository)) {
 				ctx.report({
 					message: 'Remove moot property `bugs`.',
-					fix: fix(ctx, 'bugs'),
+					fix: fix('bugs'),
 					file
 				});
 			}
@@ -69,7 +65,7 @@ module.exports = ctx => {
 			if (isGitRepository(pkg.homepage) && isGitRepository(pkg.repository)) {
 				ctx.report({
 					message: 'Remove moot property `homepage`.',
-					fix: fix(ctx, 'homepage'),
+					fix: fix('homepage'),
 					file
 				});
 			}

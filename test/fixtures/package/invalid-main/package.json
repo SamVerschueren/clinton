@@ -1,9 +1,0 @@
-{
-  "name": "package",
-  "main": "index.js",
-  "clinton": {
-    "rules": {
-      "pkg-main": "error"
-    }
-  }
-}

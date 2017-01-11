@@ -1,29 +1,15 @@
 'use strict';
-const detectIndent = require('detect-indent');
+const fix = pkg => {
+	let description = pkg.description;
+	description = description.slice(0, 1).toUpperCase() + description.slice(1);
 
-const fixDescription = x => {
-	x = x.slice(0, 1).toUpperCase() + x.slice(1);
-
-	while (x[x.length - 1] === '.') {
-		x = x.slice(x, x.length - 1);
+	while (description[description.length - 1] === '.') {
+		description = description.slice(description, description.length - 1);
 	}
 
-	return x;
-};
+	pkg.description = description;
 
-const fix = ctx => {
-	return () => ctx.fs.readFile('package.json', false)
-		.then(pkg => {
-			// Detect formatting options
-			const indentation = detectIndent(pkg).indent;
-			const lastchar = pkg.split('\n').pop().trim().length === 0 ? '\n' : '';
-
-			pkg = JSON.parse(pkg);
-			pkg.description = fixDescription(pkg.description);
-
-			const contents = JSON.stringify(pkg, undefined, indentation);
-			return ctx.fs.writeFile('package.json', `${contents}${lastchar}`, 'utf8');
-		});
+	return pkg;
 };
 
 module.exports = ctx => {
@@ -38,7 +24,7 @@ module.exports = ctx => {
 		ctx.report({
 			message: 'Package `description` should start with a capital letter',
 			file,
-			fix: fix(ctx)
+			fix
 		});
 	}
 
@@ -46,7 +32,7 @@ module.exports = ctx => {
 		ctx.report({
 			message: 'Package `description` should not end with a dot',
 			file,
-			fix: fix(ctx)
+			fix
 		});
 	}
 };

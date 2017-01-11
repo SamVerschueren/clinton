@@ -1,24 +1,29 @@
 import test from 'ava';
-import {lint as m} from '../';
-import utils from './fixtures/utils';
+import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
 	cwd: 'test/fixtures/max-depth',
-	inherit: false
+	rules: {
+		'max-depth': 'error'
+	}
 };
 
-const inherit = utils.assign(opts);
+const ruleTester = clintonRuleTester(opts);
 
 test('max depth fail', async t => {
-	t.deepEqual(await m('.', inherit({rules: {'max-depth': ['error', 1]}})), [
-		{
-			ruleId: 'max-depth',
-			severity: 'error',
-			message: 'Directories are nested too deeply (2).'
-		}
-	]);
+	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {'max-depth': ['error', 1]}}));
+
+	await ruleTester(t, '.',
+		[
+			{
+				ruleId: 'max-depth',
+				severity: 'error',
+				message: 'Directories are nested too deeply (2).'
+			}
+		]
+	);
 });
 
 test('max depth', async t => {
-	t.is((await m('.', opts)).length, 0);
+	await ruleTester(t, '.', []);
 });

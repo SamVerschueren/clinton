@@ -2,10 +2,5 @@
   "name": "ava",
   "devDependencies": {
     "ava": "*"
-  },
-  "clinton": {
-    "rules": {
-      "ava": "error"
-    }
   }
 }

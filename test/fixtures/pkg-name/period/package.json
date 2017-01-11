@@ -1,8 +1,3 @@
 {
-  "name": ".package",
-  "clinton": {
-    "rules": {
-      "pkg-name": "error"
-    }
-  }
+  "name": ".package"
 }

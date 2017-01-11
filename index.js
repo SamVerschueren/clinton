@@ -1,10 +1,13 @@
 'use strict';
 const path = require('path');
 const pathExists = require('path-exists');
+const yaml = require('js-yaml');
 const Environment = require('./lib/environment');
 const context = require('./lib/context');
 const config = require('./lib/config');
 const rules = require('./lib/rules');
+const Fixer = require('./lib/fixer');
+const FileSystem = require('./lib/fs/filesystem');
 const ruleUtil = require('./lib/utils/rule');
 const defaultConfig = require('./config');
 
@@ -84,10 +87,27 @@ const lint = exports.lint = (input, opts) => {
 };
 
 exports.fix = (input, opts) => {
-	return lint(input, opts)
-		.then(validations => {
-			validations = validations.filter(x => x.fix);
+	const fs = new FileSystem();
+	const fixer = new Fixer();
 
-			return validations.reduce((ret, validation) => ret.then(() => validation.fix()), Promise.resolve());
+	return lint(input, opts)
+		.then(validations => fixer.fixAll(validations.filter(x => x.fix)))
+		.then(() => {
+			// Write all the files
+			const promises = [];
+
+			for (const fd of fixer.files) {
+				let content = fd.contents;
+
+				if (fd.ext === '.json') {
+					content = JSON.stringify(fd.contents, undefined, fd.indent) + fd.lastchar;
+				} else if (fd.ext === '.yaml' || fd.ext === '.yml') {
+					content = yaml.safeDump(fd.contents, {indent: fd.indent.length});
+				}
+
+				promises.push(fs.writeFile(fd.file, content, 'utf8'));
+			}
+
+			return Promise.all(promises);
 		});
 };
