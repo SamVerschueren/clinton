@@ -3,10 +3,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/SamVerschueren/clinton.git"
-  },
-  "clinton": {
-    "rules": {
-      "pkg-shorthand-repository": "error"
-    }
   }
 }

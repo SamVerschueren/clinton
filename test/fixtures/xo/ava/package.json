@@ -1,0 +1,10 @@
+{
+  "name": "xo",
+  "scripts": {
+    "test": "ava"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "xo": "*"
+  }
+}

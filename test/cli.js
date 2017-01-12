@@ -53,3 +53,7 @@ test('handle `bin` object', async t => {
 		]
 	);
 });
+
+test('no `bin` property', async t => {
+	await ruleTester(t, '..', []);
+});

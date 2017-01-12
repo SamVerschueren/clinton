@@ -67,9 +67,7 @@ module.exports = ctx => {
 					message: 'Language is not set to `node_js`.',
 					file
 				});
-			}
-
-			if (!travis.node_js) {
+			} else if (!travis.node_js) {
 				ctx.report({
 					message: 'No Node.js versions specified.',
 					file

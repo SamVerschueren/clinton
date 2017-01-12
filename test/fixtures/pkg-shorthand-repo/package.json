@@ -1,9 +1,4 @@
 {
   "name": "package",
-  "repository": "SamVerschueren/clinton",
-  "clinton": {
-    "rules": {
-      "pkg-shorthand-repository": "error"
-    }
-  }
+  "repository": "SamVerschueren/clinton"
 }

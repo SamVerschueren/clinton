@@ -92,6 +92,31 @@ test('test script', async t => {
 	);
 });
 
+test('ava is not part of the test script', async t => {
+	await ruleTester(t, 'xo',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'AVA is not used in the test script.',
+				file: path.resolve(opts.cwd, 'xo/package.json')
+			}
+		],
+		[
+			{
+				name: 'ava',
+				scripts: {
+					test: 'xo && ava'
+				},
+				devDependencies: {
+					ava: '*',
+					xo: '*'
+				}
+			}
+		]
+	);
+});
+
 test('cli config', async t => {
 	await ruleTester(t, 'cli-config',
 		[

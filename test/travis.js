@@ -126,3 +126,29 @@ test('deprecated versions', async t => {
 		]
 	);
 });
+
+test('language not set to `node_js`', async t => {
+	await ruleTester(t, 'php',
+		[
+			{
+				message: 'Language is not set to `node_js`.',
+				file: path.resolve(opts.cwd, 'php/.travis.yml'),
+				ruleId: 'travis',
+				severity: 'error'
+			}
+		]
+	);
+});
+
+test('no versions specified', async t => {
+	await ruleTester(t, 'no-versions',
+		[
+			{
+				message: 'No Node.js versions specified.',
+				file: path.resolve(opts.cwd, 'no-versions/.travis.yml'),
+				ruleId: 'travis',
+				severity: 'error'
+			}
+		]
+	);
+});

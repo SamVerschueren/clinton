@@ -59,26 +59,20 @@ const fixFilename = (chosenCase, filename) => filename
 	.map(ignoreNumbers(chosenCase.fn))
 	.join('.');
 
-const leadingUnserscoresRegex = /^(_+)(.*)$/;
-const splitFilename = filename => {
-	const res = leadingUnserscoresRegex.exec(filename);
-	return {
-		leading: (res && res[1]) || '',
-		trailing: (res && res[2]) || filename
-	};
-};
-
 module.exports = ctx => {
-	const chosenCase = cases[ctx.options[0].case || 'camelCase'];
+	let chosenCase = cases.camelCase;
+
+	if (ctx.options[0] && ctx.options[0].case) {
+		chosenCase = cases[ctx.options[0].case];
+	}
 
 	for (const file of ctx.files) {
 		const extension = path.extname(file);
 		const filename = path.basename(file, extension);
-		const splitName = splitFilename(filename);
-		const fixedFilename = fixFilename(chosenCase, splitName.trailing);
-		const renameFilename = splitName.leading + fixedFilename + extension;
+		const fixedFilename = fixFilename(chosenCase, filename);
+		const renameFilename = fixedFilename + extension;
 
-		if (fixedFilename !== splitName.trailing) {
+		if (fixedFilename !== filename) {
 			ctx.report({
 				message: `Filename is not in ${chosenCase.name}. Rename it to \`${renameFilename}\`.`,
 				file: ctx.fs.resolve(file)

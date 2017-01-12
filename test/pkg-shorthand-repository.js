@@ -3,23 +3,25 @@ import test from 'ava';
 import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
-	cwd: 'test/fixtures/pkg-shorthand-repo'
+	cwd: 'test/fixtures/pkg-shorthand-repo',
+	rules: {
+		'pkg-shorthand-repository': 'error'
+	}
 };
 
 const ruleTester = clintonRuleTester(opts);
 
 const result = {
 	name: 'package',
-	repository: 'SamVerschueren/clinton',
-	clinton: {
-		rules: {
-			'pkg-shorthand-repository': 'error'
-		}
-	}
+	repository: 'SamVerschueren/clinton'
 };
 
 test('shorthand repository', async t => {
 	await ruleTester(t, '.', []);
+});
+
+test('no repository field', async t => {
+	await ruleTester(t, '..', []);
 });
 
 test('repository field is an object', async t => {
