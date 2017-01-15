@@ -11,36 +11,6 @@ const opts = {
 
 const ruleTester = clintonRuleTester(opts);
 
-test('no esnext', async t => {
-	await ruleTester(t, 'no-esnext',
-		[
-			{
-				ruleId: 'xo',
-				severity: 'error',
-				message: 'Enforce ES2015+ rules in XO with the `esnext` option.',
-				file: path.resolve(opts.cwd, 'no-esnext/package.json')
-			}
-		],
-		[
-			{
-				name: 'xo',
-				scripts: {
-					test: 'xo'
-				},
-				engines: {
-					node: '>=4'
-				},
-				devDependencies: {
-					xo: '*'
-				},
-				xo: {
-					esnext: true
-				}
-			}
-		]
-	);
-});
-
 test('no XO dependency', async t => {
 	await ruleTester(t, 'no-dependency',
 		[

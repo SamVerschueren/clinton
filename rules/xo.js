@@ -17,19 +17,6 @@ module.exports = ctx => {
 			return;
 		}
 
-		if (pkg.engines && pkg.engines.node && !semver.satisfies('0.10.0', pkg.engines.node) && !semver.satisfies('0.12.0', pkg.engines.node)) {
-			if (!pkg.xo || pkg.xo.esnext !== true) {
-				ctx.report({
-					message: 'Enforce ES2015+ rules in XO with the `esnext` option.',
-					file,
-					fix: pkg => {
-						pkg.xo = Object.assign({}, pkg.xo, {esnext: true});
-						return pkg;
-					}
-				});
-			}
-		}
-
 		if (requiredVersion) {
 			if (requiredVersion === '*' && installedVersion !== '*') {
 				ctx.report({

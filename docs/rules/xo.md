@@ -33,24 +33,6 @@ Detects if [XO](https://github.com/sindresorhus/xo) is being used and is being u
 > Specify `XO` configuration via a config object instead of passing it through via the CLI.
 
 
-```json
-{
-  "name": "foo",
-  "engines": {
-    "node": ">=4"
-  },
-  "scripts": {
-    "test": "xo"
-  },
-  "devDependencies": {
-    "xo": "*"
-  }
-}
-```
-
-> Enforce ES2015+ rules with the `esnext` option.
-
-
 ## Pass
 
 ```json
