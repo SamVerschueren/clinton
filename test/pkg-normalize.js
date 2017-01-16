@@ -73,6 +73,24 @@ test('normalize `bugs` field', async t => {
 test('normalize `homepage` field', async t => {
 	await ruleTester(t, 'homepage/no-repository', []);
 	await ruleTester(t, 'homepage/custom', []);
+	await ruleTester(t, 'homepage/repository-object',
+		[
+			{
+				message: 'Remove moot property `homepage`.',
+				file: path.resolve(opts.cwd, 'homepage/repository-object/package.json'),
+				ruleId: 'pkg-normalize',
+				severity: 'error'
+			}
+		],
+		[
+			{
+				name: 'package',
+				repository: {
+					url: 'SamVerschueren/clinton'
+				}
+			}
+		]
+	);
 	await ruleTester(t, 'homepage',
 		[
 			{
