@@ -44,15 +44,5 @@ module.exports = ctx => {
 				});
 			}
 		}
-	}).catch(err => {
-		if (err.code === 'ENOTFOUND') {
-			ctx.report({
-				message: 'Schema for `package.json` not found.',
-				file
-			});
-			return;
-		}
-
-		throw err;
-	});
+	}).catch(() => {});
 };
