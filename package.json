@@ -36,6 +36,7 @@
   ],
   "dependencies": {
     "array-multi-find": "^1.0.0",
+    "cache-conf": "^0.3.0",
     "chalk": "^1.1.3",
     "detect-indent": "^4.0.0",
     "eclint": "^1.1.5",
