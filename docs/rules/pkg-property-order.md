@@ -77,5 +77,5 @@ Enforces the following order in of the properties in `package.json`.
 You can set a custom order as well.
 
 ```js
-"pkg-user-order": ["error", "name", "description", "version"]
+"pkg-user-order": ["error", {"order": ["name", "description", "version"]}]
 ```

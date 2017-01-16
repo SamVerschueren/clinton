@@ -30,9 +30,7 @@ const DEFAULT_ORDER = [
 	'optionalDependencies'
 ];
 
-const fix = ctx => {
-	const keys = ctx.options.length > 0 ? ctx.options : DEFAULT_ORDER;
-
+const fix = (ctx, keys) => {
 	return pkg => {
 		const ret = Object.create(null);
 		const pkgProps = Object.keys(pkg);
@@ -54,7 +52,12 @@ const fix = ctx => {
 };
 
 module.exports = ctx => {
-	const keys = ctx.options.length > 0 ? ctx.options : DEFAULT_ORDER;
+	let keys = DEFAULT_ORDER;
+
+	if (ctx.options[0] && ctx.options[0].order) {
+		keys = ctx.options[0].order;
+	}
+
 	const file = ctx.fs.resolve('package.json');
 
 	return ctx.fs.readFile('package.json')
@@ -68,7 +71,7 @@ module.exports = ctx => {
 				if (key !== pkgKeys[index]) {
 					ctx.report({
 						message: `Property '${key}' should occur before property '${pkgKeys[index]}'.`,
-						fix: fix(ctx),
+						fix: fix(ctx, keys),
 						file
 					});
 					return;
