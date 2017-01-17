@@ -46,3 +46,19 @@ test('`node_modules` not ignored', async t => {
 		]
 	);
 });
+
+test('`node_modules` not ignored and no final newline', async t => {
+	await ruleTester(t, 'no-modules-no-final-newline',
+		[
+			{
+				ruleId: 'gitignore',
+				severity: 'error',
+				message: '`node_modules` is not being ignored. Add it to `.gitignore`.',
+				file: path.resolve(opts.cwd, 'no-modules-no-final-newline/.gitignore')
+			}
+		],
+		[
+			'foo.txt\nnode_modules'
+		]
+	);
+});

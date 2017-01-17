@@ -9,6 +9,7 @@ module.exports = ctx => {
 	const isPrivate = pkg.private;
 	const fileName = ctx.files.find(file => file.toLowerCase().indexOf('license') === 0);
 	const file = ctx.fs.resolve(fileName || 'license');
+	const pkgFile = ctx.fs.resolve('package.json');
 
 	if (isPrivate && !fileName) {
 		// Exit if the project is `private` and no `filename` is provided
@@ -25,8 +26,8 @@ module.exports = ctx => {
 
 	if (!pkg.license) {
 		ctx.report({
-			message: 'No `license` property defined in `package.json.',
-			file
+			message: 'No `license` property defined in `package.json`.',
+			file: pkgFile
 		});
 		return;
 	}
@@ -42,7 +43,7 @@ module.exports = ctx => {
 	if (pkg.license !== type) {
 		ctx.report({
 			message: `Expected \`license\` property to be \`${type}\`, got \`${pkg.license}\`.`,
-			file
+			file: pkgFile
 		});
 		return;
 	}

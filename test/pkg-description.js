@@ -49,6 +49,10 @@ test('package description ends with a dot', async t => {
 	);
 });
 
-test('package description', async t => {
+test('valid package description', async t => {
 	await ruleTester(t, '.', []);
+});
+
+test('no package description', async t => {
+	await ruleTester(t, '..', []);
 });

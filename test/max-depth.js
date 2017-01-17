@@ -10,6 +10,10 @@ const opts = {
 
 const ruleTester = clintonRuleTester(opts);
 
+test('max depth', async t => {
+	await ruleTester(t, '.', []);
+});
+
 test('max depth fail', async t => {
 	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {'max-depth': ['error', 1]}}));
 
@@ -24,6 +28,8 @@ test('max depth fail', async t => {
 	);
 });
 
-test('max depth', async t => {
-	await ruleTester(t, '.', []);
+test('max depth is not a number', t => {
+	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {'max-depth': ['error', '5']}}));
+
+	t.throws(ruleTester(t, '.'), 'Expected `max-depth` to be of type `number`, got `string`');
 });

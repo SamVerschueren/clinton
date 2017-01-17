@@ -13,6 +13,23 @@ test('license', async t => {
 	await ruleTester(t, 'isc', []);
 });
 
+test('no license type provided as option', async t => {
+	await ruleTester(t, 'no-license-type', []);
+});
+
+test('no license property defined', async t => {
+	await ruleTester(t, 'no-license-defined',
+		[
+			{
+				ruleId: 'license',
+				severity: 'error',
+				message: 'No `license` property defined in `package.json`.',
+				file: path.resolve(opts.cwd, 'no-license-defined/package.json')
+			}
+		]
+	);
+});
+
 test('license property does not match', async t => {
 	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {license: ['error', 'ISC']}}));
 
@@ -22,7 +39,7 @@ test('license property does not match', async t => {
 				ruleId: 'license',
 				severity: 'error',
 				message: 'Expected `license` property to be `ISC`, got `MIT`.',
-				file: path.resolve(opts.cwd, 'wrong/license')
+				file: path.resolve(opts.cwd, 'wrong/package.json')
 			}
 		]
 	);

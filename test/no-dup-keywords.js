@@ -15,6 +15,10 @@ test('no duplicates', async t => {
 	await ruleTester(t, '.', []);
 });
 
+test('no keywords', async t => {
+	await ruleTester(t, '..', []);
+});
+
 test('duplicate keywords', async t => {
 	const file = path.resolve(opts.cwd, 'duplicates/package.json');
 

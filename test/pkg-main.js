@@ -15,6 +15,10 @@ test('valid main', async t => {
 	await ruleTester(t, '.', []);
 });
 
+test('no main', async t => {
+	await ruleTester(t, '..', []);
+});
+
 test('invalid main', async t => {
 	await ruleTester(t, 'invalid-main',
 		[

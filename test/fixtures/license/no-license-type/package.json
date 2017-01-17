@@ -1,0 +1,9 @@
+{
+  "name": "license",
+  "license": "ISC",
+  "clinton": {
+    "rules": {
+      "license": "error"
+    }
+  }
+}

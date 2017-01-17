@@ -3,7 +3,7 @@ module.exports = ctx => {
 	const allowedDepth = ctx.options[0] || 5;
 
 	if (typeof allowedDepth !== 'number') {
-		throw new TypeError('Expected a maximum allowed depth for rule `max-depth`');
+		throw new TypeError(`Expected \`max-depth\` to be of type \`number\`, got \`${typeof allowedDepth}\``);
 	}
 
 	let maxDepth = 0;

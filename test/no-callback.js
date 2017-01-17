@@ -10,6 +10,10 @@ const opts = {
 
 const ruleTester = clintonRuleTester(opts);
 
+test('no readme', async t => {
+	await ruleTester(t, '..', []);
+});
+
 test('callback', async t => {
 	await ruleTester(t, 'cb',
 		[
