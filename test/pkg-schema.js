@@ -11,7 +11,7 @@ const opts = {
 
 const ruleTester = clintonRuleTester(opts);
 
-test(async t => {
+test('missing required version property', async t => {
 	await ruleTester(t, '.',
 		[
 			{
@@ -22,4 +22,10 @@ test(async t => {
 			}
 		]
 	);
+});
+
+test('fails on incorrect options object', t => {
+	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {'pkg-schema': ['error', 'foo']}}));
+
+	t.throws(ruleTester(t, '.'), 'Expected options to be of type `object`, got `string`');
 });
