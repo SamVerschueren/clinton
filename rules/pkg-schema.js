@@ -8,7 +8,7 @@ const SCHEMA_URL = 'http://json.schemastore.org/package';
 const SEVEN_DAYS = 86400000 * 7;
 
 const getSchema = (ctx, options) => {
-	const cachedSchema = cache.store['pkg-schema'] && cache.store['pkg-schema'].data;
+	const cachedSchema = cache.get('pkg-schema', {ignoreMaxAge: true});
 
 	if (cachedSchema && !cache.isExpired('pkg-schema')) {
 		return Promise.resolve(cachedSchema);
