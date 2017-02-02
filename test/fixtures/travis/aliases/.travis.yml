@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - 'node'
+  - 'lts/*'
+  - 'lts/argon'
+  - 'lts/boron'
+  - '6'
+  - '4'

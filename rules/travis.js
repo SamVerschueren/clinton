@@ -2,7 +2,8 @@
 const semver = require('semver');
 
 const SUPPORTED_VERSIONS = ['0.10', '0.12', '4', '6'];
-const DEPRECATED_VERSIONS = ['iojs', 'stable'];
+const DEPRECATED_VERSIONS = ['iojs', 'stable', 'unstable'];
+const IGNORED_VERSIONS = ['node', 'lts/*', 'lts/argon', 'lts/boron'];
 
 /**
  * Normalize a semantic version to be a valid version. 0.10 -> 0.10.0
@@ -74,22 +75,28 @@ module.exports = ctx => {
 				});
 			}
 
-			const versions = Array.isArray(travis.node_js) ? travis.node_js : [travis.node_js];
+			let versions = Array.isArray(travis.node_js) ? travis.node_js : [travis.node_js];
 
-			for (const version of versions) {
-				if (DEPRECATED_VERSIONS.indexOf(version) !== -1) {
+			versions = versions.filter(version => {
+				if (IGNORED_VERSIONS.indexOf(version) !== -1) {
+					return false;
+				} else if (DEPRECATED_VERSIONS.indexOf(version) !== -1) {
 					ctx.report({
 						message: `Version \`${version}\` is deprecated.`,
 						file
 					});
-				} else if (version !== 'node' && engine && !semver.satisfies(normalize(version), engine)) {
+
+					return false;
+				} else if (engine && !semver.satisfies(normalize(version), engine)) {
 					ctx.report({
 						message: `Unsupported version \`${version}\` is being tested.`,
 						fix: fixers.unsupported(version),
 						file
 					});
 				}
-			}
+
+				return true;
+			});
 
 			if (engine) {
 				for (const version of SUPPORTED_VERSIONS) {
