@@ -79,3 +79,24 @@ node_js:
   - '0.12'
   - '0.10'
 ```
+
+### Testing matrix
+
+```json
+{
+  "name": "travis",
+  "engines": {
+    "node": ">=4"
+  }
+}
+```
+
+```yml
+language: node_js
+node_js:
+  - '6'
+matrix:
+  include:
+    - node_js: '4'
+			env: FOO='bar'
+```

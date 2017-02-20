@@ -162,3 +162,34 @@ test('no versions specified', async t => {
 		]
 	);
 });
+
+test('testing matrix', async t => {
+	const file = path.resolve(opts.cwd, 'matrix-include/.travis.yml');
+
+	await ruleTester(t, 'matrix-include',
+		[
+			{
+				message: 'Supported version `0.12` not being tested.',
+				ruleId: 'travis',
+				severity: 'error',
+				file
+			}
+		],
+		[
+			{
+				language: 'node_js',
+				node_js: [				// eslint-disable-line camelcase
+					'6',
+					'0.12'
+				],
+				matrix: {
+					include: [
+						{
+							node_js: '4'	// eslint-disable-line camelcase
+						}
+					]
+				}
+			}
+		]
+	);
+});

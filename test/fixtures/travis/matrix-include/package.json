@@ -1,0 +1,6 @@
+{
+  "name": "travis",
+  "engines": {
+    "node": ">=0.12"
+  }
+}

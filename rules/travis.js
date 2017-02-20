@@ -30,6 +30,15 @@ const isSupported = (version, engines) => {
 	return false;
 };
 
+const getTravisVersions = travis => {
+	const versions = Array.isArray(travis.node_js) ? travis.node_js : [travis.node_js];
+
+	const matrix = travis.matrix ? travis.matrix.include : [];
+	const matrixVersions = matrix.map(x => x.node_js).filter(Boolean);
+
+	return versions.concat(matrixVersions);
+};
+
 const fixers = {
 	unsupported: version => {
 		return yaml => {
@@ -75,7 +84,7 @@ module.exports = ctx => {
 				});
 			}
 
-			let versions = Array.isArray(travis.node_js) ? travis.node_js : [travis.node_js];
+			let versions = getTravisVersions(travis);
 
 			versions = versions.filter(version => {
 				if (IGNORED_VERSIONS.indexOf(version) !== -1) {
