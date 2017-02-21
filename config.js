@@ -14,6 +14,7 @@ module.exports = {
 		'pkg-description': 'error',
 		'pkg-name': 'error',
 		'pkg-shorthand-repository': 'error',
+		'pkg-dependency-order': 'error',
 		readme: 'error',
 		'test-script': 'error',
 		'use-travis': 'warn',

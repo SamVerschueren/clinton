@@ -1,0 +1,11 @@
+{
+  "name": "package",
+  "dependencies": {
+    "pify": "*",
+    "clinton": "*"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "xo": "*"
+  }
+}
