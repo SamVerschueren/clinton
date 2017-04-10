@@ -36,6 +36,17 @@ test('wrong version', async t => {
 				message: 'Expected version \'0.15.2\' but found \'0.15.1\'.',
 				file: path.resolve(opts.cwd, 'package.json')
 			}
+		],
+		[
+			{
+				name: 'xo',
+				scripts: {
+					test: 'xo'
+				},
+				devDependencies: {
+					xo: '^0.15.2'
+				}
+			}
 		]
 	);
 
@@ -46,6 +57,17 @@ test('wrong version', async t => {
 				severity: 'error',
 				message: 'Expected version \'0.16.0\' but found \'0.15.1\'.',
 				file: path.resolve(opts.cwd, 'package.json')
+			}
+		],
+		[
+			{
+				name: 'xo',
+				scripts: {
+					test: 'xo'
+				},
+				devDependencies: {
+					xo: '^0.16.0'
+				}
 			}
 		]
 	);
@@ -63,6 +85,17 @@ test('unicorn version', async t => {
 				severity: 'error',
 				message: 'Expected unicorn version \'*\' but found \'0.15.1\'.',
 				file: path.resolve(opts.cwd, 'package.json')
+			}
+		],
+		[
+			{
+				name: 'xo',
+				scripts: {
+					test: 'xo'
+				},
+				devDependencies: {
+					xo: '*'
+				}
 			}
 		]
 	);
@@ -140,6 +173,89 @@ test('cli config', async t => {
 					space: true,
 					semicolon: false,
 					fooBar: true
+				}
+			}
+		]
+	);
+});
+
+test('support for older Node.js with fixed version', async t => {
+	await ruleTester(t, 'support',
+		[
+			{
+				ruleId: 'xo',
+				severity: 'error',
+				message: 'Expected version \'0.16.0\' but found \'0.17.1\'.',
+				file: path.resolve(opts.cwd, 'support/package.json')
+			}
+		],
+		[
+			{
+				name: 'xo',
+				engines: {
+					node: '>=0.10'
+				},
+				scripts: {
+					test: 'xo'
+				},
+				devDependencies: {
+					xo: '^0.16.0'
+				}
+			}
+		]
+	);
+});
+
+test('support for older Node.js with unicorn version', async t => {
+	await ruleTester(t, 'support/unicorn',
+		[
+			{
+				ruleId: 'xo',
+				severity: 'error',
+				message: 'Expected version \'0.16.0\' but found \'*\'.',
+				file: path.resolve(opts.cwd, 'support/unicorn/package.json')
+			}
+		],
+		[
+			{
+				name: 'xo',
+				engines: {
+					node: '>=0.12'
+				},
+				scripts: {
+					test: 'xo'
+				},
+				devDependencies: {
+					xo: '^0.16.0'
+				}
+			}
+		]
+	);
+});
+
+test('support for older Node.js with required unicorn version', async t => {
+	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {xo: ['error', '*']}}));
+
+	await ruleTester(t, 'support',
+		[
+			{
+				ruleId: 'xo',
+				severity: 'error',
+				message: 'Expected version \'0.16.0\' but found \'0.17.1\'.',
+				file: path.resolve(opts.cwd, 'support/package.json')
+			}
+		],
+		[
+			{
+				name: 'xo',
+				engines: {
+					node: '>=0.10'
+				},
+				scripts: {
+					test: 'xo'
+				},
+				devDependencies: {
+					xo: '^0.16.0'
 				}
 			}
 		]
