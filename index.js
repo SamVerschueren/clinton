@@ -51,6 +51,11 @@ const lint = (input, opts) => {
 
 	const validations = [];
 
+	if (!env.isValid()) {
+		console.warn('No `package.json` found');
+		return Promise.resolve(validations);
+	}
+
 	return config.load(env)
 		.then(config => {
 			opts = merge(opts, config);

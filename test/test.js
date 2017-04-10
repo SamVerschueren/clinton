@@ -46,3 +46,11 @@ test('unknown plugin', async t => {
 test('cli', async t => {
 	await t.throws(execa('./cli.js', ['test/fixtures/valid-version/invalid-version', '--no-inherit']), new RegExp(`[ ]*?${figures.cross}[ ]*?The specified version in package.json is invalid.[ ]*valid-version`));
 });
+
+test('do nothing if `package.json` is missing', async t => {
+	const result = await m('.', {
+		cwd: 'test/fixtures/no-package'
+	});
+
+	t.is(result.length, 0);
+});
