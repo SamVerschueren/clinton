@@ -5,11 +5,11 @@ import figures from 'figures';
 import {lint as m} from '../';
 
 test('project does not exist', async t => {
-	t.throws(m('foo/bar'), 'Path foo/bar does not exist.');
+	await t.throws(m('foo/bar'), 'Path foo/bar does not exist.');
 });
 
 test('no project provided', async t => {
-	t.throws(m(), 'No input provided.');
+	await t.throws(m(), 'No input provided.');
 });
 
 test('no errors', async t => {
@@ -39,10 +39,10 @@ test('`ignores` option', async t => {
 	t.is(result.length, 0);
 });
 
-test('unknown plugin', t => {
-	t.throws(m('.', {cwd: './', plugins: ['foo'], rules: {foo: 'error'}}), 'Could not find module for plugin \'foo\'.');
+test('unknown plugin', async t => {
+	await t.throws(m('.', {cwd: './', plugins: ['foo'], rules: {foo: 'error'}}), 'Could not find module for plugin \'foo\'.');
 });
 
-test('cli', t => {
-	t.throws(execa('./cli.js', ['test/fixtures/valid-version/invalid-version', '--no-inherit']), new RegExp(`[ ]*?${figures.cross}[ ]*?The specified version in package.json is invalid.[ ]*valid-version`));
+test('cli', async t => {
+	await t.throws(execa('./cli.js', ['test/fixtures/valid-version/invalid-version', '--no-inherit']), new RegExp(`[ ]*?${figures.cross}[ ]*?The specified version in package.json is invalid.[ ]*valid-version`));
 });

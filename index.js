@@ -28,7 +28,7 @@ const merge = (options, config) => {
 	return Object.assign(opts, config);
 };
 
-const lint = exports.lint = (input, opts) => {
+const lint = (input, opts) => {
 	if (typeof input !== 'string') {
 		return Promise.reject(new TypeError('No input provided.'));
 	}
@@ -85,6 +85,8 @@ const lint = exports.lint = (input, opts) => {
 		})
 		.then(() => validations);
 };
+
+exports.lint = lint;
 
 exports.fix = (input, opts) => {
 	const fs = new FileSystem();
