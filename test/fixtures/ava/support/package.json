@@ -1,0 +1,12 @@
+{
+  "name": "ava",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "scripts": {
+    "test": "ava"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1"
+  }
+}

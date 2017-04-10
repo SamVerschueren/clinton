@@ -3,6 +3,12 @@ const semver = require('semver');
 const parseArgs = require('yargs-parser');
 
 const fixers = {
+	version: version => {
+		return pkg => {
+			pkg.devDependencies.ava = version;
+			return pkg;
+		};
+	},
 	script: pkg => {
 		if (!pkg.scripts) {
 			pkg.scripts = {};
@@ -38,11 +44,11 @@ const fixers = {
 };
 
 module.exports = ctx => {
-	const requiredVersion = ctx.options[0];
+	let requiredVersion = ctx.options[0];
 	const file = ctx.fs.resolve('package.json');
 
 	return ctx.fs.readFile('package.json').then(pkg => {
-		const installedVersion = pkg.devDependencies && pkg.devDependencies.ava;
+		let installedVersion = pkg.devDependencies && pkg.devDependencies.ava;
 
 		if (!installedVersion) {
 			ctx.report({
@@ -52,18 +58,28 @@ module.exports = ctx => {
 			return;
 		}
 
-		const errors = [];
+		installedVersion = installedVersion.replace(/^(~|\^)/, '');
+
+		const engine = pkg.engines && pkg.engines.node ? pkg.engines.node : undefined;
+		const supportsOlderVersions = engine && (semver.satisfies('0.10.0', engine) || semver.satisfies('0.12.0', engine));
+		const requiresUnicorn = requiredVersion === '*';
+
+		if (supportsOlderVersions && (!requiredVersion || requiredVersion === '*' || semver.gte(requiredVersion, '0.17.0'))) {
+			requiredVersion = '0.17.0';
+		}
 
 		if (requiredVersion) {
-			if (requiredVersion === '*' && installedVersion !== '*') {
+			if (requiresUnicorn && requiredVersion === '*' && installedVersion !== '*') {
 				ctx.report({
 					message: `Expected unicorn version '*' but found '${installedVersion}'.`,
-					file
+					file,
+					fix: fixers.version('*')
 				});
-			} else if (requiredVersion !== '*' && !semver.gte(installedVersion, requiredVersion)) {
+			} else if (installedVersion !== requiredVersion) {
 				ctx.report({
 					message: `Expected version '${requiredVersion}' but found '${installedVersion}'.`,
-					file
+					file,
+					fix: fixers.version(`^${requiredVersion}`)
 				});
 			}
 		}
@@ -83,7 +99,5 @@ module.exports = ctx => {
 				file
 			});
 		}
-
-		return errors;
 	});
 };

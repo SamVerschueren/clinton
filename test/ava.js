@@ -36,6 +36,17 @@ test('wrong version', async t => {
 				message: 'Expected version \'0.15.2\' but found \'0.15.1\'.',
 				file: path.resolve(opts.cwd, 'package.json')
 			}
+		],
+		[
+			{
+				name: 'ava',
+				scripts: {
+					test: 'ava'
+				},
+				devDependencies: {
+					ava: '^0.15.2'
+				}
+			}
 		]
 	);
 
@@ -46,6 +57,17 @@ test('wrong version', async t => {
 				severity: 'error',
 				message: 'Expected version \'0.16.0\' but found \'0.15.1\'.',
 				file: path.resolve(opts.cwd, 'package.json')
+			}
+		],
+		[
+			{
+				name: 'ava',
+				scripts: {
+					test: 'ava'
+				},
+				devDependencies: {
+					ava: '^0.16.0'
+				}
 			}
 		]
 	);
@@ -63,6 +85,17 @@ test('unicorn version', async t => {
 				severity: 'error',
 				message: 'Expected unicorn version \'*\' but found \'0.15.1\'.',
 				file: path.resolve(opts.cwd, 'package.json')
+			}
+		],
+		[
+			{
+				name: 'ava',
+				scripts: {
+					test: 'ava'
+				},
+				devDependencies: {
+					ava: '*'
+				}
 			}
 		]
 	);
@@ -138,6 +171,89 @@ test('cli config', async t => {
 				},
 				ava: {
 					failFast: true
+				}
+			}
+		]
+	);
+});
+
+test('support for older Node.js with fixed version', async t => {
+	await ruleTester(t, 'support',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'Expected version \'0.17.0\' but found \'0.19.1\'.',
+				file: path.resolve(opts.cwd, 'support/package.json')
+			}
+		],
+		[
+			{
+				name: 'ava',
+				engines: {
+					node: '>=0.10'
+				},
+				scripts: {
+					test: 'ava'
+				},
+				devDependencies: {
+					ava: '^0.17.0'
+				}
+			}
+		]
+	);
+});
+
+test('support for older Node.js with unicorn version', async t => {
+	await ruleTester(t, 'support/unicorn',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'Expected version \'0.17.0\' but found \'*\'.',
+				file: path.resolve(opts.cwd, 'support/unicorn/package.json')
+			}
+		],
+		[
+			{
+				name: 'ava',
+				engines: {
+					node: '>=0.12'
+				},
+				scripts: {
+					test: 'ava'
+				},
+				devDependencies: {
+					ava: '^0.17.0'
+				}
+			}
+		]
+	);
+});
+
+test('support for older Node.js with required unicorn version', async t => {
+	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {ava: ['error', '*']}}));
+
+	await ruleTester(t, 'support',
+		[
+			{
+				ruleId: 'ava',
+				severity: 'error',
+				message: 'Expected version \'0.17.0\' but found \'0.19.1\'.',
+				file: path.resolve(opts.cwd, 'support/package.json')
+			}
+		],
+		[
+			{
+				name: 'ava',
+				engines: {
+					node: '>=0.10'
+				},
+				scripts: {
+					test: 'ava'
+				},
+				devDependencies: {
+					ava: '^0.17.0'
 				}
 			}
 		]
