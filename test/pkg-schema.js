@@ -1,5 +1,6 @@
 import path from 'path';
 import test from 'ava';
+import CacheConf from 'cache-conf';
 import clintonRuleTester from './fixtures/rule-tester';
 
 const opts = {
@@ -10,6 +11,11 @@ const opts = {
 };
 
 const ruleTester = clintonRuleTester(opts);
+
+test.before(() => {
+	const cache = new CacheConf();
+	cache.delete('pkg-schema');
+});
 
 test('missing required version property', async t => {
 	await ruleTester(t, '.',
