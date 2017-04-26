@@ -37,8 +37,8 @@ Instead of passing the rules as an option, you can also add them to your `packag
 ```json
 {
 	"name": "foo",
-		"license": "ISC",
-		"clinton": {
+	"license": "ISC",
+	"clinton": {
 		"rules": {
 			"license": ["error", "MIT"]
 		}
