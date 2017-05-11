@@ -10,16 +10,14 @@ const testFix = (t, validation, output) => {
 	});
 };
 
-const clean = validations => {
-	for (const validation of validations) {
-		if (typeof validation.fix !== 'function') {
-			throw new TypeError(`Expected \`.fix\` to be a \`function\`, got \`${typeof validation.fix}\``);
-		}
-
-		delete validation.fix;
+const clean = validation => {
+	if (typeof validation.fix !== 'function') {
+		throw new TypeError(`Expected \`.fix\` to be a \`function\`, got \`${typeof validation.fix}\``);
 	}
 
-	return validations;
+	delete validation.fix;
+
+	return validation;
 };
 
 module.exports = options => {
@@ -31,7 +29,13 @@ module.exports = options => {
 				let ret = Promise.resolve();
 
 				if (expectedFixes) {
-					const promises = validations.map((x, i) => testFix(t, x, expectedFixes[i]));
+					const promises = validations.map((x, i) => {
+						if (expectedFixes[i] === null) {
+							return;
+						}
+
+						return testFix(t, x, expectedFixes[i]);
+					});
 
 					ret = ret.then(() => Promise.all(promises));
 				}
@@ -40,7 +44,11 @@ module.exports = options => {
 			})
 			.then(validations => {
 				if (expectedFixes) {
-					validations = clean(validations);
+					for (let i = 0; i < validations.length; i++) {
+						if (expectedFixes[i] !== null) {
+							validations[i] = clean(validations[i]);
+						}
+					}
 				}
 
 				if (expectedValidations) {

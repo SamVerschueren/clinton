@@ -17,6 +17,10 @@ const normalize = version => {
 		parts.push(0);
 	}
 
+	if (!semver.valid(parts.join('.'))) {
+		return version;
+	}
+
 	return parts.join('.');
 };
 
@@ -54,7 +58,20 @@ const fixers = {
 	supported: version => {
 		return yaml => {
 			yaml.node_js.push(version);
-			yaml.node_js.sort((a, b) => semver.lt(normalize(a), normalize(b)));
+			yaml.node_js.sort((a, b) => {
+				a = normalize(a);
+				b = normalize(b);
+
+				if (!semver.valid(a)) {
+					return -1;
+				}
+
+				if (!semver.valid(b)) {
+					return 1;
+				}
+
+				return semver.lt(a, b);
+			});
 
 			return yaml;
 		};

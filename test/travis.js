@@ -137,6 +137,102 @@ test('deprecated versions', async t => {
 	);
 });
 
+test('deprecated and unsupported versions', async t => {
+	const file = path.resolve(opts.cwd, 'deprecated-unsupported/.travis.yml');
+
+	await ruleTester(t, 'deprecated-unsupported',
+		[
+			{
+				message: 'Version `stable` is deprecated.',
+				file,
+				ruleId: 'travis',
+				severity: 'error'
+			},
+			{
+				message: 'Version `unstable` is deprecated.',
+				file,
+				ruleId: 'travis',
+				severity: 'error'
+			},
+			{
+				message: 'Version `iojs` is deprecated.',
+				file,
+				ruleId: 'travis',
+				severity: 'error'
+			},
+			{
+				message: 'Unsupported version `0.12` is being tested.',
+				file,
+				ruleId: 'travis',
+				severity: 'error'
+			},
+			{
+				message: 'Unsupported version `0.10` is being tested.',
+				file,
+				ruleId: 'travis',
+				severity: 'error'
+			},
+			{
+				message: 'Supported version `4` not being tested.',
+				file,
+				ruleId: 'travis',
+				severity: 'error'
+			},
+			{
+				message: 'Supported version `6` not being tested.',
+				file,
+				ruleId: 'travis',
+				severity: 'error'
+			}
+		],
+		[
+			null,
+			null,
+			null,
+			{
+				language: 'node_js',
+				node_js: [				// eslint-disable-line camelcase
+					'stable',
+					'unstable',
+					'iojs',
+					'0.10'
+				]
+			},
+			{
+				language: 'node_js',
+				node_js: [				// eslint-disable-line camelcase
+					'stable',
+					'unstable',
+					'iojs',
+					'0.12'
+				]
+			},
+			{
+				language: 'node_js',
+				node_js: [				// eslint-disable-line camelcase
+					'stable',
+					'unstable',
+					'iojs',
+					'4',
+					'0.12',
+					'0.10'
+				]
+			},
+			{
+				language: 'node_js',
+				node_js: [				// eslint-disable-line camelcase
+					'stable',
+					'unstable',
+					'iojs',
+					'6',
+					'0.12',
+					'0.10'
+				]
+			}
+		]
+	);
+});
+
 test('language not set to `node_js`', async t => {
 	await ruleTester(t, 'php',
 		[
