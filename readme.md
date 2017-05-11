@@ -134,6 +134,7 @@ Current working directory when linting local projects.
 - [no-git-merge-conflict](docs/rules/no-git-merge-conflict.md) - Prevents having Git merge conflict markers.
 - [pkg-dependency-order](docs/rules/pkg-dependency-order.md) - Enforces alphabetical order of `dependencies` and `devDependencies` in `package.json`. *(fixable)*
 - [pkg-description](docs/rules/pkg-description.md) - Enforces the description to start with a capital letter and not end with a dot. *(fixable)*
+- [pkg-engine](docs/rules/pkg-engine.md) - Enforces the use of a `engines.node` field in `package.json`.
 - [pkg-main](docs/rules/pkg-main.md) - Enforces the existance of the main file.
 - [pkg-name](docs/rules/pkg-name.md) - Enforces a valid package name.
 - [pkg-normalize](docs/rules/pkg-normalize.md) - Enforces package normalization. *(fixable)*

@@ -13,6 +13,7 @@ module.exports = {
 		'pkg-normalize': 'warn',
 		'pkg-description': 'error',
 		'pkg-name': 'error',
+		'pkg-engine': 'error',
 		'pkg-shorthand-repository': 'error',
 		'pkg-dependency-order': 'error',
 		readme: 'error',

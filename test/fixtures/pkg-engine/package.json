@@ -1,0 +1,6 @@
+{
+  "name": "package",
+  "engines": {
+    "node": ">=4"
+  }
+}
