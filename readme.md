@@ -131,6 +131,7 @@ Current working directory when linting local projects.
 - [max-depth](docs/rules/max-depth.md) - Enforce the maximum depth of the directory structure.
 - [no-callback](docs/rules/no-callback.md) - Enforces the use of promises instead of callbacks.
 - [no-dup-keywords](docs/rules/no-dup-keywords.md) - Enforce not having duplicate keywords in `package.json`. *(fixable)*
+- [no-empty-keywords](docs/rules/no-empty-keywords.md) - Enforce not having empty keywords in `package.json`. *(fixable)*
 - [no-git-merge-conflict](docs/rules/no-git-merge-conflict.md) - Prevents having Git merge conflict markers.
 - [pkg-dependency-order](docs/rules/pkg-dependency-order.md) - Enforces alphabetical order of `dependencies` and `devDependencies` in `package.json`. *(fixable)*
 - [pkg-description](docs/rules/pkg-description.md) - Enforces the description to start with a capital letter and not end with a dot. *(fixable)*
