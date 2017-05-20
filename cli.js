@@ -67,12 +67,15 @@ const exit = validations => {
 	}
 };
 
+const lint = () => ghLint.lint(cli.input[0] || '.', cli.flags)
+	.then(validations => {
+		log(validations);
+		exit(validations);
+	});
+
 if (cli.flags.fix) {
-	ghLint.fix(cli.input[0] || '.', cli.flags);
+	ghLint.fix(cli.input[0] || '.', cli.flags)
+		.then(() => lint());
 } else {
-	ghLint.lint(cli.input[0] || '.', cli.flags)
-		.then(validations => {
-			log(validations);
-			exit(validations);
-		});
+	lint();
 }
