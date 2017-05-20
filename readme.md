@@ -94,22 +94,22 @@ Current working directory when linting local projects.
 ## CLI
 
 ```
-	Usage
-	  $ clinton [<path>]
+    Usage
+      $ clinton [<path>]
 
-	Options
-	  --no-inherit  Prevent inheriting from the default rules.
-	  --ignores     Ignore files. Can be added multiple times.
-	  --fix         Automatically fix problems.
+    Options
+      --no-inherit  Prevent inheriting from the default rules.
+      --ignores     Ignore files. Can be added multiple times.
+      --fix         Automatically fix problems.
 
-	Examples
-	  $ clinton
+    Examples
+      $ clinton
         .editorconfig
         ⚠  Use .editorconfig to define and maintain consistent coding styles between editors.     editorconfig
 
         1  warning
 
-	  $ clinton ~/projects/project
+      $ clinton ~/projects/project
         license
         ✖  No MIT license found.  license-mit
 
