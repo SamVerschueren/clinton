@@ -72,9 +72,12 @@
   "devDependencies": {
     "ava": "*",
     "coveralls": "^2.11.12",
+    "cpy": "^5.0.0",
     "execa": "^0.4.0",
     "figures": "^1.7.0",
+    "load-json-file": "^2.0.0",
     "nyc": "^8.1.0",
+    "tempy": "^0.1.0",
     "xo": "*"
   },
   "xo": {

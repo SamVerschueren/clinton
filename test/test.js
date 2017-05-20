@@ -1,8 +1,12 @@
 /* eslint-disable object-property-newline */
+import path from 'path';
 import test from 'ava';
 import execa from 'execa';
 import figures from 'figures';
-import {lint as m} from '../';
+import tempy from 'tempy';
+import cpy from 'cpy';
+import loadJsonFile from 'load-json-file';
+import {lint as m, fix} from '../';
 
 test('project does not exist', async t => {
 	await t.throws(m('foo/bar'), 'Path foo/bar does not exist.');
@@ -53,4 +57,27 @@ test('do nothing if `package.json` is missing', async t => {
 	});
 
 	t.is(result.length, 0);
+});
+
+test('fix', async t => {
+	const dir = tempy.directory();
+
+	await cpy('test/fixtures/_fix/package.json', dir);
+
+	await fix('.', {
+		rules: {
+			'no-dup-keywords': 'error'
+		},
+		cwd: dir
+	});
+
+	t.deepEqual(await loadJsonFile(path.join(dir, 'package.json')), {
+		name: 'package',
+		keywords: [
+			'foo',
+			'bar',
+			'unicorn',
+			'rainbow'
+		]
+	});
 });
