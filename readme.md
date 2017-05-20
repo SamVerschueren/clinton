@@ -127,6 +127,7 @@ Current working directory when linting local projects.
 - [filename-case](docs/rules/filename-case.md) - Enforce a case style for filenames.
 - [gitignore](docs/rules/gitignore.md) - Enforce the use of `.gitignore`. *(fixable)*
 - [gulp](docs/rules/gulp.md) - Enforces the correct `devDependencies` when Gulp is detected.
+- [keywords](docs/rules/keywords.md) - Enforces the use of `keywords` in `package.json`.
 - [license](docs/rules/license.md) - Enforce the use of a specific license.
 - [max-depth](docs/rules/max-depth.md) - Enforce the maximum depth of the directory structure.
 - [no-callback](docs/rules/no-callback.md) - Enforces the use of promises instead of callbacks.
