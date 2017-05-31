@@ -1,6 +1,6 @@
 {
   "name": "clinton",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "JavaScript project style linter",
   "license": "MIT",
   "repository": "SamVerschueren/clinton",
