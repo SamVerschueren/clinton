@@ -50,6 +50,7 @@ test('unsupported version', async t => {
 			{
 				language: 'node_js',
 				node_js: [				// eslint-disable-line camelcase
+					'8',
 					'6',
 					'4',
 					'0.10'
@@ -58,6 +59,7 @@ test('unsupported version', async t => {
 			{
 				language: 'node_js',
 				node_js: [				// eslint-disable-line camelcase
+					'8',
 					'6',
 					'4',
 					'0.12'
@@ -89,6 +91,7 @@ test('untested versions', async t => {
 			{
 				language: 'node_js',
 				node_js: [				// eslint-disable-line camelcase
+					'8',
 					'6',
 					'4',
 					'0.10'
@@ -97,6 +100,7 @@ test('untested versions', async t => {
 			{
 				language: 'node_js',
 				node_js: [				// eslint-disable-line camelcase
+					'8',
 					'6',
 					'4',
 					'0.12'
@@ -183,6 +187,12 @@ test('deprecated and unsupported versions', async t => {
 				file,
 				ruleId: 'travis',
 				severity: 'error'
+			},
+			{
+				message: 'Supported version `8` not being tested.',
+				file,
+				ruleId: 'travis',
+				severity: 'error'
 			}
 		],
 		[
@@ -228,6 +238,17 @@ test('deprecated and unsupported versions', async t => {
 					'0.12',
 					'0.10'
 				]
+			},
+			{
+				language: 'node_js',
+				node_js: [				// eslint-disable-line camelcase
+					'stable',
+					'unstable',
+					'iojs',
+					'8',
+					'0.12',
+					'0.10'
+				]
 			}
 		]
 	);
@@ -269,6 +290,12 @@ test('testing matrix', async t => {
 				ruleId: 'travis',
 				severity: 'error',
 				file
+			},
+			{
+				message: 'Supported version `8` not being tested.',
+				ruleId: 'travis',
+				severity: 'error',
+				file
 			}
 		],
 		[
@@ -277,6 +304,20 @@ test('testing matrix', async t => {
 				node_js: [				// eslint-disable-line camelcase
 					'6',
 					'0.12'
+				],
+				matrix: {
+					include: [
+						{
+							node_js: '4'	// eslint-disable-line camelcase
+						}
+					]
+				}
+			},
+			{
+				language: 'node_js',
+				node_js: [				// eslint-disable-line camelcase
+					'8',
+					'6'
 				],
 				matrix: {
 					include: [
