@@ -123,7 +123,7 @@ Current working directory when linting local projects.
 
 - [ava](docs/rules/ava.md) - Enforces the use of [AVA](https://github.com/avajs/ava). *(fixable)*
 - [cli](docs/rules/cli.md) - Enforces the existance and executability of the cli file.
-- [editorconfig](docs/rules/editorconfig.md) - Enforces the use of  [EditorConfig](http://editorconfig.org).
+- [editorconfig](docs/rules/editorconfig.md) - Enforces the use and rules of  [EditorConfig](http://editorconfig.org).
 - [filename-case](docs/rules/filename-case.md) - Enforce a case style for filenames.
 - [gitignore](docs/rules/gitignore.md) - Enforce the use of `.gitignore`. *(fixable)*
 - [gulp](docs/rules/gulp.md) - Enforces the correct `devDependencies` when Gulp is detected.

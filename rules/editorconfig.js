@@ -1,30 +1,41 @@
 'use strict';
+const LintSpaces = require('lintspaces');
+
 module.exports = ctx => {
 	if (ctx.files.indexOf('.editorconfig') === -1) {
 		ctx.report({
 			message: 'Use `.editorconfig` to define and maintain consistent coding styles between editors',
 			file: ctx.fs.resolve('.editorconfig')
 		});
+		return;
 	}
 
-	// https://github.com/SamVerschueren/clinton/issues/26
-	// return new Promise(resolve => {
-	// 	const errors = [];
+	const lintSpaces = new LintSpaces({
+		editorconfig: ctx.fs.resolve('.editorconfig'),
+		ignores: [
+			'js-comments',
+			/`[\s\S]*?`/g
+		]
+	});
 
-	// 	const stream = vfs.src(['**/*', '!node_modules', '!node_modules/**'], {cwd: ctx.env.path})
-	// 		.pipe(eclint.check({
-	// 			reporter: (file, message) => {
-	// 				errors.push({
-	// 					message,
-	// 					file: file.path
-	// 				});
-	// 			}
-	// 		}));
+	for (const file of ctx.files) {
+		lintSpaces.validate(ctx.fs.resolve(file));
+	}
 
-	// 	stream.on('data', () => {});
+	const results = lintSpaces.getInvalidFiles();
 
-	// 	stream.on('finish', () => {
-	// 		resolve(errors);
-	// 	});
-	// });
+	for (const file of Object.keys(results)) {
+		const errors = results[file];
+
+		for (const line of Object.keys(errors)) {
+			const lineErrors = errors[line];
+
+			for (const error of lineErrors) {
+				ctx.report({
+					message: `${error.message.replace(/\.$/, '')} at line ${error.line}`,
+					file
+				});
+			}
+		}
+	}
 };

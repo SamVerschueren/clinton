@@ -27,3 +27,16 @@ test('no editorconfig', async t => {
 test('editorconfig', async t => {
 	await ruleTester(t, 'true', []);
 });
+
+test('invalid editorconfig', async t => {
+	await ruleTester(t, 'invalid',
+		[
+			{
+				ruleId: 'editorconfig',
+				severity: 'error',
+				message: 'Unexpected spaces found at line 2',
+				file: path.resolve(opts.cwd, 'invalid/package.json')
+			}
+		]
+	);
+});
