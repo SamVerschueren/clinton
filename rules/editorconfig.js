@@ -1,6 +1,11 @@
 'use strict';
 const LintSpaces = require('lintspaces');
 
+const IGNORE_FILES = [
+	'package-lock.json',
+	'yarn.lock'
+];
+
 module.exports = ctx => {
 	if (ctx.files.indexOf('.editorconfig') === -1) {
 		ctx.report({
@@ -19,7 +24,9 @@ module.exports = ctx => {
 	});
 
 	for (const file of ctx.files) {
-		lintSpaces.validate(ctx.fs.resolve(file));
+		if (IGNORE_FILES.indexOf(file) === -1) {
+			lintSpaces.validate(ctx.fs.resolve(file));
+		}
 	}
 
 	const results = lintSpaces.getInvalidFiles();
