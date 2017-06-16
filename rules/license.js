@@ -43,7 +43,8 @@ module.exports = ctx => {
 	if (pkg.license !== type) {
 		ctx.report({
 			message: `Expected \`license\` property to be \`${type}\`, got \`${pkg.license}\`.`,
-			file: pkgFile
+			file: pkgFile,
+			fix: pkg => Object.assign({}, pkg, {license: type})
 		});
 		return;
 	}

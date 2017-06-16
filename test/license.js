@@ -41,6 +41,17 @@ test('license property does not match', async t => {
 				message: 'Expected `license` property to be `ISC`, got `MIT`.',
 				file: path.resolve(opts.cwd, 'wrong/package.json')
 			}
+		],
+		[
+			{
+				name: 'license',
+				license: 'ISC',
+				clinton: {
+					rules: {
+						license: ['error', 'MIT']
+					}
+				}
+			}
 		]
 	);
 });
