@@ -28,6 +28,10 @@ test('editorconfig', async t => {
 	await ruleTester(t, 'true', []);
 });
 
+test('do not validate binary files', async t => {
+	await ruleTester(t, 'binary', []);
+});
+
 test('invalid editorconfig', async t => {
 	await ruleTester(t, 'invalid',
 		[

@@ -1,5 +1,6 @@
 'use strict';
 const LintSpaces = require('lintspaces');
+const isBinaryPath = require('is-binary-path');
 
 const IGNORE_FILES = [
 	'package-lock.json',
@@ -24,7 +25,7 @@ module.exports = ctx => {
 	});
 
 	for (const file of ctx.files) {
-		if (IGNORE_FILES.indexOf(file) === -1) {
+		if (IGNORE_FILES.indexOf(file) === -1 && !isBinaryPath(file)) {
 			lintSpaces.validate(ctx.fs.resolve(file));
 		}
 	}
