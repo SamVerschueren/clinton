@@ -140,7 +140,7 @@ Current working directory when linting local projects.
 - [pkg-main](docs/rules/pkg-main.md) - Enforces the existance of the main file.
 - [pkg-name](docs/rules/pkg-name.md) - Enforces a valid package name.
 - [pkg-normalize](docs/rules/pkg-normalize.md) - Enforces package normalization. *(fixable)*
-- [pkg-property-order](docs/rules/pkg-property-order) - Enforces order of properties in in `package.json`. *(fixable)*
+- [pkg-property-order](docs/rules/pkg-property-order.md) - Enforces order of properties in in `package.json`. *(fixable)*
 - [pkg-schema](docs/rules/pkg-schema.md) - Enforces a valid `package.json`.
 - [pkg-shorthand-repository](docs/rules/pkg-shorthand-repository.md) - Enforces the use of the shorthand repository URL. *(fixable)*
 - [pkg-user-order](docs/rules/pkg-user-order.md) - Enforces order of properties in user objects in `package.json`. *(fixable)*
