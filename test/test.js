@@ -28,7 +28,8 @@ test('merge rules', async t => {
 });
 
 test('`cwd` option', async t => {
-	t.is((await m('.', {cwd: './', ignores: ['test/**', 'docs/**']})).length, 0);
+	const validations = await m('.', {cwd: './', ignores: ['test/**', 'docs/**']});
+	t.is(validations.length, 0);
 });
 
 test('`ignores` option', async t => {
