@@ -32,15 +32,18 @@ test('do not validate binary files', async t => {
 	await ruleTester(t, 'binary', []);
 });
 
-test('invalid editorconfig', async t => {
-	await ruleTester(t, 'invalid',
-		[
-			{
-				ruleId: 'editorconfig',
-				severity: 'error',
-				message: 'Unexpected spaces found at line 2',
-				file: path.resolve(opts.cwd, 'invalid/package.json')
-			}
-		]
-	);
-});
+if (process.platform !== 'win32') {
+	// TODO https://github.com/SamVerschueren/clinton/issues/80
+	test('invalid editorconfig', async t => {
+		await ruleTester(t, 'invalid',
+			[
+				{
+					ruleId: 'editorconfig',
+					severity: 'error',
+					message: 'Unexpected spaces found at line 2',
+					file: path.resolve(opts.cwd, 'invalid/package.json')
+				}
+			]
+		);
+	});
+}
