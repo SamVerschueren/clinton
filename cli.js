@@ -6,7 +6,7 @@ const logSymbols = require('log-symbols');
 const updateNotifier = require('update-notifier');
 const groupBy = require('lodash.groupby');
 const formatter = require('eslint-formatter-pretty');
-const ghLint = require('./');
+const ghLint = require('.');
 
 const cli = meow(`
 	Usage

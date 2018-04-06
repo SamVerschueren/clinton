@@ -6,7 +6,7 @@ import figures from 'figures';
 import tempy from 'tempy';
 import cpy from 'cpy';
 import loadJsonFile from 'load-json-file';
-import {lint as m, fix} from '../';
+import {lint as m, fix} from '..';
 
 test('project does not exist', async t => {
 	await t.throws(m('foo/bar'), 'Path foo/bar does not exist.');

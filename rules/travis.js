@@ -106,14 +106,18 @@ module.exports = ctx => {
 			versions = versions.filter(version => {
 				if (IGNORED_VERSIONS.indexOf(version) !== -1) {
 					return false;
-				} else if (DEPRECATED_VERSIONS.indexOf(version) !== -1) {
+				}
+
+				if (DEPRECATED_VERSIONS.indexOf(version) !== -1) {
 					ctx.report({
 						message: `Version \`${version}\` is deprecated.`,
 						file
 					});
 
 					return false;
-				} else if (engine && !semver.satisfies(normalize(version), engine)) {
+				}
+
+				if (engine && !semver.satisfies(normalize(version), engine)) {
 					ctx.report({
 						message: `Unsupported version \`${version}\` is being tested.`,
 						fix: fixers.unsupported(version),

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import path from 'path';
 import test from 'ava';
 import clintonRuleTester from './fixtures/rule-tester';
@@ -49,7 +50,7 @@ test('unsupported version', async t => {
 		[
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'8',
 					'6',
 					'4',
@@ -58,7 +59,7 @@ test('unsupported version', async t => {
 			},
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'8',
 					'6',
 					'4',
@@ -90,7 +91,7 @@ test('untested versions', async t => {
 		[
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'8',
 					'6',
 					'4',
@@ -99,7 +100,7 @@ test('untested versions', async t => {
 			},
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'8',
 					'6',
 					'4',
@@ -201,7 +202,7 @@ test('deprecated and unsupported versions', async t => {
 			null,
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'stable',
 					'unstable',
 					'iojs',
@@ -210,7 +211,7 @@ test('deprecated and unsupported versions', async t => {
 			},
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'stable',
 					'unstable',
 					'iojs',
@@ -219,7 +220,7 @@ test('deprecated and unsupported versions', async t => {
 			},
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'stable',
 					'unstable',
 					'iojs',
@@ -230,7 +231,7 @@ test('deprecated and unsupported versions', async t => {
 			},
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'stable',
 					'unstable',
 					'iojs',
@@ -241,7 +242,7 @@ test('deprecated and unsupported versions', async t => {
 			},
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'stable',
 					'unstable',
 					'iojs',
@@ -301,28 +302,28 @@ test('testing matrix', async t => {
 		[
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'6',
 					'0.12'
 				],
 				matrix: {
 					include: [
 						{
-							node_js: '4'	// eslint-disable-line camelcase
+							node_js: '4'
 						}
 					]
 				}
 			},
 			{
 				language: 'node_js',
-				node_js: [				// eslint-disable-line camelcase
+				node_js: [
 					'8',
 					'6'
 				],
 				matrix: {
 					include: [
 						{
-							node_js: '4'	// eslint-disable-line camelcase
+							node_js: '4'
 						}
 					]
 				}
