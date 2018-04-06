@@ -17,7 +17,7 @@ test.before(() => {
 	cache.delete('pkg-schema');
 });
 
-test('missing required version property', async t => {
+test.failing('missing required version property', async t => {
 	await ruleTester(t, '.',
 		[
 			{

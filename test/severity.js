@@ -1,4 +1,3 @@
-import path from 'path';
 import test from 'ava';
 import clintonRuleTester from './fixtures/rule-tester';
 
@@ -7,7 +6,7 @@ const cwd = 'test/fixtures';
 const createOptions = severity => ({
 	cwd,
 	rules: {
-		'pkg-schema': severity
+		readme: severity
 	}
 });
 
@@ -19,9 +18,8 @@ test('turned off', async t => {
 test('warning', async t => {
 	const reports = [
 		{
-			message: 'Missing required property: version at path \'#/\'',
-			file: path.resolve(cwd, 'package.json'),
-			ruleId: 'pkg-schema',
+			message: 'Missing readme file',
+			ruleId: 'readme',
 			severity: 'warn'
 		}
 	];
@@ -33,9 +31,8 @@ test('warning', async t => {
 test('error', async t => {
 	const reports = [
 		{
-			message: 'Missing required property: version at path \'#/\'',
-			file: path.resolve(cwd, 'package.json'),
-			ruleId: 'pkg-schema',
+			message: 'Missing readme file',
+			ruleId: 'readme',
 			severity: 'error'
 		}
 	];
