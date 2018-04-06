@@ -15,6 +15,8 @@ const DEFAULT_ORDER = [
 	'publishConfig',
 	'config',
 	'main',
+	'module',
+	'browser',
 	'bin',
 	'man',
 	'os',
