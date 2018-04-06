@@ -192,14 +192,17 @@ You can wrap this up in a project, publish it to [npm](https://www.npmjs.com/) a
 		"clinton-plugin-file-exists": "1.0.0"
 	},
 	"clinton": {
-		"plugins": {
+		"plugins": [
+			"file-exists"
+		],
+		"rules": {
 			"file-exists": ["error", "index.js"]
 		}
 	}
 }
 ```
 
-When running `npm test`, `clinton` will execute your plugin and will use `index.js` as the option argument. The first argument `error` indicates the severity of the error.
+When running `npm test`, `clinton` will execute your plugin and will use `index.js` as the option argument. The first that is passed to the plugin, `error` in this example, indicates the severity of the error.
 
 
 ## Related
