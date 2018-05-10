@@ -1,0 +1,12 @@
+{
+  "name": "xo",
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo"
+  },
+  "devDependencies": {
+    "xo": "*"
+  }
+}

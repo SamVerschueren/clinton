@@ -233,6 +233,33 @@ test('support for older Node.js with unicorn version', async t => {
 	);
 });
 
+test('support for Node.js 4 with unicorn version', async t => {
+	await ruleTester(t, 'support/node4',
+		[
+			{
+				ruleId: 'xo',
+				severity: 'error',
+				message: 'Expected version \'0.20.3\' but found \'*\'.',
+				file: path.resolve(opts.cwd, 'support/node4/package.json')
+			}
+		],
+		[
+			{
+				name: 'xo',
+				engines: {
+					node: '>=4'
+				},
+				scripts: {
+					test: 'xo'
+				},
+				devDependencies: {
+					xo: '^0.20.3'
+				}
+			}
+		]
+	);
+});
+
 test('support for older Node.js with required unicorn version', async t => {
 	const ruleTester = clintonRuleTester(Object.assign({}, opts, {rules: {xo: ['error', '*']}}));
 

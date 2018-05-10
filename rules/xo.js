@@ -61,11 +61,14 @@ module.exports = ctx => {
 		installedVersion = installedVersion.replace(/^(~|\^)/, '');
 
 		const engine = pkg.engines && pkg.engines.node ? pkg.engines.node : undefined;
-		const supportsOlderVersions = engine && (semver.satisfies('0.10.0', engine) || semver.satisfies('0.12.0', engine));
+		const supportsNode0 = engine && (semver.satisfies('0.10.0', engine) || semver.satisfies('0.12.0', engine));
+		const supportsNode4 = engine && (semver.satisfies('4.0.0', engine));
 		const requiresUnicorn = requiredVersion === '*';
 
-		if (supportsOlderVersions && (!requiredVersion || requiredVersion === '*' || semver.gte(requiredVersion, '0.16.0'))) {
+		if (supportsNode0 && (!requiredVersion || requiredVersion === '*' || semver.gte(requiredVersion, '0.16.0'))) {
 			requiredVersion = '0.16.0';
+		} else if (supportsNode4 && (!requiredVersion || requiredVersion === '*' || semver.gte(requiredVersion, '0.20.3'))) {
+			requiredVersion = '0.20.3';
 		}
 
 		if (requiredVersion) {
