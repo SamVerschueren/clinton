@@ -51,6 +51,7 @@ test('unsupported version', async t => {
 			{
 				language: 'node_js',
 				node_js: [
+					'10',
 					'8',
 					'6',
 					'4',
@@ -60,6 +61,7 @@ test('unsupported version', async t => {
 			{
 				language: 'node_js',
 				node_js: [
+					'10',
 					'8',
 					'6',
 					'4',
@@ -92,6 +94,7 @@ test('untested versions', async t => {
 			{
 				language: 'node_js',
 				node_js: [
+					'10',
 					'8',
 					'6',
 					'4',
@@ -101,6 +104,7 @@ test('untested versions', async t => {
 			{
 				language: 'node_js',
 				node_js: [
+					'10',
 					'8',
 					'6',
 					'4',
@@ -194,6 +198,12 @@ test('deprecated and unsupported versions', async t => {
 				file,
 				ruleId: 'travis',
 				severity: 'error'
+			},
+			{
+				message: 'Supported version `10` not being tested.',
+				file,
+				ruleId: 'travis',
+				severity: 'error'
 			}
 		],
 		[
@@ -250,6 +260,17 @@ test('deprecated and unsupported versions', async t => {
 					'0.12',
 					'0.10'
 				]
+			},
+			{
+				language: 'node_js',
+				node_js: [
+					'stable',
+					'unstable',
+					'iojs',
+					'10',
+					'0.12',
+					'0.10'
+				]
 			}
 		]
 	);
@@ -297,6 +318,12 @@ test('testing matrix', async t => {
 				ruleId: 'travis',
 				severity: 'error',
 				file
+			},
+			{
+				message: 'Supported version `10` not being tested.',
+				ruleId: 'travis',
+				severity: 'error',
+				file
 			}
 		],
 		[
@@ -318,6 +345,20 @@ test('testing matrix', async t => {
 				language: 'node_js',
 				node_js: [
 					'8',
+					'6'
+				],
+				matrix: {
+					include: [
+						{
+							node_js: '4'
+						}
+					]
+				}
+			},
+			{
+				language: 'node_js',
+				node_js: [
+					'10',
 					'6'
 				],
 				matrix: {

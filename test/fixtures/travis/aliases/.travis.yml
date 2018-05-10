@@ -2,9 +2,11 @@ language: node_js
 node_js:
   - 'node'
   - 'lts/*'
+  - 'lts/dubnium'
   - 'lts/carbon'
   - 'lts/argon'
   - 'lts/boron'
+  - '10'
   - '8'
   - '6'
   - '4'

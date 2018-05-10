@@ -1,9 +1,9 @@
 'use strict';
 const semver = require('semver');
 
-const SUPPORTED_VERSIONS = ['0.10', '0.12', '4', '6', '8'];
+const SUPPORTED_VERSIONS = ['0.10', '0.12', '4', '6', '8', '10'];
 const DEPRECATED_VERSIONS = ['iojs', 'stable', 'unstable'];
-const IGNORED_VERSIONS = ['node', 'lts/*', 'lts/argon', 'lts/boron', 'lts/carbon'];
+const IGNORED_VERSIONS = ['node', 'lts/*', 'lts/argon', 'lts/boron', 'lts/carbon', 'lts/dubnium'];
 
 /**
  * Normalize a semantic version to be a valid version. 0.10 -> 0.10.0
